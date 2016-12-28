@@ -1,0 +1,14 @@
+= pocket-square-ingest
+
+Microservice for ingesting Pocket data.
+
+== HOWTO: start with docker
+
+[source,shell]
+----
+docker ps # to determine if container is already running
+docker kill $CONTAINER_ID # if needed
+
+docker pull pocketsquare/pocket-square-ingest:$TAG # to load specific image
+docker run -dit -p 8080:8080 pocketsquare/pocket-square-ingest:$TAG # to start specific image
+----
