@@ -1,0 +1,9 @@
+= HOWTO: run service
+
+== Endpoints
+
+GET to http://<host>:<port>/fetch/{user_id} - fetch articles of specified user
+
+== Service locations
+
+Development instance - 188.166.174.189:28102

@@ -3,14 +3,13 @@ import json
 import urllib2
 from bs4 import BeautifulSoup
 import sqlite3
+import os
 
-POCKET_APP_KEY = '51208-f9d6fc146c43b2912ff314fa'
-#POCKET_REQUEST_TOKEN = 'f43f5796-d630-3803-f038-1e8077'
-POCKET_ACCESS_TOKEN = 'f3d74179-cda8-2a61-5011-847754'
+POCKET_APP_KEY = os.environ['POCKET_SQUARE_APP_KEY']
 
 
-def fetch_pocket_links():
-    instance = pocket.Pocket(POCKET_APP_KEY, POCKET_ACCESS_TOKEN)
+def fetch_pocket_links(accessToken):
+    instance = pocket.Pocket(POCKET_APP_KEY, accessToken)
     return instance.get(state='all', detailType='complete', count=1000, sort='oldest')[0]['list']
 
 

@@ -6,14 +6,8 @@ TravisCI - https://travis-ci.org/pocket-square/pocket-square-ingest/
 
 DockerHub - https://hub.docker.com/r/pocketsquare/pocket-square-ingest/
 
-== HOWTO: start with docker
+== Documentation
 
-[source,shell]
-----
-docker rm pocket_square_ingest
-docker ps # to determine if container is already running
-docker kill $CONTAINER_ID # if needed
+link:src/docs/howto-start-docker.adoc[HOWTO: start service as docker container]
 
-docker pull pocketsquare/pocket-square-ingest:$TAG # to load specific image
-docker run -dit -p 5000:5000 --name pocket_square_ingest pocketsquare/pocket-square-ingest:$TAG # to start specific image
-----
+link:src/docs/howto-run-service.adoc[HOWTO: run service]
