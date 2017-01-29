@@ -15,12 +15,9 @@ def fetch_cached():
 def fetch(user_id):
     request = Request('http://pocket_square_users:28101/user/' + user_id)
 
-    try:
-        response_json = urlopen(request).read()
-        response = json.loads(response_json)
-        return json.dumps(fetch_pocket_links(response.accessToken))
-    except URLError as e:
-        return 'Something went wrong:' + str(e)
+    response_json = urlopen(request).read()
+    response = json.loads(response_json)
+    return json.dumps(fetch_pocket_links(response.accessToken))
 
 
 if __name__ == '__main__':
