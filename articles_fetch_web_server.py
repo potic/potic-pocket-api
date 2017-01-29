@@ -19,9 +19,9 @@ def fetch(user_id):
         response_json = urlopen(request).read()
         response = json.loads(response_json)
         return json.dumps(fetch_pocket_links(response.accessToken))
-    except URLError, e:
-        return 'Something went wrong:', e
+    except URLError as e:
+        return 'Something went wrong:' + str(e)
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0')
