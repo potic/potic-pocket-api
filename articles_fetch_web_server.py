@@ -1,7 +1,6 @@
 from flask import Flask
-from urllib2 import Request, urlopen, URLError
+import requests
 from article_fetch import fetch_pocket_links
-import json
 
 app = Flask(__name__)
 
@@ -13,10 +12,8 @@ def fetch_cached():
 
 @app.route('/fetch/<user_id>')
 def fetch(user_id):
-    request = Request('http://pocket_square_users:28101/user/' + user_id)
-
-    response_json = urlopen(request).read()
-    response = json.loads(response_json)
+    request = requests.get('http://pocket_square_users:8080/user/' + user_id)
+    response = request.json()
     return json.dumps(fetch_pocket_links(response["accessToken"]))
 
 
