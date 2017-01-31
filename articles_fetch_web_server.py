@@ -13,11 +13,11 @@ def fetch_cached():
 
 @app.route('/fetch/<user_id>')
 def fetch(user_id):
-    request = Request('http://188.166.174.189:28101/user/' + user_id)
+    request = Request('http://pocket_square_users:28101/user/' + user_id)
 
     response_json = urlopen(request).read()
     response = json.loads(response_json)
-    return json.dumps(fetch_pocket_links(response.accessToken))
+    return json.dumps(fetch_pocket_links(response["accessToken"]))
 
 
 if __name__ == '__main__':
