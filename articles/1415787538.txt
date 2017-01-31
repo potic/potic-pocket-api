@@ -1,0 +1,72 @@
+
+            Investing For Geeks
+          
+						A quick, opinionated guide to retirement planning and investing for software people.
+						
+Investing For Geeks
+Hiya guys!
+Patrick (patio11) here. You’re getting this email because you signed up on my blog to for thoughts on software.  I haven’t written too much recently, which was largely because I was quite busy with Starfighter.  Sadly, that wound down.  On a happier note, I will now have a lot more time for writing, both personally and on behalf of Stripe, which I joined earlier this week.
+[Edit: Actually, it's possible that you've never gotten an email from me. Somebody might have just given you the link to this page, which is an online archive of an email that I sent to folks who had asked for it. If you'd like to get articles like this in your inbox, totally free, about once a week or two, give me your email address.]
+I’ve been probably best known for running a teeny tiny little business called Bingo Card Creator. I sold it last year, and wanted to tell you a little of what I learned.
+ 
+One of my numerous very boring hobbies is reading books about investing so you don’t have to.    Often when I told people I was building a (toy) stock exchange they’d ask me for stock advice, which is about as well-considered as asking a WoW guild to deal with your terrorism problem.  Be that as it may, investing for individuals is a question with some Right Answers.
+Strategy, Not Stock Picks
+There exists a thing called the Efficient Markets Hypothesis, whose strong form states that asset prices already incorporate everything the market knows about the future state of an asset.  There is a medium-strength version of the hypothesis, which adopts the weaker claim that “You are astoundingly unlikely to know more about any stock from reading the newspaper, seeing their chart on Google Finance, or consuming their quarterly reports than a team of PhDs who did nothing but study that stock for the last year, and accordingly are vanishingly unlikely to trade stocks in such a fashion that you do better than the market once you account for fees and tax impact.“
+“Better than the market” is a squishily defined term.  Basically, for exposing yourself to the risk of volatile business performance across the economy, you gain the upside of the entire economy (“beta” in finance lingo) plus or minus some deviation based on how good you are at stockpicking (“alpha”).  You should assume that on average your alpha is zero or negative, once you consider the impact of fees and taxes.
+Beta, though, beta is greatly positive over the long-run.  You want to buy it, as cheaply as possible, in the largest amount you can a) afford and b) stomach.
+The afford question is easy, the stomach question is not.  Market returns are volatile.  Over the long run, we expect US equities to appreciate by about 8% per year.  In the 10 year period from 2006 to 2015, the average return was a little lower than 8%, in the same sense that the average number of legs people have is a little lower than two.  There was boring 2011 (2.1%), roaring 2013 (32.15%), and catastrophic financial crisis 2008 (-36.55%).  If you decided to just stop investing after 2008, you lost out on several years of good performance as a consequence.
+One way to deal with the volatility of market returns is to mix in less-volatile assets.  Another way is to simply commit to a course of action and treat volatility like a cost of doing business.  I recommend both.
+Particular Investment Vehicles
+You have basically two good options for “what to buy” in 2016 to purchase cheap beta with a level of volatility you’re comfortable with.  Both are cosmetic wrappers on index funds, which are computer programs with financial institutions attached.  The programs attempt to replicate the performance of a particular index, like the S&P 500 or a more modern index like the CRSP US Total Market Index.  To the extent they do their job right, they’re guaranteed to get the market return, less fees.
+Fees for index funds are very low compared to traditionally managed mutual funds, because index funds don’t require a team of very expensive people to make investment decisions.  This pushes the cost from ~1.5% of assets under management to “extremely low” — on the order of 10 basis points (0.10%) or less for some index fund offerings.  Since you are always guaranteed to underperform by what you pay in fees, saving 1.4% on fees is pretty massive, since the long-term growth of the economy will probably come in at about 8%.
+There are a couple of ways to consume index funds.  One is to buy them through your broker.  One is to buy ETFs of the mutual funds through your broker.  Either of these approaches requires you to make decisions about which funds to purchase, how to periodically rebalance them, and what percentage of your portfolio you should put into them.
+You can read a lot of books and waste a lot of time on these topics, but they have Right Answers.  There are exactly two things you should consider here:
+1)  Go to Vanguard.  Find their Target Date Retirement Fund closest to your retirement date.  (For me, that would be the 2050 vintage.)  Put money in it every month.  The end.  (Many of these are sold either as mutual funds or as ETFs.  If you’re reading this, you probably don’t care about the difference — get the mutual fund directly from Vanguard if possible, the corresponding ETF from your broker if not.)
+2)  Use a roboadvisor — an automated service which purchases a portfolio of index funds on your behalf. Take their automated risk quiz.  As someone who is young and can tolerate a commitment strategy, I opt for maximum risk, but you might sensibly pick less.  (Again, we’re not optimizing for returns, we’re optimizing for the maximum risk we can tolerate.  If actual volatility knocks you out of the market your theoretical returns if you stayed in the market are not relevant.)
+I use WealthFront and have enjoyed it.  Other options include Betterment and Charles Schwab’s Intelligent Portfolios product.  They’re broadly similar: they buy ETFs automatically to attempt to match your target allocation while avoiding unfavorable tax consequences.  Because they’re doing similar math and similar trades on behalf of a large number of investors, their trading costs are virtually nothing, and so their fees are generally low.
+Then, set up a monthly or weekly transfer.  You’re done.
+Tell Me About Retirement Accounts
+Sadly, the rules for retirement accounts are very, very country-specific.  I’ll write the US treatment here because that is most useful to most of you, but ask me about Japan sometime if you’re curious.
+Historically, US retirements were funded by the employer, in the form of a defined-benefit pension.  These are very uncommon these days, unless you work for the government.  Instead, you’ll end up with one of a few systems, depending on your employment situation.
+The most common cases for people reading this.
+Working For A Larger Company: You’ll probably be offered a 401k.  If you are not offered a 401k, your company is not offering something competitive with most grown-up-company jobs.
+A 401k is a way to contribute pre-tax money to a retirement account — the amount of money you contribute is deducted from your income before calculating taxes.  This is a particularly nice perk to have when you have a high marginal tax rate right now.
+Your company will probably extend a term saying “We will match your contributions up to N% of your salary.”  You should always and under every circumstance invest enough money to max out your employer match.  It is free money if you take it.  It is very unfree non-money if you don’t, because the cost of offering that perk was factored into your salary and you do not get bonus salary back if you don’t avail yourself of it.
+Your 401k may constrain the options you have available to invest.  In the happy case, you can buy one of the aforementioned Vanguard funds or at least another index fund with reasonable expense ratios.  In the less happy case, you pick one of the terrible options that your company’s provider allows you to take, hold your nose to get your full match, then migrate the 401k to another provider when you leave the company.
+Self-Employed:
+Are you doing very well?
+Yes, crushing it, thanks for asking: You should open a SEP-IRA, which is a special account type that is similar to a 401k in mechanics but has very, very generous funding limits.  Presently, they are the lower of 25% of the business’ profits or $53k a year.  Unlike most other account types, there is no income-based phaseout of eligibility.
+Nope, just getting by: You should open a Roth IRA, which is funded in post-tax rather than pre-tax dollars.  This means that it is to your advantage if your tax rate at retirement is higher than your tax rate now.  As your business is not super successful at the moment, that may be likely.  A Roth lets you contribute $5.5k a year.
+No 401k Offered:
+Open a traditional IRA or a Roth IRA.  The traditional IRA contributes pre-tax money, the Roth IRA post-tax money.  The upshot is that if you believe your marginal rate at retirement to be higher than your present rate, you should pick a Roth IRA, otherwise, you should pick a traditional IRA.  If you don’t feel like forecasting that, take my word for it that 90% of you should have Roth IRAs.
+You can get any of these accounts very quickly from Vanguard or Wealthfront if you have a Social Security Number and a US street address.  If neither of these things are true, you will experience some difficulty, which is unfortunately slightly outside the scope of this email.  I’ve been there, too.  Sorry.
+How Much Money Should I Invest?
+Only invest money you won’t touch for 10+ years.
+You need $1 million in assets to sustain $40k a year in retirement income, so that allows you to calculate your goal number fairly easily.  The Internet is filled with retirement calculators if you want to model out how much you need to save per month to hit your desired level of income during retirement.
+Should I Invest In Privately Held Tech Companies?
+It’s a fun entertainment expense.  You’re highly unlikely to make market-beating returns doing so.
+Most returns to startups come from a very small number of companies (the Googles/Facebooks/Ubers of the world); your ability to get a market-beating return is dependent on access to those deals and luck-of-the-draw in being invested in them as opposed to the other seemingly-a-great-idea companies that were their contemporaries.
+It is unlikely that you will be able to out-stockpick professionals (who also make underwhelming returns) as a hobby.
+Should I Invest In Crowdfunding?
+Crowdfunding has a bit of an adverse selection problem, where only companies which are insufficiently attractive to more professional angels (who, again, are failing to beat the market most of the time) show up on crowdfunding platforms.  Sometimes that is because the dedicated professionals overlook things.  That is not the way I would bet with regards to any particular crowdfunding investment you would consider putting money into.
+If you consider equity-based crowdfunding more as a Kickstarter/lifestyle expense than an investment, that’s fine, but budget it out of entertainment/etc rather than your retirement/college fund for kids/etc.
+Career Capital
+I’d be remiss if I didn’t mention that most people in the tech industry have one asset which is orders of magnitude larger than all their others: the present value of their future career.  Optimizing for the returns of this asset beat the heck out of optimizing for the returns of your portfolio, one reason why you should spend less time on trying to eke out an extra 1% on $100k in your IRA and more time on developing skills to get you your next career upgrade.  (If you’re in business, substitute “increase revenue” for “career upgrade” — though everyone in business is in a career and everyone with a career is in business, at the end of the day.)
+This makes buying books a stupidly high ROI, assuming you read and get value out of them.  This is true generally of programming books (which are criminally underpriced) and anything else which meaningfully bends the curve of your business or trajectory upward.
+A friend of mine, Nick Disabato, is working on a book about conversion optimization, a topic near and dear to my heart.  I’ve used conversion optimization extensively over the years in my own software companies, at consulting clients, and will hopefully get to apply it to the day job.
+Nick is launching orders for his book next week.  One of the offerings will include the (long, long in the queue) 5 hour video course on A/B testing, staring Nick and yours truly.  Get on Nick’s email list if you’d like to hear when it launches next week.
+I’ll have an A/B testing story for you next time.
+Regards,
+Patrick McKenzie
+P.S. It's been a long while since my periodic disclaimer about affiliate links, which is that I don't use affiliate links.
+ 
+Contact us
+            Kalzumeus Software
+            1608 S. Ashland Ave
+            Suite #95114
+            Chicago, IL 60608
+            patrick@kalzumeus.com 
+            www.kalzumeus.com
+            
+Feel Free To Share This
+Anybody interested in seeing these emails on a regular basis should go to my site and give me their email address.  If you'd like to share this link around, though, go right ahead!  Copyright by Patrick McKenzie 2017, yadda yadda yadda, I trust you not to abuse it.

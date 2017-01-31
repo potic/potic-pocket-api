@@ -1,0 +1,763 @@
+
+10 Articles Every Programmer Must Read
+Javarevisited
+Blog about  Java programming language, FIX Protocol, Tibco RV
+Pages
+Home
+core java
+spring
+hibernate
+collections
+multithreading
+design patterns
+interview questions
+coding
+data structure
+OOP
+books
+About Me
+10 Articles Every Programmer Must Read
+Being a Java programmer and Software developer, I have learned a lot from articles titled as What Every Programmer Should Know about ..... , they tend to give a lot of useful and in-depth information about a particular topic, which otherwise is very hard to discover. In my quest of learning I have come across some very useful articles, which I have bookmarked for reference and multiple reading. I personally think that all programmer can benefit by reading these articles, which makes me write this post and share all of these "What Every Programmer Should Know" articles with you guys. These are from my personal bookmarks. In this article, you will see classic what every programmer should know article from topics like memory, Unicode, floating point arithmetic, networking, object oriented design, time, URL Encoding, String and many more.
+This list is very important for beginner and newcomers, as they are the ones, who lacks practical knowledge. Since most of these post are actually driven by practical knowledge, beginner and intermediate programmers can take a lot from it. Also gaining knowledge of fundamentals early in career helps to avoid mistakes, which has done by other programmers and software developers on their course of learning.
+Though it’s not easy to grasp all knowledge given in these articles in just one reading. You probably won't understand some details about floating point number or get confused with subtle details of memory, but it’s important to keep these list handy and refer them time to time with a context. So Good luck and Enjoy reading these wonderful articles.  By the way, don't forget to share any What Every Programmer Should know article, if it’s not already in this list.
+What Every Programmer Should Know about Memory
+This is one of the classic article, which will take you through may lanes of memory, some old, some new, some known and some unknown. Despite being so conman and omnipresent, not every programmer have enough knowledge of Memory. Knowledge of memory in modern system becomes even more important if you are in space of writing high performance application. Hardware designers have come up with ever more sophisticated memory handling and acceleration techniques–such as CPU caches–but these cannot work optimally without some help from the programmer. I am still reading this article, and I can't tell you how much I have learned from this about RAM, CPU Caches e.g. L1 and L2 cache, different types of memory, direct memory access, memory controller designs and Memory in general. In short, a must read for programmers of all level of experience.
+What Every Computer Scientist Should Know About Floating-Point Arithmetic
+Floating point arithmetic is a tricky topic, and it’s not easy to master. Even many Java programmer doesn't know what can go wrong when comparing float/double value with == operator. Many of us often makes mistake of doing monetary calculation in float and double. This article is another gem of this series and must read for all software developers and programmers. As your experience grows, you are expected to know subtle details of common things, and floating point arithmetic is one of them. As as senior Java developer, you must know how do perform monetary calculation, when to use float, double or BigDecimal classes, how to round floating point numbers etc. Even if you know fundamentals of floating point arithmetic, You will learn something new about floating point calculation by reading this article.
+What Every Developer Should know about Unicode
+Character encoding is another area, where many programmer struggle, and "The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)" aims to fill that gap. On side note, Yes that's the full title of that article. It was written by Joel Spolsky, one of the founder of statckoverflow.com. Joel has written this post on his blog almost 10 years back, but it is still relevant in today’s world. This article will teach you about What is Unicode, What is character encoding, how characters are represented using bytes and many more. One of the best thing about this article is language and flow, even if you don't know anything about Unicode, you can easily follow. In short, one more must read for all programmers, coders and software engineers.
+What Every Programmer Should know about Time
+Apart from Character encoding, time and date is another area, where many programmers struggle, including me. Even senior developers lost between GMT, UTC, day light saving and between leap seconds. Frankly speaking, It's not easy to deal with time zones without making any mistake, then add day light savings and effect of that. Problems becomes worse if you using trial and error method, because you will never able to solve your problem by doing that. There are so many things which can go wrong and there are equal number of misconceptions. Things like, whether date contains time-zone or not can confuse you like hell, converting UNIX time to other time-zone can freak you out, forget about clock synchronization and delays. I hope many of your misconception about time will go away and you will build sound fundamental about Time, by reading this classic article.
+What every web developer must know about URL encoding
+This article describes common misconceptions about Uniform Resource Locator (URL) encoding, then attempts to clarify URL encoding for HTTP, before presenting frequent problems and their solutions. While this article is not specific to any programming language, it illustrate the problems in Java) and finish by explaining how to fix URL encoding problems in Java, and in a web application at several levels. You will learn basics of URL grammar, general URL syntax in HTTP and other protocol. This article also explores common pitfalls of URLs e.g. character encoding, reserved character at different part of URL, and URL encoding/decoding issues. If you are a Java programmer, then you will also learn about how to handle URLs in Java application, the right way. How to construct URL and using Apache commons HTTP client library. Finally it also suggest best practices or dealing with URLs e.g. you should encode URLs when you build them, making sure your URL-rewrite filters deal with your URL correctly and many more. In short, a must read article for any web developer and programmer.
+What should every programmer know about web development?
+This is an interesting article from programmers stack exchange, about what should every programmer implementing the technical details of a web application consider before making the site public. This includes things ranging from Interface design and User Experience, Security, Web standards, Performance, Search Engine Optimization(SEO), Technology involved, and about several important resources. Since today's world is hugely dependent upon internet and programmer having their personal site, blog is quite common. Experience learned on this article will not even help in your professional work but also in your personal work. You will learn about all key technology e.g. HTTP, HTML, XML, CSS, JavaScript, browsers compatibility, tips to reduce loading time of your website, XML sitemaps, W3C specifications and several other key details.
+What Every Programmer Should Know About SEO
+This is another article, which is very important for web developers, programmers and blogger. SEO is too big to ignore, since many programmers are also blogger, it’s important to learn few basics of Search Engine Optimization to help Google find their content and present to other fellow programmers. Since no company can survive without web presence in today's inter-connected world, SEO becomes even more important. If you own start-up, selling any product, then SEO is something to care about. All programmers, especially web developers can largely benefit from this article. Remember, Search Engine Optimization is vast and very dynamic subject, and also varies between different search engines e.g. Google, Yahoo, and others. So, In order to master this topic you will always need to update your knowledge.
+What Every C Programmer Should Know About Undefined Behaviour #1/3
+C programming language have the concept of "undefined behaviour". Undefined behaviour is a broad topic with a lot of nuances and that's one reason of Why I like Java, less number of undefined behaviour, less confusion, more stability and more peace. Many seemingly reasonable things in C actually have undefined behaviour, and this is a common source of bugs in programs. Beyond that, any undefined behaviour in C gives license to the implementation (the compiler and runtime) to produce code that formats your hard drive, does completely unexpected things, or worse. Read this excellent article to deep dive on sea of undefined behaviour
+What Every Programmer Need to know about networking
+From the article itself "You’re a programmer. Have you ever wondered how multi-player games work? From the outside it seems magical: two or more players sharing a consistent experience across the network like they actually exist together in the same virtual world. But as programmers we know the truth of what is actually going on underneath is quite different from what you see. It turns out that it’s all an illusion." This is very interesting article about networking, written for game programmers but I think every programmer and developer can benefit from this.
+What Every Java Developer Should Know about String
+This is my article on java.lang.String and what I personally thing every Java programmer should know about it. String is very important in day to day programming in Java and that's why good knowledge is must for any Java developer. This article touches many important areas of String including string pool, string literal, comparing String using == vs equals(), converting bytes to String, Why String is immutable, properly concatenating Strings and many more. Advanced programmer may already know all these stuffs but even then it’s good to revise them.
+What should every programmer know about security?
+This question was ask by one computer programming student in StackOverFlow. Just like we learn a lot about general programming concepts e.g. operating system, algorithm, data-structure, computer architecture, and other stuff, its also important to know about security. Though Security is vast topic ranging from encryption/decryption, SSL, web security, obfuscation, authentication, authorization etc, a basic minimum knowledge is must for every programmer. I personally didn't know much about Security when I started my career, its when I start writing Servlet/JSP based Java web application, I come to know about web security and several security threats like SQL Injection, Denial of Service, XML Injection, Cross site scripting and others. As Java developer, now I follow secure Java coding practices provided by fortify, PMP and other static code analysis providers.  This article is very good collection of topics and links about Security and whether you are doing coding or not, you will surely benefit from this resource.
+Latency Numbers Every Programmer Should Know
+This is the bonus article, but must read for every Programmer. In order to write high performance application in any programming language e.g. Java or C++, you ought to know fundamental latency numbers e.g. how much time it take to read a variable from memory, from L1 Cache, from L2 cache, from random read in SSD and from disk. How much time it take to lock unlock on mutex, to send a data packet from one city to another or doing a roundtrip on same data centre. These latency numbers are independent of any programming language and part of core knowledge, a developer must have to write high frequency low latency applications. Good thing about this link is that it also provides you comparative analysis of how these latency numbers have evolved over the years. You can see what these latency numbers were in 2006 and what they are now.
+That's all in this list of article every Programmer must read. By reading articles titles as What Every Programmer or Developer Should know, you gain in-depth knowledge of a particular topic. Frankly speaking there are too many things to learn for programmers, learning a programming language like Java is just a tip of iceberg, but isn't it many of us have passion for learning. Programming is a challenging job, and only things which help you all along your career is fundamental knowledge e.g. things about Memory, Unicode, floating point numbers, time, security is very important for any programmer. Few things are programming language specific e.g. my post about Java String and What every C programmer should know about undefined behaviour, but they are still good to learn for many beginner and developers.
+Posted by
+Javin Paul
+Email This
+BlogThis!
+Share to Twitter
+Share to Facebook
+Labels:
+coding
+                              ,
+                            
+general
+                              ,
+                            
+programming
+12 comments
+                      :
+                    
+Lukas Eder
+said...
+"Personal bookmarks"? More like googling for "What Every Programmer Should Know" and taking the first 10 pages...
+May 13, 2014 at 10:32 AM
+KidCrippler
+said...
+The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets (No Excuses!)http://www.joelonsoftware.com/articles/Unicode.html
+May 14, 2014 at 12:51 AM
+Thomas
+said...
+Avoid Joel Spolsky's Unicode article - it's flawed and errored on a few technical points.
+May 14, 2014 at 10:07 AM
+Anonymous
+said...
+URL encoding?  Web development?  SEO?  java.lang.String?  Erp!10 Articles Every Programmer Must Read, where "Every" := "Every Java web developer".
+May 14, 2014 at 10:48 AM
+dnorton
+said...
+The very first link, "What Every Programmer Should Know about Memory", is to a 114 page PDF. I think we're being very loose with the definition of "article." I would call that a book.
+May 14, 2014 at 11:19 AM
+raptaml
+said...
+Wonderful piece of knowledge! Thank you! I would consider adding https://www.crypto101.ioas it is contains incredible amounts of essential knowledge about crypto, their implementation and underlying mechanics and mathematical principles. Great reading!
+May 14, 2014 at 12:09 PM
+Anonymous
+said...
+I am completely amazed that nobody mentioned what every programmer should know about data modeling.  I've been a programmer for many years, and the quality of the data models I have seen has been horrific.
+May 15, 2014 at 5:28 AM
+Anonymous
+said...
+In my experience in the real time embedded computing world, every programmer has to know about endianness ... and DOESN'T. Can't tell you how much time and money has been wasted because of this one simple subject. How about adding an article about endianness?
+May 15, 2014 at 6:13 AM
+Anonymous
+said...
+Typo in "This is my article on java.lang.String and what I personally thing every Java programmer should know about it." Thing should be think, I think.
+May 15, 2014 at 7:38 AM
+Michael Lueck
+said...
+I would add to this list a classic article by Nicholas Petreley titled "Programming for passion -- not profit -- produces high-quality software". The article I scanned from the original printed version in InfoWorld and is at the following link: http://www.lfsf.org/pub/quotes/nicholas_petreley-programming_for_passion.jpg
+May 16, 2014 at 8:37 AM
+Anonymous
+said...
+Beyond articles, every programmer should read three books: "Dreaming in Code", "Peopleware", and "The Mythical Man Month". If I could enforce just this one thing...just three books...the quality of communication between programmers would improve dramatically
+February 4, 2015 at 4:36 AM
+Shramik Tangadkar
+said...
+link not open -> What every web developer must know about URL encoding
+February 8, 2016 at 10:03 AM
+Post a Comment
+Newer Post
+Older Post
+Home
+Subscribe to:
+Post Comments
+                      (
+                      Atom
+                      )
+                    
+Interview Questions
+core java interview question
+(161)
+data structure and algorithm
+(45)
+Coding Interview Question
+(32)
+SQL Interview Questions
+(24)
+thread interview questions
+(20)
+database interview questions
+(18)
+servlet interview questions
+(17)
+collections interview questions
+(15)
+spring interview questions
+(9)
+Programming interview question
+(4)
+hibernate interview questions
+(4)
+Translate this blog
+Java Tutorials
+date and time tutorial
+(17)
+FIX protocol tutorial
+(16)
+java collection tutorial
+(52)
+java IO tutorial
+(25)
+Java JSON tutorial
+(6)
+Java multithreading Tutorials
+(33)
+Java Programming Tutorials
+(27)
+Java xml tutorial
+(9)
+Search This Blog
+Follow by Email
+Followers
+Blog Archive
+                            ► 
+                          
+2017
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+2016
+                          (
+                          166
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          2
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          24
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+2015
+                          (
+                          126
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                          ▼ 
+                        
+2014
+                          (
+                          101
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          8
+                          )
+                        
+                          ▼ 
+                        
+May
+                          (
+                          11
+                          )
+                        
+jQuery Class and ID Selector Example Tutorial
+Law of Demeter in Java - Principle of least Knowle...
+Double Checked Locking on Singleton Class in Java
+Why use SerialVersionUID inside Serializable class...
+Exception in thread "main" java.lang.ArrayIndexOut...
+How to Find Prime Factors of Integer Numbers in Ja...
+10 Articles Every Programmer Must Read
+tibrvnative.dll : Can't load IA 32-bit .dll on a A...
+Open source Java Libraries to Create PDF documents...
+How String in Switch works in Java 7
+Top 5 Cloud Service Providers and Companies, Java ...
+                            ► 
+                          
+April
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+2013
+                          (
+                          127
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+2012
+                          (
+                          214
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          51
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          28
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          34
+                          )
+                        
+                            ► 
+                          
+2011
+                          (
+                          135
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          27
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+2010
+                          (
+                          30
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          26
+                          )
+                        
+Pages
+Privacy Policy
+Copyright by Javin Paul 2010-2016. Powered by Blogger.
+ 

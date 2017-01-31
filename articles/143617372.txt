@@ -1,0 +1,866 @@
+
+How to Parse or Read XML File in Java  >> XML Tutorial Example
+Javarevisited
+Blog about  Java programming language, FIX Protocol, Tibco RV
+Pages
+Home
+core java
+spring
+hibernate
+collections
+multithreading
+design patterns
+interview questions
+coding
+data structure
+OOP
+books
+About Me
+How to Parse or Read XML File in Java  >> XML Tutorial Example
+How to parse xml file in Java or how to read xml file in java is one of common need of a Java Developer working with enterprise Java application which uses XML for data representation, messaging and data transfer. Java has good support to handle XML files and XML Documents and you can read XML File in Java, create or write to XML file in Java by using various XML parsers available. Reading XML file is little bit different than reading text or binary file in Java but it uses same concept of File class.
+Universal acceptability of XML and Java has helped them to grow together and they have lot of things common in between just like Java is platform independence, XML provides data which is also platform independent. You can use XML to transfer data between a legacy application written in C or C++ and Java.
+What is important to work with XML in Java is correct understanding of XML Parser, Basic knowledge of XML document etc. In this Java XML Tutorial we will see how to parse and XML File by using both DOM  XML Parser. We will also see difference between DOM and SAX parser in XML and other basics related to XML parsing in Java. I thought about this article after sharing my xpath notes in Java.
+How to read XML File in Java
+JAXP - Java API for XML Parsing
+Java provides extensive support for reading XML file, writing XML file and accessing any element from
+XML file. All XML parsing related classes and methods are inside JAXP. Though DOM related code comes from org.w3c.dom package. All XML parsers are in javax.xml.parsers package.we will see example of parsing xml files using JAXP API in next section.
+Parse XML File in Java using DOM Parser
+In this section we will see how to parse xml files or how to read xml file using DOM XML Parser.DOM is quick and easy way to parse xml files in Java and if you are doing it for testing its way to go. Only thing to concern is that XML files which need to be parsed must not be too large. You can also create xml file by using DOM parser and DocumentFactory Class in Java.
+XML file for parsing in Java
+Here is xml file Stocks.xml which contains some stocks and there price, quantity we will use this in our xml parsing example in Java.
+<?xml version="1.0" encoding="UTF-8"?>
+<stocks>
+       <stock>
+              <symbol>Citibank</symbol>
+              <price>100</price>
+              <quantity>1000</quantity>
+       </stock>
+       <stock>
+              <symbol>Axis bank</symbol>
+              <price>90</price>
+              <quantity>2000</quantity>
+       </stock>
+</stocks>
+Code Example of Parsing XML File in Java using DOM Parser
+Here is a code example of parsing above xml file in Java using DOM parser:
+import java.io.File;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+public class DOMExampleJava {
+public static void main(String args[]) {
+try {
+File stocks = new File("Stocks.xml");
+DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+Document doc = dBuilder.parse(stocks);
+doc.getDocumentElement().normalize();
+System.out.println("root of xml file" + doc.getDocumentElement().getNodeName());
+NodeList nodes = doc.getElementsByTagName("stock");
+System.out.println("==========================");
+for (int i = 0; i < nodes.getLength(); i++) {
+Node node = nodes.item(i);
+if (node.getNodeType() == Node.ELEMENT_NODE) {
+Element element = (Element) node;
+System.out.println("Stock Symbol: " + getValue("symbol", element));
+System.out.println("Stock Price: " + getValue("price", element));
+System.out.println("Stock Quantity: " + getValue("quantity", element));
+}
+}
+} catch (Exception ex) {
+ex.printStackTrace();
+}
+}
+private static String getValue(String tag, Element element) {
+NodeList nodes = element.getElementsByTagName(tag).item(0).getChildNodes();
+Node node = (Node) nodes.item(0);
+return node.getNodeValue();
+}
+}
+Output:
+root of xml file stocks
+==========================
+Stock Symbol: Citibank
+Stock Price: 100
+Stock Quantity: 1000
+Stock Symbol: Axis bank
+Stock Price: 90
+Stock Quantity: 2000
+That’s all on xml parsing in java for now. We have seen how to read and write xml file in Java and now familiar with both DOM and SAX Parser in java. We will see more on xml on coming days like reading xml elements via xpath and using xml beans etc. let me know if you have any doubt on xml parsing example or in general with xml and Java.
+Related Java Tutorials
+How to create File and Directory in Java
+Static Method and Static Variable in Java
+How to use Iterator in Java
+How to override HashCode method in Java
+How to create Thread in Java 
+How to Stop Thread in Java
+Posted by
+Javin Paul
+Email This
+BlogThis!
+Share to Twitter
+Share to Facebook
+Labels:
+core java
+                              ,
+                            
+xml
+Location:
+United States
+21 comments
+                      :
+                    
+Anonymous
+said...
+Hi,I really liked your post, can you please cover something about JAXB, XStream, Jibx also, it will be very useful
+December 28, 2011 at 7:09 PM
+Javin @ polymorphism in java
+said...
+Thanks Anonymous, I would definitely try to cover more about JAXB, Xstream, Xerces etc.
+December 29, 2011 at 4:13 AM
+daticon
+said...
+Tried a bunch of .java files for parsing my XML file. This was the only one that worked, and it was the shortest as well. Thanks!
+January 26, 2012 at 5:18 AM
+Anonymous
+said...
+Thnks Man :)This is very helpful THANK U VERY MUCHI have a request can u plz write article on "web services" that will b a great help again thanks man
+February 24, 2012 at 2:20 AM
+Javin @ loop java hashmap
+said...
+@Anonymous, Thanks glad to hear that your like this Java XML tutorial on reading XML files. Sure, I will definitely try to write article on web services. by the way I have shared some web services Interview question on REST, you may find useful: REST and SOAP web service Interview Questions Answers
+February 24, 2012 at 7:19 AM
+Sudhakar
+said...
+I was looking for a Simple Java program to read XML file which should be capable to read real world practical xml file, validate xml files against provided XSD or DTD etc. I can still use your Java program for first part just reading xml files but I am not sure how to validate XML files against XSD or DTD. Can you please help.
+April 18, 2012 at 7:58 PM
+Ravi
+said...
+You can also use XML beans to read from XML File. xml beans are much simpler and provide more control. you just need an XSD file (XML Schema file), compile that schema and XML Bean compiler will generate classes which can than be used to read any content, element from XML file, update elements in XML and remove stuff from XML documents.
+May 23, 2012 at 12:03 AM
+Anonymous
+said...
+check out vtd-xml its a relatively new technology of parsing xml files and much faster than conventional DOM and SAX parser.
+May 30, 2012 at 2:17 AM
+Anonymous
+said...
+you can also use JDOM parser for parsing xml files, its much better than DOM and SAX parsers.
+June 19, 2012 at 2:55 AM
+Anonymous
+said...
+thank you this very helpful for me,but can you tell me about FACTORY CLASS and SaxParserFactory class in java?
+November 15, 2012 at 6:01 AM
+Erieze
+said...
+This helps a lot! Thank! :)By the way, is there a way to write data into XML file using Java as PL?
+December 27, 2012 at 6:02 AM
+Javin Paul
+said...
+@Erieze, You can also modify or write data into XML using DOM or SAX parser, better way is to use XML Binding to Java objects for modifying XML documents form Java programming language. Open source library XML Beans or JAXB can be used to bind XML document to Java objects.
+December 27, 2012 at 6:56 AM
+Mani
+said...
+hi i am new to java, and using this in android,No such file or directory error comming. Please let me know where to save stocks.xml
+January 31, 2013 at 12:14 AM
+Anonymous
+said...
+it is working fine in notepad+ but when i try to use the above 2 program in eclipse it is giving me an error. i have placed .xml file under the src folder and .java file under the package which is under the src folder again
+March 28, 2013 at 3:30 AM
+Javin @ xml interview questions
+said...
+@Anonymous, What error are you getting? Can you please post it here, must be related to classpath. I suggest try putting .xml file under project directory, just one level above src folder.
+March 28, 2013 at 6:57 PM
+Anonymous
+said...
+How do i put the xml file above the src folder?
+July 19, 2013 at 4:19 AM
+Deepak Jindal
+said...
+Sir am wrking in jsp make xml file and after that i update node in xml file then it come on jsp page but chages reflect on jsp page after some time why?
+September 9, 2013 at 10:04 AM
+Naveen Janardhan Sindhe
+said...
+Use this to save ur xml file : File stocks = new File("d:/stocks.xml");
+October 28, 2013 at 10:27 PM
+Anonymous
+said...
+If you have a node empty, for example:  don't run.Fix:private static String getValue(String tag, Element element) {    NodeList nodes = element.getElementsByTagName(tag).item(0).getChildNodes();    if (nodes.getLength()==0) {        return "";    }    else {        Node node = (Node) nodes.item(0);        return node.getNodeValue();    }}
+November 9, 2014 at 4:11 AM
+Gurumoorthy
+said...
+I am getting Red Lines DocumentBuilder db = factory.newDocumentBuilder();can u help
+November 23, 2015 at 7:00 PM
+Tawfeeq Jamal
+said...
+hi, how would i get the inner text of this xml document "634.012.02670.03/31/2016 12:00:00 AM8/31/2018 12:00:00 AM1350.000"your assistance would be highly appreciated
+February 11, 2016 at 3:11 AM
+Post a Comment
+Newer Post
+Older Post
+Home
+Subscribe to:
+Post Comments
+                      (
+                      Atom
+                      )
+                    
+Interview Questions
+core java interview question
+(161)
+data structure and algorithm
+(45)
+Coding Interview Question
+(32)
+SQL Interview Questions
+(24)
+thread interview questions
+(20)
+database interview questions
+(18)
+servlet interview questions
+(17)
+collections interview questions
+(15)
+spring interview questions
+(9)
+Programming interview question
+(4)
+hibernate interview questions
+(4)
+Translate this blog
+Java Tutorials
+date and time tutorial
+(17)
+FIX protocol tutorial
+(16)
+java collection tutorial
+(52)
+java IO tutorial
+(25)
+Java JSON tutorial
+(6)
+Java multithreading Tutorials
+(33)
+Java Programming Tutorials
+(27)
+Java xml tutorial
+(9)
+Search This Blog
+Follow by Email
+Followers
+Blog Archive
+                            ► 
+                          
+2017
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+2016
+                          (
+                          166
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          2
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          24
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+2015
+                          (
+                          126
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+2014
+                          (
+                          101
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+2013
+                          (
+                          127
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+2012
+                          (
+                          214
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          51
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          28
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          34
+                          )
+                        
+                          ▼ 
+                        
+2011
+                          (
+                          135
+                          )
+                        
+                          ▼ 
+                        
+December
+                          (
+                          27
+                          )
+                        
+Step By Step guide to Read XML file in Java Using ...
+java.lang.UnsupportedClassVersionError: Bad versio...
+Difference between DOM and SAX Parsers in Java
+How to read and write Images in java using ImageIO...
+How to Convert a Map to a List in Java Example
+4 example to Iterate over HashMap, Hashtable or an...
+What is final in Java? Final variable , Method and...
+Difference between JRE JVM and JDK in Java Program...
+How to Parse or Read XML File in Java  >> XML Tuto...
+Checked vs Unchecked Exception in Java Example
+Observer design Pattern in Java with Real world co...
+How to change Tomcat default port 8080
+Difference between Method Overloading and Overridi...
+Java.net.BindException: Address already in use: JV...
+Why main method is public static in Java
+What is load-on-startup servlet element in web.xml...
+Is Apple IPhone4S Siri going to replace the Google...
+5 Example of kill command in UNIX and Linux
+Java TreeMap Tutorial: 10 Example of TreeMap in Ja...
+How to parse String to Enum in Java | Convert Enum...
+Top 5 FIX Protocol Data Dictionaries and Online FI...
+How to read and write in text file in Java
+How to deal with Java.rmi.MarshalException: CORBA ...
+Matt Cutt Revealing Google's Latest Algorithmic Ch...
+How to Create File and Directory in Java Example -...
+Java String Replace Example Tutorial
+What is Factory method Design Pattern in Java with...
+                            ► 
+                          
+November
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+2010
+                          (
+                          30
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          26
+                          )
+                        
+Pages
+Privacy Policy
+Copyright by Javin Paul 2010-2016. Powered by Blogger.
+ 

@@ -1,0 +1,418 @@
+
+              
+          Five Popular Myths about C++, Part 3 :
+        
+            Standard C++
+    
+Show sidebar »
+Sign In / Suggest an Article
+Register
+Get Started!
+Tour
+C++ Super-FAQ
+Blog
+Forums
+Standardization
+About
+Features
+	 
+Working Draft of the next standard
+	 
+Current ISO C++ status
+	 
+Upcoming ISO C++ meetings
+	 
+Compiler conformance status
+        Categories
+      
+News
+Product News
+Articles & Books
+Video & On-Demand
+Events
+Training
+Standardization
+Tags
+basics
+intermediate
+advanced
+experimental
+        Subscribe
+      
+All Posts
+All Comments
+News
+Product News
+Articles & Books
+Video & On-Demand
+Events
+Training
+Standardization
+        Archives
+      
+January 2017
+December 2016
+November 2016
+October 2016
+September 2016
+August 2016
+July 2016
+June 2016
+May 2016
+April 2016
+March 2016
+February 2016
+Upcoming Events
+emBO++
+	Feb 18, Bochum, Germany
+	 
+C++ Russia 2017
+	Feb 24-25, Moscow, Russia
+	 
+Spring ISO C++ standards meeting (agenda)
+	Feb 27 - Mar 4, Kona, HI, USA
+	 
+ACCU 2017
+	Apr 26-29, Bristol, UK
+	 
+C++Now 2017
+	May 15–20, Aspen, CO, USA
+Tweets by @isocpp 
+Home » 
+        Blog » 
+        2014 » 
+        December » 
+        Five Popular Myths about C++, Part 3
+      
+« Prev
+Next »
+Five Popular Myths about C++, Part 3
+By Bjarne Stroustrup | 
+        Dec 22, 2014 09:50 AM 
+         | 
+        Tags: None 
+Save to:
+Instapaper
+Pocket
+Readability
+[For your winter reading pleasure, we're pleased to present this three-part series of new material by Bjarne Stroustrup. Part one is here, part two is here. Today we complete the series just in time for the holidays. Enjoy. -- Ed.]
+	 
+	Five Popular Myths about C++ (Part 3)
+	by Bjarne Stroustrup
+	Morgan Stanley, Columbia University, Texas A&M University
+	 
+	1. Introduction (repeated from Part 1)
+	In this three-part series, I will explore, and debunk, five popular myths about C++:
+		"To understand C++, you must first learn C"
+		"C++ is an Object-Oriented Language"
+		"For reliable software, you need Garbage Collection"
+		"For efficiency, you must write low-level code"
+		"C++ is for large, complicated, programs only"
+	If you believe in any of these myths, or have colleagues who perpetuate them, this short article is for you. Several of these myths have been true for someone, for some task, at some time. However, with today’s C++, using widely available up-to date ISO C++ 2011 compilers, and tools, they are mere myths.
+	I deem these myths “popular” because I hear them often. Occasionally, they are supported by reasons, but more often they are simply stated as obvious, needing no support. Sometimes, they are used to dismiss C++ from consideration for some use.
+	Each myth requires a long paper or even a book to completely debunk, but my aim here is simply to raise the issues and to briefly state my reasons.
+	The first three myths were addressed in my first two installments.
+	5. Myth 4: "For efficiency, you must write low-level code"
+	Many people seem to believe that efficient code must be low level. Some even seem to believe that low-level code is inherently efficient (“If it’s that ugly, it must be fast! Someone must have spent a lot of time and ingenuity to write that!”). You can, of course, write efficient code using low-level facilities only, and some code has to be low-level to deal directly with machine resources. However, do measure to see if your efforts were worthwhile; modern C++ compilers are very effective and modern machine architectures are very tricky. If needed, such low-level code is typically best hidden behind an interface designed to allow more convenient use. Often, hiding the low level code behind a higher-level interface also enables better optimizations (e.g., by insulating the low-level code from “insane” uses). Where efficiency matters, first try to achieve it by expressing the desired solution at a high level, don’t dash for bits and pointers.
+	5.1 C’s qsort()
+	Consider a simple example. If you want to sort a set of floating-point numbers in decreasing order, you could write a piece of code to do so. However, unless you have extreme requirements (e.g., have more numbers than would fit in memory), doing so would be most naïve. For decades, we have had library sort algorithms with acceptable performance characteristics. My least favorite is the ISO standard C library qsort():
+int greater(const void* p, const void* q)  // three-way compare
+{
+  double x = *(double*)p;  // get the double value stored at the address p
+  double y = *(double*)q;
+  if (x>y) return 1;
+  if (x<y) return -1;
+  return 0;
+}
+void do_my_sort(double* p, unsigned int n)
+{
+  qsort(p,n,sizeof(*p),greater);
+}
+int main()
+{
+  double a[500000];
+  // ... fill a ...
+  do_my_sort(a,sizeof(a)/sizeof(*a));  // pass pointer and number of elements
+  // ...
+}
+	If you are not a C programmer or if you have not used qsort recently, this may require some explanation; qsort takes four arguments
+		A pointer to a sequence of bytes
+		The number of elements
+		The size of an element stored in those bytes
+		A function comparing two elements passed as pointers to their first bytes
+	Note that this interface throws away information. We are not really sorting bytes. We are sorting doubles, but qsort doesn’t know that so that we have to supply information about how to compare doubles and the number of bytes used to hold a double. Of course, the compiler already knows such information perfectly well. However, qsort’s low-level interface prevents the compiler from taking advantage of type information. Having to state simple information explicitly is also an opportunity for errors. Did I swap qsort()’s two integer arguments? If I did, the compiler wouldn’t notice. Did my compare() follow the conventions for a C three-way compare?
+	If you look at an industrial strength implementation of qsort (please do), you will notice that it works hard to compensate for the lack of information. For example, swapping elements expressed as a number of bytes takes work to do as efficiently as a swap of a pair of doubles. The expensive indirect calls to the comparison function can only be eliminated if the compiler does constant propagation for pointers to functions.
+	5.2 C++’s sort()
+	Compare qsort() to its C++ equivalent, sort():
+void do_my_sort(vector<double>& v)
+{
+  sort(v,[](double x, double y) { return x>y; });  // sort v in decreasing order
+}
+int main()
+{
+  vector<double> vd;
+  // ... fill vd ...
+  do_my_sort(v);
+  // ...
+}
+	Less explanation is needed here. A vector knows its size, so we don’t have to explicitly pass the number of elements. We never “lose” the type of elements, so we don’t have to deal with element sizes. By default, sort() sorts in increasing order, so I have to specify the comparison criteria, just as I did for qsort(). Here, I passed it as a lambda expression comparing two doubles using >. As it happens, that lambda is trivially inlined by all C++ compilers I know of, so the comparison really becomes just a greater-than machine operation; there is no (inefficient) indirect function call.
+	I used a container version of sort() to avoid being explicit about the iterators. That is, to avoid having to write:
+std::sort(v.begin(),v.end(),[](double x, double y) { return x>y; });
+	I could go further and use a C++14 comparison object:
+sort(v,greater<>()); // sort v in decreasing order
+	Which version is faster? You can compile the qsort version as C or C++ without any performance difference, so this is really a comparison of programming styles, rather than of languages. The library implementations seem always to use the same algorithm for sort and qsort, so it is a comparison of programming styles, rather than of different algorithms. Different compilers and library implementations give different results, of course, but for each implementation we have a reasonable reflection of the effects of different levels of abstraction.
+	I recently ran the examples and found the sort() version 2.5 times  faster than the qsort() version. Your mileage will vary from compiler to compiler and from machine to machine, but I have never seen qsort beat sort. I have seen sort run 10 times faster than qsort. How come? The C++ standard-library sort is clearly at a higher level than qsort as well as more general and flexible. It is type safe and parameterized over the storage type, element type, and sorting criteria. There isn’t a pointer, cast, size, or a byte in sight. The C++ standard library STL, of which sort is a part, tries very hard not to throw away information. This makes for excellent inlining and good optimizations.
+	Generality and high-level code can beat low-level code. It doesn’t always, of course, but the sort/qsort comparison is not an isolated example. Always start out with a higher-level, precise, and type safe version of the solution. Optimize (only) if needed.
+	6. Myth 5: "C++ is for large, complicated, programs only"
+	C++ is a big language. The size of its definition is very similar to those of C# and Java. But that does not imply that you have to know every detail to use it or use every feature directly in every program. Consider an example using only foundational components from the standard library:
+set<string> get_addresses(istream& is)
+{
+  set<string> addr;
+  regex pat { R"((\w+([.-]\w+)*)@(\w+([.-]\w+)*))"}; // email address pattern
+  smatch m;
+  for (string s; getline(is,s); )                    // read a line
+    if (regex_search(s, m, pat))                     // look for the pattern
+      addr.insert(m[0]);                             // save address in set
+  return addr;
+}
+	I assume you know regular expressions. If not, now may be a good time to read up on them. Note that I rely on move semantics to simply and efficiently return a potentially large set of strings. All standard-library containers provide move constructors, so there is no need to mess around with new.
+	For this to work, I need to include the appropriate standard library components:
+#include<string>
+#include<set>
+#include<iostream>
+#include<sstream>
+#include<regex>
+using namespace std;
+	Let’s test it:
+istringstream test {  // a stream initialized to a sting containing some addresses
+  "asasasa\n"
+  "bs@foo.com\n"
+  "ms@foo.bar.com$aaa\n"
+  "ms@foo.bar.com aaa\n"
+  "asdf bs.ms@x\n"
+  "$$bs.ms@x$$goo\n"
+  "cft foo-bar.ff@ss-tt.vv@yy asas"
+  "qwert\n"
+};
+int main()
+{
+  auto addr = get_addresses(test);  // get the email addresses
+  for (auto& s : addr)              // write out the addresses
+    cout << s << '\n';
+}
+	This is just an example. It is easy to modify get_addresses() to take the regex pattern as an argument, so that it could find URLs or whatever. It is easy to modify get_addresses() to recognize more than one occurrence of a pattern in a line. After all, C++ is designed for flexibility and generality, but not every program has to be a complete library or application framework. However, the point here is that the task of extracting email addresses from a stream is simply expressed and easily tested.
+	6.1 Libraries
+	In any language, writing a program using only the built-in language features (such as if, for, and +) is quite tedious. Conversely, given suitable libraries (such as graphics, route planning, and database) just about any task can be accomplished with a reasonable amount of effort.
+	The ISO C++ standard library is relatively small (compared to commercial libraries), but there are plenty of open-source and commercial libraries “out there.” For example, using (open source or proprietary) libraries, such as Boost [3], POCO [2], AMP [4], TBB [5], Cinder [6], vxWidgets [7], and CGAL [8], many common and more-specialized tasks become simple. As an example, let’s modify the program above to read URLs from a web page. First, we generalize get_addresses() to find any string that matches a pattern:
+set<string> get_strings(istream& is, regex pat)
+{
+  set<string> res;
+  smatch m;
+  for (string s; getline(is,s); )  // read a line
+  if (regex_search(s, m, pat))
+    res.insert(m[0]);              // save match in set
+  return res;
+}
+	That is just a simplification. Next, we have to figure out how to go out onto the Web to read a file. Boost has a library, asio, for communicating over the Web:
+#include “boost/asio.hpp” // get boost.asio
+	Talking to a web server is a bit involved:
+int main()
+try {
+  string server = "www.stroustrup.com";
+  boost::asio::ip::tcp::iostream s {server,"http"};  // make a connection
+  connect_to_file(s,server,"C++.html");    // check and open file
+  regex pat {R"((http://)?www([./#\+-]\w*)+)"}; // URL
+  for (auto x : get_strings(s,pat))    // look for URLs
+    cout << x << '\n';
+}
+catch (std::exception& e) {
+  std::cout << "Exception: " << e.what() << "\n";
+  return 1;
+}
+	Looking in www.stroustrup.com’s file C++.html, this gave:
+http://www-h.eng.cam.ac.uk/help/tpl/languages/C++.html
+http://www.accu.org
+http://www.artima.co/cppsource
+http://www.boost.org
+...
+	I used a set, so the URLs are printed in lexicographical order.
+	I sneakily, but not altogether unrealistically, “hid” the checking and HTTP connection management in a function (connect_to_file()):
+void connect_to_file(iostream& s, const string& server, const string& file)
+  // open a connection to server and open an attach file to s
+  // skip headers
+{
+  if (!s)
+    throw runtime_error{"can't connect\n"};
+  // Request to read the file from the server:
+  s << "GET " << "http://"+server+"/"+file << " HTTP/1.0\r\n";
+  s << "Host: " << server << "\r\n";
+  s << "Accept: */*\r\n";
+  s << "Connection: close\r\n\r\n";
+  // Check that the response is OK:
+  string http_version;
+  unsigned int status_code;
+  s >> http_version >> status_code;
+  string status_message;
+  getline(s,status_message);
+  if (!s || http_version.substr(0, 5) != "HTTP/")
+    throw runtime_error{ "Invalid response\n" };
+  if (status_code!=200)
+    throw runtime_error{ "Response returned with status code" };
+  // Discard the response headers, which are terminated by a blank line:
+  string header;
+  while (getline(s,header) && header!="\r")
+    ;
+}
+	As is most common, I did not start from scratch. The HTTP connection management was mostly copied from Christopher Kohlhoff’s asio documentation [9].
+	6.2 Hello, World!
+	C++ is a compiled language designed with the primary aim of delivering good, maintainable code where performance and reliability matters (e.g., infrastructure [10]). It is not meant to directly compete with interpreted or minimally-compiled “scripting” languages for really tiny programs. Indeed, such languages (e.g. JavaScript) – and others (e.g., Java) – are often implemented in C++. However, there are many useful C++ programs that are just a few dozen or a few hundred lines long.
+	The C++ library writers could help here. Instead of (just) focusing on the clever and advanced parts of a library, provide easy-to-try “Hello, World” examples. Have a trivial-to-install minimal version of the library and have a max-one-page “Hello, World!” example of what the library can do. We are all novices at some time or other. Incidentally, my version of “Hello, World!” for C++ is:
+#include<iostream>
+int main()
+{
+  std::cout << "Hello, World\n";
+}
+	I find longer and more complicated versions less than amusing when used to illustrate ISO C++ and its standard library.
+	7. The Many Uses of Myths
+	Myths sometimes have a basis in reality. For each of these myths there have been times and situations where someone could reasonably believe them based on evidence. For today, I consider them flat-out wrong, simple misunderstandings, however honestly acquired. One problem is that myths always serve a purpose – or they would have died out. These five myths have served and serve in a variety of roles:
+		They can offer comfort: No change is needed; no reevaluation of assumptions is needed. What is familiar feels good. Change can be unsettling, so it would be nice if the new was not viable.
+		They can save time getting started with a new project: If you (think you) know what C++ is, you don’t have to spend time learning something new. You don’t have to experiment with new techniques. You don’t have to measure for potential performance snags. You don’t have to train new programmers.
+		They can save you from having to learn C++: If those myths were true, why on earth would you want to spend time learning C++?
+		They can help promote alternative languages and techniques: If those myths were true, alternatives are obviously necessary.
+	But these myths are not true, so intellectually honest promotion of status quo, alternatives to C++, or avoidance of modern C++ programming styles cannot rely on them. Cruising along with an older view of C++ (with familiar language subsets and techniques) may be comfortable, but the state of software is such that change is necessary. We can do much better than with C, “C with Classes”, C++98, etc.
+	Sticking to the old-and-true is not cost free. Maintenance cost is often higher than for more modern code. Older compilers and tool chains deliver less performance and worse analysis than modern tools relying on more structured modern code. Good programmers often choose not to work on “antique” code.
+	Modern C++ (C++11, C++14) and the programming techniques it supports are different and far better than “common, popular myths” would indicate.
+	If you believe one of these myths, don’t just take my word for it being false. Try it. Test it. Measure “the old way” and the alternatives for some problem you care about. Try to get a real hold on the time needed to learn the new facilities and techniques, the time to write code the new way, the runtime of the modern code. Don’t forget to compare the likely maintenance cost to the cost of sticking with “the old way.” The only perfect debunking of a myth is to present evidence. Here, I have presented only examples and arguments.
+	And no, this is not an argument that C++ is perfect. C++ is not perfect; it is not the best language for everything and for everybody. Neither is any other language. Take C++ for what it is, rather than what it was 20 years ago or what someone promoting an alternative claims it to be. To make a rational choice, get some solid information and -- as far as time allows -- try for yourself to see how current C++ works for the kind of problems you face.
+	8. Summary
+	Don’t believe “common knowledge” about C++ or its use without evidence. This article takes on five frequently expressed opinions about C++ and argues that they are “mere myths:”
+		"To understand C++, you must first learn C"
+		"C++ is an Object-Oriented Language"
+		"For reliable software, you need Garbage Collection"
+		"For efficiency, you must write low-level code"
+		"C++ is for large, complicated, programs only"
+	They do harm.
+	9. Feedback
+	Not convinced? Tell me why. What other myths have you encountered? Why are they myths rather than valid experiences? What evidence do you have that might debunk a myth?
+	10. References
+	1. ISO/IEC 14882:2011 Programming Language C++
+	2. POCO libraries: http://pocoproject.org/
+	3. Boost libraries: http://www.boost.org/
+	4. AMP: C++ Accelerated Massive Parallelism. http://msdn.microsoft.com/en-us/library/hh265137.aspx
+	5. TBB: Intel Threading Building Blocks. www.threadingbuildingblocks.org/
+	6. Cinder: A library for professional-quality creative coding. http://libcinder.org/
+	7. vxWidgets: A Cross-Platform GUI Library. www.wxwidgets.org
+	8. Cgal - Computational Geometry Algorithms Library. www.cgal.org
+	9. Christopher Kohlhoff : Boost.Asio documentation. http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio.html
+	10. B. Stroustrup: Software Development for Infrastructure. Computer, vol. 45, no. 1, pp. 47-58, Jan. 2012, doi:10.1109/MC.2011.353.
+	11. Bjarne Stroustrup: The C++ Programming Language (4th Edition). Addison-Wesley. ISBN 978-0321563842. May 2013.
+	12. Bjarne Stroustrup: A Tour of C++. Addison Wesley. ISBN 978-0321958310. September 2013.
+	13. B. Stroustrup: Programming: Principles and Practice using C++ (2nd edition). Addison-Wesley. ISBN 978-0321992789. May 2014.
+Share this Article
+Add a Comment
+You must sign in or register to add a comment.
+Comments (8)
+0
+0
+Rada Florin
+ 
+            said on Dec 23, 2014 12:37 AM:
+              
+                Hello,
+Great article series.
+There is a small typo in the first block of code at the function:
+"void do_my sort(double* p, unsigned int n)"
+I think it should be "void do_my_sort(double* p, unsigned int n)"
+3
+0
+              comptroller
+             
+            said on Dec 23, 2014 08:13 AM:
+              
+                I am a beginner hobbyist programmer and I only know Python well at the moment. People have always told me to avoid C++ because it is not suitable for beginners, and that it is only suitable for those people that have a 'talent' for programming. Sadly I am not included in this group as even Python confuses me sometimes.
+This series has given me the motivation to ignore the masses that have been constantly telling me to avoid C++.
+Thank you for this series of articles.
+              
+            
+2
+0
+              sdt
+             
+            said on Dec 23, 2014 10:35 AM:
+              
+                Hello,
+I would like to follow-up your examination of libraries availability. Yes, what you are saying is true: there're a lot of libraries out there ready to be used, which provide abstraction over many low level, system-specific routines. Moreover, they might already be present on the system.
+The problem is the lack of assurance a standard library gives me: quality, efficiency, availability and being ... standard.
+- Quality: A standard library must follow particular requirements in order to be considered as such; a third party one need not. 
+- Efficiency: Again, a standard library is likely to be very efficient. How can you say the same for a foreign library without profiling and/or analyzing its source code?
+- Availability: I don't know how available a library may be on a certain system. Moreover, I don't have to search for it on the web, studying it, gambling on its trustworthiness. If there were a standard Networking Library, POCO::Net arguably would not even exist.
+The standard gives personality to a library. A non-standard library will never compare to a standard one. Using a non-standard library is, in my honest opinion, a bet. Almost all (big) companies develop their own version of them mainly for precise needs along with the points I mentioned before.
+0
+0
+Bjarne Stroustrup
+ 
+            said on Dec 23, 2014 10:52 AM:
+              
+                Thanks
+1
+0
+              Venki003
+             
+            said on Dec 23, 2014 01:52 PM:
+              
+                Bjarne,
+Thank you for the clarifications on popular myths.
+Recently in one of the video Andrei said, 1% improvement in HHVM C++ code performance will save significant amount of money in terms of data center power cost alone. Clearly C++ is eco friendly. In CERN benchmarks zeromq outperformed all other messaging systems, but the implementer regretted selecting C++ as language of choice on his blog. There are many such examples that prove C++ power & flexibility.
+What is the potential of modern C++ (>= C++11) in developing big data computing platforms like MapReduce, NoSQL db, messaging system, ...? Why other languages leading lacuna as of now? Do you expect open source alternatives in C++ near time? Does C++11 help to reduce time to market or is it still expert friendly?
+0
+0
+              NoSenseEtAl
+             
+            said on Dec 23, 2014 02:11 PM:
+              
+                regarding 9. 
+There is one class of examples where ugly code is faster...
+one instance of those class  is this:
+you need to implement this function:
+int FindTallestPerson(const std::vector& persons, const int min_age) // Person has get_height() and get_age()
+{
+  //find the tallest person whose age is at least min_age, if none return -1, ignore that std convention is to return .end()
+}
+ugly fast solution with manual loop would do it with 1 pass, 
+using STL IDK how to do it nicely... one way is std::max element with horrible looking comparator. And then check the result 
+if it is of correct age, if not return -1.
+other STL way is to do it slowly with copy_if to temp vector(where all persons with age>=min_age are) then do max_element on that. 
+Boost has filter iterator but that is also a bit ugly because IIRC they still dont support core lang lambdas(aside that boost lambdas are nicer than std ones :D).
+And if you watch Chanlder's talk from CPP con you can also see how writing normal looking c++ code can be slow... 
+But like almost everything it is a *trade off*. FB can afford to hire Alexandrescu and other smart people to manually 
+mark functions as inline/not inline and care about order of members of a struct for 2% performance because of their scale... Some other programs would be fine even if they run 500% slower because they are desktop programs that use 1-2% of CPU. 
+0
+0
+              prisco.napoli
+             
+            said on Dec 24, 2014 02:46 PM:
+              
+                Hello Bjarne,
+excellent article. I found very interesting the 4th Myth about code efficiency, particularly when high-level code beats low-level code. It would be nice If in future you could go deeply in this argument with a specific post where more examples of high-level code that outperforms low-level code are reported.
+Thank you so much for this series of articles.
+              
+            
+1
+0
+              Athari
+             
+            said on Jan 11, 2015 11:07 PM:
+              
+                Just wanted to share a funny competition on CodeGolf.StackExchange with alternative implementations in other languages of your program for downloading a web page and listing links. While the rules are questionable (error checking is often ignored, for example), I think the results are quite interesting.
+http://codegolf.stackexchange.com/q/44278/15570
+P.S. Several developers faced the problem of overly strict string validation — http://www.stroustrup.com/C++.html contains invalid UTF-8 byte sequences: "What � if anything � have we learned from C++?" (note the placeholder characters).
+              
+            
+« Prev
+Next »
+Back to Top
+        © Copyright 2017 Standard C++ Foundation. 
+        All rights reserved. 
+        
+Terms of Use
+Privacy Policy

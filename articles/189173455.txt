@@ -1,0 +1,251 @@
+
+         Android: Better Performance with ContentProviderOperation | Grokking Android      
+ 
+Grokking Android
+Getting Down to the Nitty Gritty of Android Development
+Suche
+Android: Better Performance with ContentProviderOperation
+May 17th, 2012 By Wolfram Rittmeyer 16 Comments
+ContentProviders are one of Android’s core building blocks. They represent a relational interface to data – either in databases or (cached) data from the cloud.
+Sometimes you want to use them for multiple operations in a row. Like updating different sources and so on. In those cases you could call the respective ContentResolver methods multiple times or you could execute a batch of operations. The latter is the recommended practise. 
+To create, delete or update a set of data in a batch like fashion you should use the class ContentProviderOperation.
+According to Android’s documentation it is recommended to use ContentProviderOperations for multiple reasons:
+All operations execute within the same transaction – thus data integrity is assured
+This helps improve performance since starting, running and closing one transaction offers far better performance than opening and committing multiple transactions
+Finally using one batch operation instead of multiple isolated operations reduces the number of context switches between your app and the content provider you are using. This of course also helps to improve the performance of your app – and by using less cpu cycles also reduces the power consumption.
+To create an object of ContentProviderOperation you need to build it using the inner class ContentProviderOperation.Builder. You obtain an object of the Builder class by calling one of the three static methods newInsert, newUpdate or newDelete:
+Methods to obtain a Builder object
+Method
+Usage
+newInsert
+Create a Builder object suitable for an insert operation
+newUpdate
+Create a Builder object suitable for an update operation
+newDelete
+Create a Builder object suitable for a delete operation
+The Builder is an example of the Gang of Four Builder pattern. A Builder defines an interface for how to create objects. Concrete instances then create specific objects for the task at hand. In this case we have three different Builders for creating ContentProviderOperation objects. These objects can be used to create, update or delete ContentProvider data sets.
+Typically all steps necessary to create a ContentProviderOperation object are done in one round of method chaining. That’s possible because all methods of the Builder class return a Builder object themself. The one exception is the build() method, which instead returns the desired object: Our completely created ContentProviderOperation object. So a typical chain might look like this:
+ArrayList<ContentProviderOperation> ops =
+   new ArrayList<ContentProviderOperation>();
+ops.add(
+   ContentProviderOperation.newInsert(RawContacts.CONTENT_URI)
+       .withValue(RawContacts.ACCOUNT_TYPE, "someAccountType")
+       .withValue(RawContacts.ACCOUNT_NAME, "someAccountName")
+       .withYieldAllowed(true)
+       .build());
+Of course you could also use a ContentValues object as usual and use the withValues(values) method instead.
+The Builder class has among others these methods you can use to define which objects to delete or how to create or update an object:
+Some important methods of the Builder object
+Method
+Usage
+withSelection (String selection, String[] selectionArgs)
+Specifies on which subset of the existing data set to operate. Only usable with ContentProviderOperation objects used to update or delete data
+withValue (String key, Object value)
+Defines the desired value for one column. Only usable with ContentProviderOperation objects used to create or update data
+withValues (ContentValues values)
+Defines the desired values for multiple columns. Only usable with ContentProviderOperation objects used to create or update data
+As you can see in the code sample I presented above you need an ArrayList of ContentProviderOperation objects. For every ContentProvider-CRUD method you have to use one ContentProviderOperation object and add it to this list. I will explain in a later blog post about the method withValueBackReference() why it has to be an ArrayList and not say a LinkedList.
+The list is finally passed to the applyBatch() method of the ContentResolver object:
+try {
+   getContentResolver().
+      applyBatch(ContactsContract.AUTHORITY, ops);
+} catch (RemoteException e) {
+   // do s.th.
+} catch (OperationApplicationException e) {
+   // do s.th.
+}
+That’s all for now. I will explain two methods of the Builder class, that are not well documented, in separate follow up posts.
+ 
+Wolfram Rittmeyer lives in Germany and has been developing with Java for many years.
+In recent years he shifted his attention to Android and blogs about anything interesting that came up while developing for Android.
+You can find him on Google+ and Twitter.
+Related Posts:
+Android's CalendarContract Content Provider
+Android's ContentProviderOperation: "withYieldAllowed" explained
+Android's ContentProviderOperation: "withBackReference" explained
+Android Tutorial: Using Content Providers
+Android Tutorial: Content Provider Basics
+ Tags: Android, applyBatch(), ContentProvider, ContentProviderOperation, ContentProviderOperation.Builder, newDelete(), newInsert(), newUpdate() 
+            « How to Correctly Use SQL’s like in Android 
+Finding all View-IDs of an Android UI »            
+			16 thoughts on “Android: Better Performance with ContentProviderOperation”		
+ Ataul Munim
+December 31, 2012 at 06:50 pm
+Hi, thanks for this series – I felt your posts on Loaders helped explain the concept in a straightforward fashion, so I’m returning for more 🙂
+I have a few questions on usage of Content Providers:
+– Do the CRUD operations in ContentResolver run on a background thread or is it recommended to use ASyncTask when inserting/updating/deleting rows (not many) when using these methods?
+– Is there any overhead to using Content Provider Operations if there is only one ContentProvider-CRUD method you need to run? Is it suggested to *always* use Content Provider Operations, or *only* when it might appear you need batch operations, like when syncing remotely?
+Thanks!
+Ataul
+Reply
+ Wolfram Rittmeyer
+January 8, 2013 at 11:48 am
+No, ContentProvider methods run on the UI thread. That’s why you should use Loaders. 
+If you want to delete or insert stuff, you could simply start a normal thread. Unless your UI needs to be informed after the deletion has happened. In that case you would need an AsyncTask. 
+In general: Use AsyncTasks when you need to manipulate the UI when the thread has finished working.
+There is no need to use ContentProviderOperations if only one query or modification statement is used. I only use them for batch operations or when update/delete/insert statements depend on the result of a previous query (that is they depend on the ID returned by the previous statement).
+Reply
+ brescia123
+March 25, 2013 at 03:36 pm
+Hi, nice post! There’s a way to have information about the progress of the batch operation? thanks!
+Reply
+ Yuku
+April 23, 2013 at 09:34 am
+Thanks for the useful article! I wonder why the list of ContentProviderOperations has to be an ArrayList and not say a LinkedList when passed to applyBatch. Do you have any idea why? 
+As far as I can trace from the source code, applyBatch is eventually passed to ContentProviderNative, and it contains this code:
+    public ContentProviderResult[] applyBatch(ArrayList operations)
+            throws RemoteException, OperationApplicationException {
+          ……
+            data.writeInt(operations.size());
+            for (ContentProviderOperation operation : operations) {
+                operation.writeToParcel(data, 0);
+            }
+so it seems that just a List works, no need to be an ArrayList.
+Reply
+ Wolfram Rittmeyer
+April 23, 2013 at 09:38 pm
+No idea. But probably just a thoughtless deed. The quality of the source differs very much from class to class – some excellent, some not so. I also see no reason for choosing an ArrayList instead of letting the clients choose the type of list. 
+They actually use it, though, in ContentProvider. Here they use this construct in applyBatch():
+[java]
+final int numOperations = operations.size();
+final ContentProviderResult[] results = new ContentProviderResult[numOperations];
+for (int i = 0; i < numOperations; i++) {
+   results[i] = operations.get(i).apply(this, results, i);
+}
+[/java]
+Though, why they don’t use the Java-variant of a for-each loop here is beyond me. With that the type of List would have been irrelevant.
+Reply
+ JD
+April 28, 2015 at 10:11 pm
+ContentProviderOperation vs. AsyncQueryHandler?
+Do you have any thoughts on the differences between using AsyncQueryHandler and ContentProviderOperation?
+I’m not sure which to use now that I’ve read your very informative post….?
+in my MainActivity I have:
+new AsyncQueryHandler(mContentResolver){}
+			.startInsert(-1, null, myURI, myValues);
+The above is my simple way of issuing inserts to my provider asynchronously.
+?
+Reply
+ Wolfram Rittmeyer
+April 29, 2015 at 08:28 am
+I normally either use an IntentService or (recently) Rx for this. I actually have never yet used AsycnQueryHandler 🙂
+Anyways: If you have just one insert, stick with AsyncQueryHandler. ContentProviderOperation is especially useful if you want to batch multiple operations. Then they can offer a tremendous speedup.
+Reply
+ JD
+April 29, 2015 at 06:09 pm
+Danke schon Herr Rittmeyer.
+What’s “Rx” ?
+You may find this interesting (I found it yesterday and am very excited about it):
+https://www.dre.vanderbilt.edu/~schmidt/cs282/PDFs/9-Content-Providers-6-7-and-8.pdf
+Reply
+ Marco
+November 14, 2015 at 07:53 am
+Can you explain to me the difference between a bulkInsert() and an applyBatch() with insert operations? I’ve read some stack overflow posts, but I’m still not sure.
+Reply
+ Wolfram Rittmeyer
+November 14, 2015 at 11:22 am
+With bulkInsert() you can only insert to the same URI (usually representing one table in the backing database). With applyBatch() you can use different operations (delete, update and insert) and apply them for different URIs. Every operation can use its own URI.
+Thus you could first insert something to one table and then something to depending tables (say a music album and it’s titles respectively). You can also use the id of the first insert (of the music album) for the other inserts (of the music titles) – which isn’t possible with bulkInsert() as well.
+Reply
+ Maxim G
+April 10, 2016 at 12:26 pm
+Thank you for your article.
+I tried to use applyBatch and got weird results with race conditions. I posted question to stackoverflow: http://stackoverflow.com/questions/36518917/sqlite-db-with-content-provider-race-conditions.
+May be you can tell what’s wrong.
+Reply
+ Kirill Varivoda
+October 26, 2016 at 04:18 pm
+It’s all over the internet. ContentProvider do not use any transactions at all. Look at the source code and look for word “transaction”, you will not find it:
+http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.1.1_r1/android/content/ContentProvider.java#ContentProvider
+So, statement “All operations execute within the same transaction – thus data integrity is assured” is not true. We are talking about default implementation here 🙂
+Reply
+ Wolfram Rittmeyer
+October 26, 2016 at 09:40 pm
+I think nothing is all over the internet, when it comes to ContentProviders. They are not that common – and their use is probably in decline.
+Anyhow, you are right of course. that’s why I explicitly create a transaction in my ContentProvider sample app within applyBatch() – before passing the call on to the parent method.
+Reply
+ Pushpal Roy
+November 9, 2016 at 11:23 am
+Nice post Wolfram! Just one thing I’m stuck with. After clicking on the contact (linked account), I’m invoking an activity. Just like Whatsapp or Skype, directly from my phone book. While doing that I want to pass the text present to the activity. 
+Please help me with this.
+Thanks in advance!
+Reply
+ Gustavo
+December 28, 2016 at 01:31 pm
+So this mean I have to check if the operation allows yielding and commit the transaction myself inside my applyBatch() implementation ? This don’t make much sense, does the withYieldAllowed work at all?
+Reply
+ Wolfram Rittmeyer
+December 28, 2016 at 04:57 pm
+Yes, you should do so. Depending on what load you expect. If you expect many operations to be part of one transaction, then you should do so.
+Reply
+Leave a Reply Cancel reply 
+Your email address will not be published. Required fields are marked *Comment Name * 
+Email * 
+Website 
+ 
+ 
+  Recent Posts 
+Android’s ConstraintLayout: Align One View’s Edge to Another View’s Center
+Some Thoughts on Android’s new ConstraintLayout and Android Studio’s new Design Editor
+RxJava’s Side Effect Methods
+Why use Observable.create() and not just inherit from Observable?
+Selecting Items of a RecyclerView using StateListDrawables
+ Archives
+►2016 
+►August  (1)
+ 
+►July  (1)
+ 
+ 
+►2015 
+►November  (1)
+ 
+►October  (1)
+ 
+ 
+►2014 
+►August  (2)
+ 
+►June  (1)
+ 
+►February  (3)
+ 
+►January  (1)
+ 
+ 
+►2013 
+►December  (2)
+ 
+►April  (1)
+ 
+►March  (2)
+ 
+►February  (1)
+ 
+►January  (2)
+ 
+ 
+►2012 
+►December  (1)
+ 
+►November  (5)
+ 
+►October  (4)
+ 
+►September  (4)
+ 
+►August  (3)
+ 
+►July  (7)
+ 
+►June  (6)
+ 
+►May  (9)
+ 
+ 
+               Copyright © Grokking Android - Getting Down to the Nitty Gritty of Android Development
+Impressum  |  Our Privacy Policy (English)  |  Unsere Datenschutz-Policy (Deutsch/German)
+English app developer profile  |  App Entwickler Verzeichnis Eintrag (Deutsch/German)
+                  Powered by WordPress
+                  Android is a trademark of Google Inc.
+               

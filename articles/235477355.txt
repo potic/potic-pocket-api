@@ -1,0 +1,1022 @@
+
+Top 30 Programming questions asked in Interview - Java C C++ Answers
+Javarevisited
+Blog about  Java programming language, FIX Protocol, Tibco RV
+Pages
+Home
+core java
+spring
+hibernate
+collections
+multithreading
+design patterns
+interview questions
+coding
+data structure
+OOP
+books
+About Me
+Top 30 Programming questions asked in Interview - Java C C++ Answers
+Top 30 Programming interview questions
+Programming questions are an integral part of any Java or C++ programmer or software analyst interview. No matter on which language you have expertise it’s expected that you are familiar with fundamental of programming and can solve problems without taking help of API. Programming questions like reversing String using recursion or How to find if Array contains duplicates  are some popular examples of programming question in Java.  Programming questions present lot of challenges Especially to Java developers as compared to C++ programmer and I think, One reason for this is powerful Java API; Which has method for almost every need and you rarely need to write by your own or there are lots of third party library from Apache, Spring, Google and other open source. 
+These programming interview questions are from my personal collections and I have only chosen those which are not very difficult, can be solved easily but at the same time can become too complex or confusing, present lots of follow-up questions and test fundamentals of programming, OOPS and design. 
+I have not given answers to these programming questions but those can be found by Google and I will try to post links of answers here sometime later but at the same time, I will try to provide quick tips or hints on some questions.You can also take help from  Programming Interviews Exposed and 10 coding questions asked in Google with solution to prepare for any programming Job interview. Those two books have helped me a lot in the past and even today I read them whenever I need to refresh my concepts.
+Anyone who is following programming questions must be familiar with these questions and also knows answer for most of these but for new guys and even for intermediate it's worth refreshing it before going to any programming job interview e.g. Core Java interview.
+ String Programming Interview Questions
+String is the primary and probably most common thing you come across on any programming language and so is with any programming interview. There is almost always a question on String whether its related to length or replace but I have always find one or two String programming questions on interviews.
+1) Write code to check a String is palindrome or not? (solution)
+Palindrome are those String whose reverse is equal to original.This can be done by using either StringBuffer reverse() method or by technique demonstrated in the solution here.
+2) Write a method which will remove any given character from a String? (solution)
+hint : you can remove a given character from String by converting it into character array and then using substring() method for removing them from output string.
+3) Print all permutation of String both iterative and Recursive way? (solution)
+4) Write a function to find out longest palindrome in a given string? (solution)
+5) How to find first non repeated character of a given String? (solution)
+6) How to count occurrence of a given character in a String? (solution)
+7) How to check if two String are Anagram? (solution)
+8) How to convert numeric String to int in Java? (solution)
+Some more String related Questions which mostly appear in Java programming interviews: 
+1) What is difference between String, StringBuilder and StringBuffer in Java? (answer)
+Main difference is that String is immutable but both StringBuilder and StringBuffer are mutable. Also StringBuilder is not synchronized like StringBuffer and that's why faster and should be used for temporary String manipulation.
+2) Why String is final in Java? (answer)
+String is final because of same reason it is immutable. Couple of reasons which I think make sense is implementation of String pool, Security, and Performance. Java designers knows that String will be used heavily in every single Java program, so they optimized it from the start.
+3) How to Split String in Java? (answer)
+Java API provides several convenient methods to split string based upon any delimiter e.g. comma, semi colon or colon. You can even use regular expression to split a big string into several smaller strings.
+4) Why Char array is preferred over String for storing password? (answer)
+ Programming questions on Array
+Array is one of the topics where most of programming questions is asked. There are many and many programming questions on Array and here I have included only some of them which is not very difficult to solve but some of array programming question can be extremely challenging, so well prepare this topic.
+9) In an array 1-100 numbers are stored, one number is missing how do you find it? (solution)
+10) In an array 1-100 exactly one number is duplicate how do you find it? (solution)
+11) In an array 1-100 multiple numbers are duplicates, how do you find it? (solution)
+One trick in this programming questions is by using HashMap or Hashtable , we can store number as key and its occurrence as value, if number is already present in Hashtable then increment its value or insert value as 1 and later on print all those numbers whose values are more than one.
+12) Given two arrays, 1,2,3,4,5 and 2,3,1,0,5 find which number is not present in the second array.
+Here is a quick tip to solve this programming question:  put the elements of the second array in the Hashtable and for every element of the first array, check whether it’s present in the hash or not, O/P all those elements from the first array that are not present in the hash table
+13) How do you find second highest number in an integer array? (solution)
+14) How to find all pairs in array of integers whose sum is equal to given number? (solution)
+15) How to remove duplicate elements from array in Java? (solution)
+16) How to find largest and smallest number in array? (solution)
+17) How to find top two maximum number in array? (solution)
+ LinkedList Programming Interview Questions
+14) How do you find middle element of a linked list in single pass?
+To answer this programming question I would say you start with simple solution on which you traverse the LinkedList until you find the tail of linked list where it points to null to find the length of linked list  and then reiterating till middle. After this answer interviewer will ask you find the middle element in single pass and there you can explain that by doing space-time trade-off you can use two pointers one incrementing one step at a time and other incrementing two step a time, so when first pointer reaches end of linked second pointer will point to the middle element.
+15) How do you find 3rd element from last in single pass? (solution)
+This programming question is similar to above and can be solved by using 2 pointers, start second pointer when first pointer reaches third place.
+16) How do you find if there is any loop in singly linked list? How do you find the start of the loop? (solution)
+This programming question can also be solved using 2 pointers and if you increase one pointer one step at a time and other as two steps at a time they will meet in some point if there is a loop.
+17) How do you reverse a singly linked list? (solution)
+18) Difference between linked list and array data structure? (answer)
+ Binary Tree Programming Interview Questions
+Binary tree or simply tree is one of favorite topic for most of interviewer and pose real challenge if you struggle with recursion. Programming questions on tree can become increasingly difficult when you think iterative but sometime can be very easy if you come with recursive solution.
+18) How do you find depth of binary tree?
+19) Write code to print InOrder traversal of a tree?
+20) Print out all leaf node of a binary tree?
+21) Write a method in Java to check if a tree is a binary search tree or not?
+22) How to check if a tree is balanced or not in Java?
+ Programming Questions on Searching and Sorting
+I have only included two programming questions related to searching and sorting but there are more can be finding on Google. Purpose of these programming questions is to see whether programmer is familiar with essential search and sort mechanism or not.
+23) Write a program to sort numbers in place using quick sort ? (solution)
+24) Write a program to implement binary search algorithm in Java or C++? (solution)
+25) How do you sort Java object using Comparator? (answer)
+This is another Java specific programming questions and you can check how to sort Object using Comparator and Comparable for answer. 
+26) Write code to implement Insertion Sort in Java? (solution)
+27) Write code to implement Bubble Sort in Java? (solution)
+ Programming Questions on Numbers
+Most of the programming questions are based on numbers and these are the ones which most of us did on college level and mind you they still has value I have seen programmers with experience of 3 years struggle with these programming questions and doesn't solve it some time and take a lot of time which simply shows that they are not in programming in there day to day work.
+26) Write code to check whether a no is power of two or not? (solution)
+27) Write a program to check whether a number is palindrome or not? (solution)
+Check out this post which shows how to reverse number in Java and can be used to find if its palindrome or not.
+28) Write code to check whether an integer is Armstrong number or not? (solution)
+Here is a Java program to find Armstrong number, you can use same logic to write code in any other programming language like C and C++.
+29) Write a program to find all prime number up to a given numbers? (solution)
+Here is another Java program to find prime numbers and print them. By using logic demonstrated in this program; you can write similar program in C and C++.
+30) Write function to compute Nth Fibonacci number? Both iterative and recursive? (solution)
+Check this Java program to print Fibonacci Series using recursion and iteration. 
+31) How to check if a number is binary? (solution)
+For this question, you need to write a function which will accept an integer and return true if it contains only 0 and 1 e.g. if input is 123 then your function will return false, for 101 it should return true.
+32)  How to reverse an integer in Java? (solution)
+33) How to count number of set bits in given integer? (solution)
+34) How to find sum of digits of a number using recursion? (solution)
+35) How to swap two numbers without using temp variable? (solution)
+36) How to find largest of three integers in Java? (solution)
+37) Write a program to find prime factors of integer? (solution)
+38) How to add two integer without using arithmetic operator? (solution)
+ General Programming Interview Questions
+In this category of programming questions I have put questions which are not fit into any data structure but presents a real life problem and you need to provide solution. These programming questions are sometime based on problems faced by developer itself. I have not included many Software design related programming question which I have shared on Top 20 software design questions and answers; you can also check that. 
+31) Write a program to find out if two rectangles R1 and R2 are overlapping?
+32) You need to write a function to climb n steps you can climb either 1 step at a time or 2 steps a time, write a function to return number of ways to climb a ladder with n step.
+33) Write code for Generate Random No in a range from min to max?
+34) Write program for word-wrap which should work on any screen size?
+35) Design an algorithm to find the frequency of occurrence of a word in an article?
+36) Write a program to implement blocking queue in Java?
+37) Write a program for producer-consumer problem? (solution)
+This article solves producer consumer problem using BlockingQueue in Java. You can refer it to answer this question.
+ Books to prepare for Programming Job Interviews
+There are lot of good books available, which can help programmer to do well on Interviews. Here is a list of book, which I personally prefer, in the order, I like them.
+1. Programming Interviews Exposed: Secrets to Landing Your Next Job
+A must read books for both beginners and experience programmer a like. It not only help you to do well on interviews, but also on negotiation, answering general questions etc.
+2. Cracking the Coding Interview: 150 Programming Questions and Solutions
+This book contains collection of questions from wide range of programming topics, including data structure, algorithms, strings, Java, networking, database, SQL, object oriented programming, software design etc. This book will give you whole picture of what can be asked.
+3. Top 10 coding interview problems asked in Google with solutions: Algorithmic Approach
+This is the must read book, if you are preparing for Google interview, or something along the line e.g. Facebook, Amazon or Microsoft Interviews. It contains top 10 programming problems, frequently asked at Google with detailed worked out solution, explanation in both pseudo code and in C++.
+ Tips on answering Programming questions
+1. If Interviewer asks you to write function then make sure you do some necessary check for bad input e.g. null check or empty check. Most of the time programmer forgets to test for not null, empty, less than 1, greater than 1 or zero input.
+2. If you write iterative version of function then Interviewer may ask you to write recursive version or vice-versa so be prepare for that.
+3. If you write a recursive function then Interviewer will ask to optimize it, even in case of Iterative version. So remember that you can optimize recursive function by Memorization (caching already calculated value) and by applying some space/time tradeoff principle. For example recursive version of Fibonacci series has O(n2) which can be reduced to O(n) using Memoziation.
+4. Interviewer may ask you to calculate Order of complexity for best and worst case of any method so be prepared.
+5. Most of the time Interviewer ask how to fix a problem as follow-up question e.g. he will ask how do you find deadlock and then how to fix deadlock in java etc.
+Apart from these programming interview questions here are some of other Java programming questions I have already discussed in my blog.
+Posted by
+Javin Paul
+Email This
+BlogThis!
+Share to Twitter
+Share to Facebook
+Labels:
+interview questions
+                              ,
+                            
+programming
+Location:
+North America
+58 comments
+                      :
+                    
+Anonymous
+said...
+very nice collection of programming interview questions would have been much better if you provided full answers of these programming interview question, nevertheless quality of these programming interview question is quite good and its really challenging for first timer.
+August 14, 2011 at 9:37 PM
+Anonymous
+said...
+thanks
+November 8, 2011 at 1:49 PM
+Javin @ spring interview questions answers
+said...
+Thanks for your comments guys, good to know that you like these programming interview questions and find useful. I suggest to contribute on this with some unique programming questions you faced during interviews.ThanksJavin
+November 18, 2011 at 5:41 PM
+Anonymous
+said...
+I was asked:How would you implement a queue using two stacks?How would you implement a Singleton in c++? (never heard of it before, so challenging)
+November 26, 2011 at 11:59 AM
+Javin @ String split Java example
+said...
+Agree with you Anonymous, these programming questions can be very challenging to solve in limited time if faced first time. that's why we need to prepare for programming interview questions also.
+November 26, 2011 at 9:32 PM
+Prabakar
+said...
+Nice questions you can include the followingWrite program to Reverse a string without using array.reverse methodWrite program to  Reverse an integerWrite program to  Print odd numbers from 1 to 100 to a text file.
+November 30, 2011 at 5:25 AM
+Anonymous
+said...
+can anyone help me solve this program for me;write a java program that prompts the user to to 20 characters, count the occurrences of the same element in the array. Display the repeated elements and its occurrences. Please i need to solve this asap.. email me syakir_aznan@yahoo.comthank you
+January 3, 2012 at 8:13 AM
+Anonymous
+said...
+can you also share programming job interview question for junior position ? I am preparing puzzles interview questions, Data structure interview questions but also want to have a look on java question not difficult and suitable for upto 2 years of experience.
+March 6, 2012 at 1:01 AM
+Anonymous
+said...
+The sad thing about programming questions on interviews is that a lot of them focus on error conditions caused by bad java programming.  I programmed in Java for over 10 years and I am a very good Java programmer.  I am not good at interview tests that focus on those types of bad programming because they never really come up in the real world of Java programming.  Once you instinctively do things right for years and years you rarely focus on things you never do as a programmer.  You will not spend your programming career on these strange minutia type issues that come up on programming tests.  Sometimes I get hung up on the approach a question has to a programming problem because they sometimes don't start from a good OO point of view to begin with.  They hurt my head because I have over a decade of doing things right and I don't focus on doing things wrong!  And very few developers do a lot of threading.  I've done some threading and you never assume you know what threading code will do by looking at ink on paper.  You are testing your threading in a IDE and making sure it is doing what you expect.  Coding tests on interviews will not find the best programmers that is for sure.  Just someone who studied for them.
+March 19, 2012 at 9:34 AM
+Javin @ collection interview question
+said...
+@Anonymous, I agree with you most of programming interviews ask thing which has nothing to do with the job you are going to perform. they look for excellent multi-threading or programming aptitude but what you never going to write true concurrent code there or complete new program.
+March 20, 2012 at 6:28 AM
+Anonymous
+said...
+Recursive version of Fibonacci series is actually 2^n, not O(n2).
+April 1, 2012 at 7:53 PM
+Anonymous
+said...
+The dialog box will be centered over the component given in the first parameter. Typically you would give the window over which it should be centered. If your program doesn't have a window, you may simply write null, in which case the dialog box will be centered on the screen.
+May 12, 2012 at 11:19 PM
+programmer
+said...
+There is a very good book called "programming exposed interview". Its just fantastic, you can get answers of some of programming questions mentioned here and explanation is simply fantastic.It also has some fantastic questions on programming like:1) How do you find permutation and combination of given String?2) Write Java program for breadth first and depth first traversal.3) Several good programming interview questions on Spring, trees and linked list and most importantly puzzles.
+May 21, 2012 at 8:36 PM
+Mike
+said...
+On question 10, your single pass solution is really the same as your two pass solution.  Even if you take turns incrementing the two pointers, you are still passing through the list 1.5 times.
+May 27, 2012 at 4:19 AM
+Jason
+said...
+A comment on Question 12 (finding a loop in a singly linked list): The proposed solution certainly determines in linear time whether there is a loop, but it doesn't find the starting place of that loop. For that, I think we have to use the naive solution: keep a hash table of previously visited nodes and see if we get a duplicate.
+June 8, 2012 at 3:49 PM
+Anonymous
+said...
+Excuse me sir...we are following ur blog to understand something not getting confusion...Write in such a way that someone can remove his/her doubt rather than getting so much confusion. I think what I want to say u can understand.  Thanks......
+June 19, 2012 at 5:09 AM
+Javin @ Java design pattern questions
+said...
+@Anonymous,Sorry I didn't get your point? These programming question are for practice before appearing to interviews? Are you complaining about answers of these question? If yes than you can easily find all answers by little work. The scope of this post is to cover programming related questions. I have even covered some of these questions in details like Reversing String using recursion etc.
+June 24, 2012 at 7:30 PM
+Michael
+said...
+You can solve the missing member problem by subtracting the sum of the shorter list from the longer.
+August 11, 2012 at 11:59 AM
+Tim
+said...
+I find it strange that I can solve most of these problems and I'm in my first year of studying Computer Science.
+August 26, 2012 at 8:43 AM
+Anonymous
+said...
+Very very great post. About 6 out of these 30 questions were asked to me in a test. But I found it very hard to make some logic and write code on a paper because I was used to do programming on computer. Can anyone tell me that whether this problem is only with me or every one finds it difficult to code on a paper.
+September 27, 2012 at 7:53 AM
+Anonymous
+said...
+In reply to Tim!Dear you might be a good programmer but, in my opinion, every programmer can solve these problems if there is no time limitation. Actual thing is to solve any given problem within time and in the tense environment of an interview.
+September 27, 2012 at 8:24 AM
+Anonymous
+said...
+Here is solution for 5) which use simple arrays operation and never use collection like HashSet 5) In an array 1-100 numbers are stored, one number is missing how do you find it?totalnumber = 100, a is that array,complexity O(n)use HashSet O(n x log n)public static void findMissedValue(int a[],int totalnumber) {  int b[]=new int[totalnumber];   for(int i=0;i<a.length;i++) {   int v = a[i];   b[v] = 1;  }   for (int j=0;j<totalnumber;j++) {   if (b[j]==0) {    System.out.print(" "+j);   }  } } 
+October 10, 2012 at 11:13 AM
+Anonymous
+said...
+8)Given two arrays, 1,2,3,4,5 and 2,3,1,0,5 find which number is not present in the second array.if Interviewer requests not to use java structure such as HashSet or Hashtable , I have another solution using pure array operation *  use native array way: find max element in second[] and first[], defined an array third[max]  *  iterate second[] , use the element as index of third[] and let third[elementofsecond]=1  *  iterate first[] if third[elementOffirst]==0, this is the element which is not present in   *  second[] Complexity is O(n+m)  public static int[] Find1stArrayIn2rdArray(int first[] , int second[]) {  int max = first[0];  for (int i=0;i<first.length;i++) {   if (max<first[i]) max=first[i];  }  for (int i=0;i<second.length;i++) {   if (max<second[i]) max=second[i];  }  int third[] = new int[max+1];  int result[] = new int[first.length+second.length];  for (int i=0;i<second.length;i++) {    third[second[i]] = 1;  }  int k=0;  for (int i=0;i<first.length;i++) {   if (third[first[i]]==0) result[k++]=first[i];   }   if (k==0) return new int[0];  int finalResult [] = new int [k];  for (int i=0;i<k;i++) finalResult[i] = result[i];  return finalResult; }
+October 10, 2012 at 11:47 AM
+Anonymous
+said...
+> 2) Write a method which will remove any given character from a String?> 3) Print all permutation of String both iterative and Recursive way?> 4) Write a function to find out longest palindrome in a given string?Why the questions marks?  Those aren't questions.
+October 14, 2012 at 5:33 PM
+Pankaj Kumar
+said...
+Hi Javin,For question 3, I was able to write a program that can do it using recursion, its here http://www.journaldev.com/526/java-program-to-find-all-permutations-of-a-string But I was not able to write a program using iteration, do you have a solution for that?For question 4, I wrote a program that you might want to check at http://www.journaldev.com/530/java-program-to-find-out-longest-palindrome-in-a-stringHoping to get some inputs from your side.
+October 26, 2012 at 12:25 PM
+Jacques LIAO
+said...
+8)Given two arrays, 1,2,3,4,5 and 2,3,1,0,5 find which number is not present in the second array.1. Sort two arrays independently ( O(n*log(n) time).2. Marching two sorted array to find those duplicate numbers. 
+December 29, 2012 at 9:39 PM
+sohail
+said...
+Most of them are too easy. ...really...just in class 11 but i no most of these...some of them have also been in question paper.
+January 1, 2013 at 1:24 PM
+Sandip Dabhade
+said...
+8)Given two arrays, 1,2,3,4,5 and 2,3,1,0,5 find which number is not present in the second array.int[] a = { 1, 2, 3, 4, 5, 8 };int[] b = { 2, 3, 1, 0, 5 };  boolean isPresent = false;  for (int i = 0; i < a.length; i++) {   for (int j = 0; j < b.length; j++) {    if (a[i] == b[j]) {     isPresent = true;    }   }   if (!isPresent) {    System.out.println("Not Present" + a[i]);   } else {    isPresent = false;   }  } }
+May 8, 2013 at 8:43 AM
+Anonymous
+said...
+great stuff,, but it would be much better if the answer were given here.CAN ANYONE SEND ME SOLUTION OF ABOVE GIVEN QUESTION PLEASE,,,, rajnikantmrc@gmail.com
+August 3, 2013 at 4:27 AM
+Anonymous
+said...
+Write the code you can get it on the greatest common factor.please any one answer this question 
+August 4, 2013 at 10:38 PM
+Gurpeet
+said...
+Hello Javin, would you mind to share some Programming Interview questions from Microsoft, Google, Amazon, Twitter and Facebook. I have those companies on my radar and preparing for their job interviews. Since you share some genuine, real questions, I would be glad if you can get something from your network for Microsoft, Amazon and Google. I am specially interested on coding, logic and programming interviews, but you can also share SQL, UNIX questions and puzzles.
+August 19, 2013 at 12:21 AM
+Anonymous
+said...
+When trying to solve the question asking "Given two arrays, 1,2,3,4,5 and 2,3,1,0,5 find which number is not present in the second array" I see a lot of O(n^2) responses (double loops).  I think knowing the API gives a good developer a 'leg up':  Integer[] a = new Integer[]{1,2,3,4,5};  Integer[] b = new Integer[]{2,3,1,0,5};  Set setA = new HashSet<>(Arrays.asList(a));  Set setB = new HashSet<>(Arrays.asList(b));  setB.removeAll(setA);   System.out.println("Item(s) in B that are NOT in A are: "+setB);
+November 22, 2013 at 6:22 AM
+Stanislav Lorents
+said...
+5) In an array 1-100 numbers are stored, one number is missing how do you find it?First decision sort and walk. Fast algorithm formula: result = sum(1..100) - sum(of array numbers). 35) You need to write a function to climb n steps you can climb either 1 step at a time or 2 steps a time, write a function to return number of ways to climb a ladder with n step. Enjoy C/C++ http://slorents.blogspot.com.au/2013/11/climb-ladder-with-n-step.html
+November 30, 2013 at 11:53 PM
+Stanislav Lorents
+said...
+8)Given two arrays, 1,2,3,4,5 and 2,3,1,0,5 find which number is not present in the second array.Because {1,2,3,4,5} is sorted array you can use binary search in it while walk through {2,3,1,0,5}. It is fastest, isn't it?
+December 1, 2013 at 1:55 AM
+Anonymous
+said...
+plz give solution using java programmin to find or count super palindrome in a string eg.nanded ,,,ie nan is   palindrom and ded is another palindrome ..plz mail soln to koolkbh@rediffmail.vom
+January 1, 2014 at 9:24 AM
+Anonymous
+said...
+For computing fibonacci sequence numbers, you can even manage a O(log(n)) complexity (in time), same for question number 25 (mistakenly written as 35 by the way).
+February 18, 2014 at 4:18 AM
+Anonymous
+said...
+can you give me the code forQ)Biggest polidrome in a given string?
+February 18, 2014 at 11:33 PM
+Anonymous
+said...
+can you add some programming interview questions on multithreading concept?
+February 18, 2014 at 11:34 PM
+Anonymous
+said...
+Here's one I got:Given a chessboard one Knight, determine whether there is a path through the chessboard, starting on any square, which would result in the Knight visiting every square on the board.
+March 3, 2014 at 2:43 PM
+Alen Jain
+said...
+why don't you put list of complex programming questions for interview
+March 21, 2014 at 1:43 AM
+Buck Swayne
+said...
+Coding on a whiteboard, without a computer, without tools to debug or observer your working code, without a search engine, observed and critiqued is really unnatural.  What's the point again?  To see how good someone is at programming?
+April 24, 2014 at 10:17 PM
+aesixonline
+said...
+8)Given two arrays, 1,2,3,4,5 and 2,3,1,0,5 find which number is not present in the second array.I had just completed intro to java and I don't know anything about hashtables, so I simply created a nested for loop with an IF statement inside to compare every number 1 by 1. This will output a number from the first array that didn't match with the second array. Due to the nature of the loop, my output showed 4 five times, and so I added a break; to cut the loop. Is there an easier way to write my IF statement?                                     int x,y,nrows;                                      int [] A= {1,2,3,4,5};                                  int [] B= {3,2,5,1,0};                                    nrows=5;                                       for(x=0; x<nrows; x++)                                       {                                                     for(y=0; y<nrows; y++)                                        {                                         if(A[x]!=B[0]&&A[x]!=B[1]&&A[x]!=B[2]&&A[x]!=B[3]&&A[x]!=B[4])                                         System.out.println(A[x]);                                          break;                                        }}                                    } //end class
+May 16, 2014 at 1:47 PM
+Ramesh Kumar
+said...
+How to convert String s=" Hi Hello World" into "world hello hi" can you please tell me
+May 30, 2014 at 5:31 AM
+Ankita Pandit
+said...
+Can any one help me in doing this Program:Design a Java Program to generate a bill for a customer after his order had been taken in any of the Pizza hut outlets
+June 23, 2014 at 10:37 AM
+Anonymous
+said...
+@Ramesh KumarString newString = "";String a = "My name is X Y Z";    int n = a.length();    int k = n-1;    int j=0;    for (int i=n-1; i>=0; i--)    {        if (a.charAt(i) == ' ' || i==0)        {            j= (i!=0)?i+1:i;            while(j<=k)            {                newString = newString + a.charAt(j);                j=j+1;            }            newString = newString + " ";            k=i-1;        }    }    System.out.println(newString);
+August 11, 2014 at 9:17 PM
+Scott
+said...
+@Stanislav Lorents: your solution for the step count is wrong. For one step, there's one way (s(1) = 1). For two steps, two ways (s(2) = 2). From the third step, you can choose to go to step 1 or 2. The number of ways is s(1) + s(2). For four steps, you can go to step 3 or 2 (s(3) + s(2) ways). It's Fibonacci again.
+August 19, 2014 at 7:10 PM
+Mario Zorica
+said...
+Great collection and thank you for sharing, I must admit few of these I never encountered.But I must say that I disagree with your statement:"it’s expected that you are familiar with fundamental of programming and can solve problems without taking help of API"With first part I agree, but the second part... doesn't that just sound strange to you?I read it like this: "It is expected from you to reinvents the wheel, to not follow best practices, to make code maintainability and readability more difficult?I don't believe that any employer will ever expect from you to solve a problem without using frameworks API, that's just silly.The point of these tests are to check your fundamentals and simply to check if you can write code. For example no one will ever expect from you to write your own reverse string implementation, but reversing something is a common task and by doing this you show that you can code it out.Nevertheless thanks again for sharing and if interested here are some additional tests, I hope you like them.
+November 3, 2014 at 5:22 AM
+Anonymous
+said...
+For a better solution for question 8, assuming it's consecutive numbers up to N, return N*(N+1)/2 - sumOfMissingNoArray.
+December 10, 2014 at 7:40 AM
+Radha Pollisetti
+said...
+can you help me for writing this program 1234321  12321    121       1
+July 6, 2015 at 4:34 AM
+Anonymous
+said...
+//In an array 1-100 numbers are stored, one number is missing how do you find it?$a=array(1,2,3,4,5,6,7,9,10);for($x=0;$x<8;$x++){ $c1=$a[$x]; $c2=$a[$x+1]; if($c2==$c1+1) {  $c1=$c1+1;  $c2=$c2+1;  } else {  echo $c1+1;  die(); } }
+September 20, 2015 at 2:24 PM
+Shubham Garg
+said...
+1) ( In java or unix ) Split the input file based on number of columns, each output file should have only column. can anybody able to solve this.
+March 18, 2016 at 3:37 AM
+lucy
+said...
+Hi,The following two questions were asked for some of our students for a programming test:1. Write a program to calculate the angle between the hour hand and the minute hand of a clock if the time is given in a string format. For example if the time is given as 12:15 the output should be 90degrees.2. Write a program to evaluate a mathematical expression given in string format without using inbuilt eval() function. For example input would be a string variable of the form 5*10/20+6 and your program should output the result. The challenge here is first you have the input in string format and secondly you got to follow the BODMAS rules.Hope this helps someone.
+March 21, 2016 at 5:56 AM
+Badal Gupta
+said...
+InterView Programming Problems topic wisehttp://www.binarycoder.org/484-2/
+May 1, 2016 at 4:07 AM
+likhin nelliyota
+said...
+//Two circles are given (center and radius for each). One circle is bigger than the other. write a program to find out the smaller circle is completely inside the bigger one. if the smaller circle is inside the bigger one, print yes, otherwise print No/////#include "stdafx.h"#include#includeint main(){ using namespace std; int x1,x2,y1,y2,r1,r2; cout<<"Enter center of   big circle"<>x1>>y1; cout<<"Enter Radius of  big circle"<>r1; cout<<"Enter center of Small circle"<>x2>>y2; cout<<"Enter Radius of  small circle"<>r2;  int distance=sqrt(pow((x1-x2),2)+pow((y1-y2),2));//To find distance between centers if((r1-r2)>(distance))// circle is inside if distance is lessthan difference between radius {  cout<<"YES"<<endl; } else {  cout<<"NO"<<endl; } return 0;}
+June 22, 2016 at 1:52 AM
+Unknown
+said...
+How to print this patter:-ABCCDEDEFG
+August 31, 2016 at 8:11 AM
+Arun kumar
+said...
+Int[] input={121,122,123,124,126,127};Output: 123,124,125,126,127Removing repeated number 121 and 122.Since 121 has two 1's llly 122 has two 2's. Any one suggest me
+September 2, 2016 at 4:02 AM
+prasad gaikwad
+said...
+matrix program accept matrix size by usermatrix size 3output1 5 74 2 9 6 8 3
+September 8, 2016 at 1:26 AM
+Ali Raza
+said...
+solution of;123432112321121 1for(int a=4;a>=1;a--)            {                int v=1;                Console.WriteLine();                while(v<=a)                {                    Console.Write(v);                    v++;                }                v=v-2;                while (v >0)                {                     Console.Write(v);                    v--;                }
+October 31, 2016 at 3:20 PM
+Post a Comment
+Newer Post
+Older Post
+Home
+Subscribe to:
+Post Comments
+                      (
+                      Atom
+                      )
+                    
+Interview Questions
+core java interview question
+(161)
+data structure and algorithm
+(45)
+Coding Interview Question
+(32)
+SQL Interview Questions
+(24)
+thread interview questions
+(20)
+database interview questions
+(18)
+servlet interview questions
+(17)
+collections interview questions
+(15)
+spring interview questions
+(9)
+Programming interview question
+(4)
+hibernate interview questions
+(4)
+Translate this blog
+Java Tutorials
+date and time tutorial
+(17)
+FIX protocol tutorial
+(16)
+java collection tutorial
+(52)
+java IO tutorial
+(25)
+Java JSON tutorial
+(6)
+Java multithreading Tutorials
+(33)
+Java Programming Tutorials
+(27)
+Java xml tutorial
+(9)
+Search This Blog
+Follow by Email
+Followers
+Blog Archive
+                            ► 
+                          
+2017
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+2016
+                          (
+                          166
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          2
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          24
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+2015
+                          (
+                          126
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+2014
+                          (
+                          101
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+2013
+                          (
+                          127
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+2012
+                          (
+                          214
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          51
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          28
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          34
+                          )
+                        
+                          ▼ 
+                        
+2011
+                          (
+                          135
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          27
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          7
+                          )
+                        
+                          ▼ 
+                        
+June
+                          (
+                          8
+                          )
+                        
+List of special bash parameter  used in Unix or Li...
+3 Exampls to Convert an Array to ArrayList in Java...
+10 example of using Vim or VI editor in UNIX and L...
+3 ways to solve java.lang.NoClassDefFoundError in ...
+How to use Comparator and Comparable in Java? With...
+Top 30 Programming questions asked in Interview - ...
+Tibco tutorial : Reliability Parameter Explained
+How Volatile in Java works? Example of volatile ke...
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+2010
+                          (
+                          30
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          26
+                          )
+                        
+Pages
+Privacy Policy
+Copyright by Javin Paul 2010-2016. Powered by Blogger.
+ 

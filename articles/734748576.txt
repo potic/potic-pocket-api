@@ -1,0 +1,137 @@
+
+What a compiler does: symbol resolution | Musing Mortoray
+ 
+Musing Mortoray
+~ Programming and Language Design
+Search:
+What a compiler does: symbol resolution  
+09
+Thursday
+Oct 2014
+			Posted  by mortoray in Programming 
+≈ Leave a comment
+Tagscompiler, Programming 
+A key activity of a compiler is to translate named symbols into memory locations. The process typically involves a few stages: identifying the symbols, segmenting them, and determining the actual address. In this article I look at this process at a high level.
+Segmentation
+Given this code:
+1
+2
+3
+4
+5
+6
+7
+var a = 0
+const b = 1
+
+defn pine = (b : integer) -> {
+    var c = b + a
+    a = a + ::b
+}
+A compiler first tries to identify and resolve all the symbols. This allows it to know exactly what variable is being used. The general approach to identifying symbols is to keep a map of the symbols encountered so far. When a name is encountered it looks in that map to see what it is. These maps also form a tree, each scope opens a map, and the searching scans up through the maps until a match is found. For languages with overloads, and type-dependent resolution, it gets somewhat more complicated.
+In any case, we’ll end up with identification something like this:
+1
+2
+3
+4
+5
+6
+@global.a = 0
+
+defn pine = ( @param.b : integer) -> {
+    @local.c = @param.b + @global.a
+    @global.a = @global.a + @global.b
+}
+Assume that in memory the compiler has direct pointers to a declaration for each variable now, so the name is no longer required for identification.
+The compiler doesn’t jump from here directly to memory addresses. Typically this information is “lowered” to an intermediate representation (IR) that is further processed and then ultimately converted to actual addresses. This allows the high-level compiler to be platform independent, as the next steps vary from OS to OS.
+Global Memory
+All of the @global variables in the program reside in the global memory space. This region is usually split into two regions though, one for constant data, and one for variable data. In both cases the compiler must determine the concrete order of the variables in that chunk of memory, and give each variable a byte offset.
+The constant data can all be written into one chunk of contiguous memory. This region can be marked read-only on many systems, improving security somewhat. For example, if we have these constant values:
+1
+2
+3
+int32 b = 1
+float64 c = 2
+string[] d = "Hi"
+The memory block can have the contents [ 1, 2, Hi ] and the addresses will be:
+1
+2
+3
+b = @cdata#0
+c = @cdata#4
+d = @cdata#12
+Dynamic data is placed in a different segment as it may be modified at runtime. This memory also tends to be allocated at runtime, and thus must be initialized before use. For example, if all the files in our program end up using this global writeable memory:
+1
+2
+int32 a = 0
+float64 e = 10
+The compiler creates these addresses:
+1
+2
+a = @data#0
+e = @data#4
+It will also create an initialization function that sets the data when the program starts.
+Relative addresses
+What is interesting about global memory is that the output executable, or shared library, retains the relative address notation. Historically the compiler would actually assign a concrete address to @data and @cdata but this doesn’t happen anymore for a variety of reasons.
+To avoid conflict between multiple libraries, the loader determines where its memory actually resides. When the library wants to look at memory @cdata#4 it needs to add the offset 4 to @cdata. There are actually a few different ways this works, the most common being position independent code (PIC), and the other being load-time relocation.
+Unlike a library, a main executable doesn’t need to worry about conflicting addresses. All those relative addresses could be converted to absolute memory locations at compile-time. This avoids any need to do relocation at load-time or to do indirect lookup, resulting in slightly faster code. However, most executables also use relative addresses and are loaded with a random global memory location just like shared libraries, called position independent executables (PIE). This improves security by thwarting certain types of attacks.
+Parameters and local variables
+Parameters and local variables are where we typically think of the stack. Like global memory we simply compile the addresses of these variables to be relative to the current stack pointer. There is no way for a function to know where the stack will be when it is called, thus relative addressing is required.
+However, modern chips have a lot of spare registers. These are a lot faster to use than memory. In the interest of performance a lot of local variables, and especially parameters, are put into registers instead of on the stack. Indeed on Linux x86_64 most parameters end up in registers. So instead of @param.b pointing to a relative memory offset, it will instead refer to a register.
+How this mapping is done is both hardware and operating system dependent. It would be too confusing for a compiler to map directly from symbols to this register layout. This is where the IR comes in. The high-level pass does the segmentation into @param and @local and lets the lower-level pass do a system appropriate layout.
+Don’t worry though, many locals do end up on the actual stack. In this case the compiler generates relative address like @local#16. At runtime this is a lookup relative to the current stack pointer. Since this is often easier for debugging, some compilers push all the local variables and parameters onto the stack in debug mode. Again, the high-level pass doesn’t care. It’s job was simply to resolve the names and tell the IR in which segment they belong.
+Read more of my articles about compilers.
+I’m the creator of the Leaf programming language: a beautiful culmination of my wide range of development experience. If you would like a presentation about Leaf, or any of my articles please contact me. I’m also available as a consultant and would be happy to discuss your project.
+RedditTwitterEmailMoreFacebookPocketLinkedInTumblrGoogleLike this:Like Loading...
+Related
+ 
+Post navigation
+← Previous post
+Next post →
+Leave a Reply Cancel reply 
+Enter your comment here...
+Fill in your details below or click an icon to log in:
+ 
+ 
+Email (required) (Address never made public)
+Name (required)
+Website
+ You are commenting using your WordPress.com account. ( Log Out / Change )
+ You are commenting using your Twitter account. ( Log Out / Change )
+ You are commenting using your Facebook account. ( Log Out / Change )
+ You are commenting using your Google+ account. ( Log Out / Change )
+Cancel
+Connecting to %s
+ Notify me of new comments via email. Notify me of new posts via email.
+ 
+ 
+About the Author
+Leaf programming language
+ Follow meon Twitter
+Follow Blog via Email
+Enter your email address to follow this blog and receive notifications of new posts by email.
+ 
+  Recent Posts 
+Ride the carousel of folly with a Python migration
+Optional Types and Leaf: Removing automatic dereference
+Smoothing 3d geometry, like a tunnel, with Catmull-Rom splines
+What is a normal map? An object normal map?
+Glowing graphics for that futuristic sci-fi feeling
+Radial Blitz – A rough journey from new technology to app store release
+Are we forever cursed with buggy software?
+The unfortunate world of boilerplate code
+A pattern bandage for messy virtual functions
+The very real mess of virtual functions
+The simple things I want in a text editor
+Is reference counting slower than GC?
+Create a free website or blog at WordPress.com.
+Send to Email Address
+Your Name
+Your Email Address
+Cancel
+				Post was not sent - check your email addresses!			
+				Email check failed, please try again			
+				Sorry, your blog cannot share posts by email.			
+ 
+ 
+%d bloggers like this:

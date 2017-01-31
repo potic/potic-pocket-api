@@ -1,0 +1,170 @@
+
+Dynamic programming solution for Facebook Hacker Cup problem "AAAAAA" in B-Prolog - Sergii Dymchenko
+Sergii Dymchenko
+Home
+Blog
+Tags
+RSS
+Twitter
+Dynamic programming solution for Facebook Hacker Cup problem "AAAAAA" in B-Prolog
+There are lots of material on how to solve puzzles and puzzle-like problems in Prolog (see Hakan Kjellerstrand's B-Prolog page, for example).
+But often the problems shown are either initially intended to be solved by hand (have small search space), or specifically tailored for logic programming paradigm.
+I want to show my Prolog solution to a Facebook Hacker Cup problem, AAAAAA 
+from the round 1 of 2014. 
+The problem has relatively large search space and was intended to be solved by skilled algorithmists using conventional programming languages. 
+Here is a summary of the problem:
+For every test case the input is a N × M grid of characters (N and M are up to 500), where '.' denotes an open cell, and '#' denotes a closed cell ("blocked with a car"). 
+The goal is to construct a longest path ("queue of people") using only open cells 
+from the top-left corner, such that every non-starting cell in the path lies right or down from the previous cell. 
+One exception is allowed – it's possible to go left or up in one contiguous segment of the whole path. Every open cell can be used at most once in the path.
+The output of a test case in the length of a longest path. There can be up to 20 test cases in a single test file.
+Example input and output:
+5
+5 5
+.....
+.....
+.....
+.....
+.....
+1 10
+..........
+5 5
+...#.
+...#.
+...#.
+...#.
+.....
+3 3
+..#
+#.#
+...
+3 8
+........
+#.#.#.#.
+#.#.#.#.
+Case #1: 17
+Case #2: 10
+Case #3: 17
+Case #4: 5
+Case #5: 10
+In the first example case there are no closed cells, and a longest path is:
+↓→↓.
+↓↑↓..
+↓↑↓..
+↓↑↓..
+→↑→→⊕
+For the last test case the path is:
+→→→→→→→↓
+#.#.#.#↓
+#.#.#.#⊕
+My solution uses a B-Prolog-specific "mode-directed tabling", which is a form of memoization.
+This is not a standard Prolog feature, so it will not work with other Prolog implementations
+(similar features exist in XSB and YAP).
+The solution uses top-down dynamic programming. 
+You don't have to know much about dynamic programming to understand the solution: 
+the program just describes all possible ways to extend the queue and asks B-Prolog to find max value of the queue length.
+This is the actual code I wrote and submitted during the competition:
+:- table queue(+, +, +, +, +, +, max).
+queue(_R, _C, _, _, X, Y, 1)  :-
+    \+ car(X, Y).
+% move down
+queue(R, C, Used, Prev, X, Y, S) :-
+    X < R,
+    Prev \= up,
+    Xp1 is X + 1,
+    \+ car(Xp1, Y),
+    queue(R, C, Used, down, Xp1, Y, Snext),
+    S is 1 + Snext.
+% move right
+queue(R, C, Used, Prev, X, Y, S) :-
+    Y < C,
+    Prev \= left,
+    Yp1 is Y + 1,
+    \+ car(X, Yp1),
+    queue(R, C, Used, right, X, Yp1, Snext),
+    S is 1 + Snext.
+% move up
+queue(R, C, Used, Prev, X, Y, S) :-
+    X > 1,
+    (Used =:= 0 ; Prev == up),
+    Prev \= down,
+    Xm1 is X - 1,
+    \+ car(Xm1, Y),
+    queue(R, C, 1, up, Xm1, Y, Snext),
+    S is 1 + Snext.
+% move left
+queue(R, C, Used, Prev, X, Y, S) :-
+    Y > 1,
+    (Used =:= 0 ; Prev == left),
+    Prev \= right,
+    Ym1 is Y - 1,
+    \+ car(X, Ym1),
+    queue(R, C, 1, left, X, Ym1, Snext),
+    S is 1 + Snext.
+do_case(Case_num, R, C) :-
+    queue(R, C, 0, right, 1, 1, S),
+    format("Case #~w: ~w\n", [Case_num, S]).
+main :-
+    read(T),
+    foreach(Case_num in 1..T, [R, C, N], (
+            initialize_table, abolish,
+            read([R, C]),
+            read(N),
+            assert(car(-1, -1)), % dummy
+            foreach(_I in 1..N, [X, Y], (read([X, Y]), assert(car(X, Y)))),
+            do_case(Case_num, R, C)
+        )).
+The first line is a tabling mode declaration for my queue predicate: the first 6 parameters are input parameters, and the last parameter is an output, 
+which needs to be maximized if several different outputs are possible for some input.
+queue parameters are: 
+R - number of grid rows
+C - number of grid columns
+Used - 1 if a left or up move was already used, 0 otherwise
+Prev - direction of the previous step
+X - current X coordinate
+Y - current Y coordinate
+S - length of a path from (X, Y).
+The first clause of the queue predicate says that if there is no a car in a cell (X, Y), 
+then it's possible to have a queue of length 1 starting in this cell (at least).
+Next 4 clauses are for the 4 possible ways to extend a queue: go down, right, up, or left. 
+To go down, the following conditions must be met according to the clause: 
+current cell row X is less than number of rows R
+previous step was not "up"
+there is no car in the position (X+1, Y)
+the length of the resulting queue is 1 + length of a queue starting from the cell (X+1, Y).
+The clause to go right is very similar.
+The clauses to go up and left have extra condition that a left or up move was not used yet, or we continue the sequence of left or up moves:
+(Used =:= 0 ; Prev == up)
+do_case uses queue to find the length of a longest queue from the top-left corner. 
+Thanks to tabling, subproblem answers are only computed once.
+main reads number of test cases, and for each test case reads R, C, and positions of cars in a Prolog-friendly format; 
+for each car a fact is asserted in the Prolog database to be used by queue clauses.
+I could have worked with the problem input directly in B-Prolog, but I decided that it's much easier to preprocess the input with a Python script
+(basically, output a two-element list of coordinates for each car in the input; also end each line with a period):
+T = int(raw_input())
+print "%d." % T
+for case_num in range(1, T + 1):
+    R, C = map(int, raw_input().split())
+    print "[%d, %d]." % (R, C)
+    cars = []
+    for i in range(R):
+        row = raw_input().strip()
+        for j in range(C):
+            if row[j] == '#':
+                cars.append([i + 1, j + 1])
+    print "%d." % len(cars)
+    for car in cars:
+        print "[%d, %d]." % (car[0], car[1])
+Here is the command to run the whole thing (tail excludes B-Prolog version info from the output):
+cat in-file | python preprocess.py | bp -g "cl('AAAAAA.pl'),main,halt" -l | tail -n +7 > out-file
+You can download other participants' solutions for the problem (mostly in Java or C++) from the scoreboard 
+and compare them with my B-Prolog solution. Most of them, if not all, use some form of dynamic programming.
+BTW, Facebook Hacker Cup 2015 starts in a month.
+2014-12-09
+b-prolog, facebook-hacker-cup, dynamic-programming, contest, prolog, logic-programming, python
+Comments
+Please enable JavaScript to view the comments powered by Disqus.
+comments powered by Disqus
+          © Sergii Dymchenko
+            –  
+          Powered by org-page

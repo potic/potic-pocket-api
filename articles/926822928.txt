@@ -1,0 +1,816 @@
+
+Поверхностный реверс инжиниринг IronPython / Хабрахабр
+TM Feed
+Хабрахабр
+Geektimes
+Тостер
+Мой круг
+Фрилансим
+Спецпроекты:
+Хабрахабр
+Публикации
+Хабы
+Компании
+Пользователи
+Песочница
+Войти
+Регистрация
+Перикл Фемиди
+@pfemidi
+          Пользователь
+        
+2,0
+карма
+0,0
+рейтинг
+Профиль
+2
+Публикации
+101
+Комментарии
+308
+Избранное
+0
+Подписчики
+       17 мая 2015 в 19:12 
+    
+Разработка →
+Поверхностный реверс инжиниринг IronPython
+Реверс-инжиниринг*, 
+          Python*
+Привет, хабрахабр!
+
+Столкнулся я с необходимостью модифицировать поведение одной чужой программы, написанной на языке Python. Казалось бы что сложного, Python ведь, бери исходник да модифицируй сколько влезет. Но не тут-то было. Дело осложнялось тем, что программа не просто была написана на Python, она была ещё и откомпилирована при помощи IronPython и никаких исходников не имелось. Для обычного, так скажем, канонического CPython существует Over 9000 различных декомпайлеров байткода из файлов .pyc обратно в .py, например [мой любимый] uncompyle2 и другие, а для IronPython ничего подобного я не нашёл. То ли плохо искал, то ли таковых действительно не существует. Пришлось разбираться самому. Говорю сразу, процесс я не автоматизировал, всё так сказать hand made.
+
+После скармливания исходного файла IronPython делает из него практически native executable в формате .Net (я говорю «практически» потому что делает он исполняемый файл для .Net, а не приложение с конкретным машинным кодом для конкретного процессора). А это значит что для первичного разбора полученного файла можно использовать какой-нибудь из существующих декомпайлеров .Net.
+Небольшое лирическое отступление про разные декомпиляторы .Net и их Addin'ыДа, я нашёл, нагуглил IronPython Reflector Addin для .NET Reflector, но то, что он генерил, меня совсем не порадовало и не устроило. Во-первых, код получался абсолютно нечитаемым и во-вторых, сам .NET Reflector не мог толком декомпилировать исходный файл, постоянно спотыкался через метод-через два и жаловался
+dotPeek вообще не смог декомпилировать ни один метод, Telerik JustDecompile как и .NET Reflector спотыкался через раз, как всегда лучшим и единственным нормально работающим вариантом оказался ILSpy
+
+Для изучения во что же IronPython превращает исходный питоновский файл я не придумал ничего лучшего, как скормить ему простейшую (специально не оптимизированную, для более полного изучения) программу вычисления первых десяти чисел Фибоначчи:
+"""This proggy calculates first 10 Fibonacci numbers"""
+def fib(n):
+    """This function does the main work to calculate Fibonacci numbers"""
+    if n == 0 or n == 1 or n == 2:
+        return 1
+    fib1 = 1
+    fib2 = 1
+    i = 2 
+    while i < n:
+        fib_sum = fib2 + fib1
+        fib1 = fib2
+        fib2 = fib_sum
+        i += 1
+    return fib_sum
+ 
+for i in xrange(10):
+    print("n is {0} for step {1}".format(fib(i), i))
+BUGFIXED 19 мая 2015
+Конечно же вместо
+    if n == 0 or n == 1 or n == 2:
+        return 1
+
+должно быть
+    if n == 0:
+        return 0
+    elif n == 1 or n == 2:
+        return 1
+
+но исправлять уже не буду, слишком много за этим потянется.
+
+IronPython создал два файла: .exe с маленьким запускным стабом и .dll с основной программой. .exe был неинтересен т.к. кроме загрузки .dll с основной программой и передачи ей управления ничего не делал, поэтому всё дальнейшее относится к .dll
+Небольшое лирическое отступление про разные версии IronPythonНачинал изучение я с последней на сей момент версии IronPython 2.7.5. Декомпилировал созданный им fibonacci.dll в C# при помощи ILSpy и для начала решил сравнить полученный код с кодом той программы, которая меня интересовала изначально. Естественно не «байт в байт», функциональность ведь разная, а просто на предмет возможных одинаковых инициализаций, общих вызовов, etc. И сразу же обнаружил различия, небольшие, но всё-таки явные различия. Решил попробовать другие версии IronPython, более старые. Выкачивал очередную (вернее предыдущую) версию IronPython, устанавливал, скармливал ему свой fibonacci.py, загружал полученный fibonacci.dll в ILSpy, визуально сравнивал, опять видел отличия и лез выкачивать следующую версию. Наконец методом таких вот проб и ошибок нашёл что интересующая меня программа была скорее всего скомпилирована при помощи IronPython 2.6, различия между общим C# кодом интересующей программы и полученным fibonacci.dll были минимальны. На IronPython 2.6 и остановился.
+
+Для всей программы IronPython создаёт класс
+public class DLRCachedCode
+
+в котором имеется лишь один метод типа
+public static
+
+содержащий __main__. Все остальные методы класса DLRCachedCode имеют тип
+private static
+
+В них содержатся функции, классы, лямбды, генераторы и пр. исходной питоновской программы.
+
+Перед методом, содержащим __main__, через объявление атрибута CachedOptimizedCode описывается глобальное пространство имён программы:
+    [CachedOptimizedCode(new string[]
+    {
+        "__name__",
+        "__file__",
+        "__doc__",
+        "__path__",
+        "__builtins__",
+        "__package__",
+        "fib",
+        "i",
+        "xrange"
+    })]
+
+В самом начале метода __main__ строится массив всех возможных локальных для данной программы сущностей: всех функций, всех классов, всех compiler generated лямбд и вспомогательных внутренних функций IronPython, через которые runtime библиотека IronPython осуществляет работу с питоновскими списками, словарями, слайсами. И даже все математические/логические операции и операции сравнения тоже производятся посредством вызова внутренних вспомогательных функций IronPython runtime:
+    public static object __main__$1(CodeContext $globalContext, FunctionCode functionCode)
+    {
+        object[] expr_06 = new object[1];
+        StrongBox<object[]> strongBox = expr_06[0] = new StrongBox<object[]>();
+        object[] array = expr_06;
+        object[] value = new object[]
+        {
+            PythonOps.MakeFunctionCode($globalContext, "fib", "This function does the main work to calculate Fibonacci numbers", new string[]
+            {
+                "n"
+            }, 0, new SourceSpan(new SourceLocation(59, 3, 1), new SourceLocation(373, 17, 19)), "fibonacci.py", new Func<PythonFunction, object, object>(new Closure(null, array).fib$2), null, null, null, new string[]
+            {
+                "n",
+                "fib1",
+                "fib2",
+                "i",
+                "fib_sum"
+            }, 5),
+            CallSite<Func<CallSite, object, KeyValuePair<IEnumerator, IDisposable>>>.Create(PythonOps.MakeOperationAction($globalContext, 18)),
+            CallSite<Func<CallSite, CodeContext, object, int, object>>.Create(PythonOps.MakeInvokeAction($globalContext, new CallSignature(1))),
+            CallSite<Func<CallSite, CodeContext, object, object, object, object>>.Create(PythonOps.MakeInvokeAction($globalContext, new CallSignature(2))),
+            CallSite<Func<CallSite, string, CodeContext, object>>.Create(PythonOps.MakeGetAction($globalContext, "format", false)),
+            CallSite<Func<CallSite, CodeContext, object, object, object>>.Create(PythonOps.MakeInvokeAction($globalContext, new CallSignature(1))),
+            CallSite<Func<CallSite, object, bool>>.Create(PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)),
+            CallSite<Func<CallSite, object, bool>>.Create(PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)),
+            CallSite<Func<CallSite, object, bool>>.Create(PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)),
+            CallSite<Func<CallSite, object, int, object>>.Create(PythonOps.MakeBinaryOperationAction($globalContext, 13)),
+            CallSite<Func<CallSite, object, int, object>>.Create(PythonOps.MakeBinaryOperationAction($globalContext, 13)),
+            CallSite<Func<CallSite, object, int, object>>.Create(PythonOps.MakeBinaryOperationAction($globalContext, 13)),
+            CallSite<Func<CallSite, object, object, bool>>.Create(PythonOps.MakeComboAction($globalContext, PythonOps.MakeBinaryOperationAction($globalContext, 20), PythonOps.MakeConversionAction($globalContext, typeof(bool), 1))),
+            CallSite<Func<CallSite, object, object, object>>.Create(PythonOps.MakeBinaryOperationAction($globalContext, 0)),
+            CallSite<Func<CallSite, object, int, object>>.Create(PythonOps.MakeBinaryOperationAction($globalContext, 63))
+        };
+
+Видно что функции из исходного питоновского текста строятся посредством вызова MakeFunctionCode из пространства имён PythonOps IronPython (да, забыл отметить что IronPython это компилятор с открытым исходным текстом, написан на C#, и исходники любой его версии можно свободно скачать из интернета по этой ссылке), имеющего следующую сигнатуру:
+public static FunctionCode MakeFunctionCode(CodeContext context, string name, string documentation, string[] argNames, FunctionAttributes flags, SourceSpan span, string path, Delegate code, string[] freeVars, string[] names, string[] cellVars, string[] varNames, int localCount)
+
+То есть мы видим что наша
+def fib(n):
+    """This function does the main work to calculate Fibonacci numbers"""
+    ....
+
+тут объявлена как
+            PythonOps.MakeFunctionCode($globalContext, "fib", "This function does the main work to calculate Fibonacci numbers", new string[]
+            {
+                "n"
+            }, 0, new SourceSpan(new SourceLocation(59, 3, 1), new SourceLocation(373, 17, 19)), "fibonacci.py", new Func<PythonFunction, object, object>(new Closure(null, array).fib$2), null, null, null, new string[]
+            {
+                "n",
+                "fib1",
+                "fib2",
+                "i",
+                "fib_sum"
+            }, 5),
+
+имеет реальное имя «fib», строчку документации «This function does the main work to calculate Fibonacci numbers»,, получает аргумент с именем «n», начинается в исходном файле «fibonacci.py» в строке 3 на столбце 1, завершается в строке 17 на столбце 19, в сгенерённом IronPython коде она будет именоваться как «fib$2», у неё пустые freeVars, names и cellVars (я не буду вдаваться в подробности что это такое, читатели хаба Python наверняка знакомы с этими понятиями), использует локальные переменные (параметры, кстати, трактуются как локальные переменные) «n», «fib1», «fib2», «i» и «fib_sum» и всего локальных переменных 5 штук.
+
+Все возможные вызовы внутренних вспомогательных функций IronPython runtime заносятся в этот массив локальных переменных как шаблонные вызовы CallSite (опять не буду вдаваться в подробности, эта статья озаглавлена как «Поверхностный реверс инжиниринг IronPython», а не «Доскональный разбор»).
+
+После этого производится модификация некоторых глобальных переменных чтобы они содержали актуальную информацию:
+globalArrayFromContext[1].set_CurrentValue((object)"fibonacci.py");
+globalArrayFromContext[0].set_CurrentValue((object)"__main__");
+
+(как видно меняются переменные "__file__" и "__name__", установленнные ранее через атрибут CachedOptimizedCode)
+
+и начинается выполнение самой программы:
+                globalArrayFromContext[2].set_CurrentValue((object)"This proggy calculates first 10 Fibonacci numbers");
+                int num = 1;
+                globalArrayFromContext[6].set_CurrentValue(PythonOps.MakeFunction($globalContext, (FunctionCode)strongBox.Value[0], globalArrayFromContext[0].get_RawValue(), null));
+                num = 19;
+                CallSite<Func<CallSite, object, KeyValuePair<IEnumerator, IDisposable>>> callSite;
+                CallSite<Func<CallSite, CodeContext, object, int, object>> callSite2;
+                KeyValuePair<IEnumerator, IDisposable> keyValuePair = (callSite = (CallSite<Func<CallSite, object, KeyValuePair<IEnumerator, IDisposable>>>)strongBox.Value[1]).Target.Invoke(callSite, (callSite2 = (CallSite<Func<CallSite, CodeContext, object, int, object>>)strongBox.Value[2]).Target.Invoke(callSite2, $globalContext, globalArrayFromContext[8].get_CurrentValue(), 10));
+                try
+                {
+                    while (true)
+                    {
+                        bool flag = keyValuePair.Key.MoveNext();
+                        if (!flag)
+                        {
+                            break;
+                        }
+                        globalArrayFromContext[7].set_CurrentValue(keyValuePair.Key.Current);
+                        num = 20;
+                        CallSite<Func<CallSite, CodeContext, object, object, object, object>> callSite3;
+                        CallSite<Func<CallSite, string, CodeContext, object>> callSite4;
+                        CallSite<Func<CallSite, CodeContext, object, object, object>> callSite5;
+                        PythonOps.Print($globalContext, (callSite3 = (CallSite<Func<CallSite, CodeContext, object, object, object, object>>)strongBox.Value[3]).Target.Invoke(callSite3, $globalContext, (callSite4 = (CallSite<Func<CallSite, string, CodeContext, object>>)strongBox.Value[4]).Target.Invoke(callSite4, "n is {0} for step {1}", $globalContext), (callSite5 = (CallSite<Func<CallSite, CodeContext, object, object, object>>)strongBox.Value[5]).Target.Invoke(callSite5, $globalContext, globalArrayFromContext[6].get_CurrentValue(), globalArrayFromContext[7].get_CurrentValue()), globalArrayFromContext[7].get_CurrentValue()));
+                        num = 19;
+                    }
+                }
+                finally
+                {
+                    PythonOps.ForLoopDispose(keyValuePair);
+                }
+
+Весь «бред» выше это то, во что IronPython превратил далеко не всю программу, а лишь
+for i in xrange(10):
+    print("n is {0} for step {1}".format(fib(i), i))
+
+Чтобы сделать это более-менее понятным был написан скрипт (его не привожу, он тривиальнейший), заменяющий имена переменных вида globalArrayFromContext[7], strongBox.Value[3].Target.Invoke и подобных на их «очеловеченные» имена из ранее построенных IronPython массивов глобальных и локальных переменных. Получается уже не компилируемый, то есть csc.exe его «не возьмёт», но гораздо более читабельный человеком код:
+                try
+                {
+                    while (true)
+                    {
+                        bool flag = keyValuePair.Key.MoveNext();
+                        if (!flag)
+                        {
+                            break;
+                        }
+                        G[i].set_CurrentValue(keyValuePair.Key.Current);
+                        num = 20;
+                        CallSite<Func<CallSite, CodeContext, object, object, object, object>> callSite3;
+                        CallSite<Func<CallSite, string, CodeContext, object>> callSite4;
+                        CallSite<Func<CallSite, CodeContext, object, object, object>> callSite5;
+                        PythonOps.Print($globalContext, (callSite3 = (CallSite<Func<CallSite, CodeContext, object, object, object, object>>)L[PythonOps.MakeInvokeAction($globalContext, new CallSignature(2))])(callSite3, $globalContext, (callSite4 = (CallSite<Func<CallSite, string, CodeContext, object>>)L[PythonOps.MakeGetAction($globalContext, "format", false)])(callSite4, "n is {0} for step {1}", $globalContext), (callSite5 = (CallSite<Func<CallSite, CodeContext, object, object, object>>)L[PythonOps.MakeInvokeAction($globalContext, new CallSignature(1))])(callSite5, $globalContext, G[fib].get_CurrentValue(), G[i].get_CurrentValue()), G[i].get_CurrentValue()));
+                        num = 19;
+                    }
+                }
+                finally
+                {
+                    PythonOps.ForLoopDispose(keyValuePair);
+                }
+
+IMHO видеть L[PythonOps.MakeGetAction($globalContext, «format», false)]), G[i].get_CurrentValue() и подобные вместо strongBox.Value[4]).Target.Invoke и globalArrayFromContext[7].get_CurrentValue() понятнее и приятнее.
+
+Т.к. повторюсь, процесс я не автоматизировал (работа была штучная и изготавливать конвейерно-поточные специнструменты не было необходимости), то дальше производится разбор руками, полный hand made. Берём, к примеру, функцию fib:
+    private static object fib$2(Closure closure, PythonFunction $function, object n)
+    {
+        object[] locals = closure.Locals;
+        StrongBox<object[]> strongBox = (StrongBox<object[]>)locals[0];
+        CodeContext globalContext = PythonOps.GetGlobalContext(PythonOps.GetParentContextFromFunction($function));
+        PythonGlobal[] globalArrayFromContext = PythonOps.GetGlobalArrayFromContext(globalContext);
+        object result;
+        try
+        {
+            int num = 5;
+            CallSite<Func<CallSite, object, bool>> callSite;
+            CallSite<Func<CallSite, object, bool>> callSite2;
+            CallSite<Func<CallSite, object, bool>> callSite3;
+            CallSite<Func<CallSite, object, int, object>> callSite4;
+            object obj2;
+            CallSite<Func<CallSite, object, int, object>> callSite5;
+            object obj;
+            CallSite<Func<CallSite, object, int, object>> callSite6;
+            if ((callSite = (CallSite<Func<CallSite, object, bool>>)L[PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)])(callSite, (!(callSite2 = (CallSite<Func<CallSite, object, bool>>)L[PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)])(callSite2, obj = ((!(callSite3 = (CallSite<Func<CallSite, object, bool>>)L[PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)])(callSite3, obj2 = (callSite4 = (CallSite<Func<CallSite, object, int, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* Equal */ 13)])(callSite4, n, 0))) ? (callSite5 = (CallSite<Func<CallSite, object, int, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* Equal */ 13)])(callSite5, n, 1) : obj2))) ? (callSite6 = (CallSite<Func<CallSite, object, int, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* Equal */ 13)])(callSite6, n, 2) : obj))
+            {
+                result = ScriptingRuntimeHelpers.Int32ToObject(1);
+            }
+            else
+            {
+                num = 8;
+                object obj3 = ScriptingRuntimeHelpers.Int32ToObject(1);
+                num = 9;
+                object obj4 = ScriptingRuntimeHelpers.Int32ToObject(1);
+                num = 11;
+                object obj5 = ScriptingRuntimeHelpers.Int32ToObject(2);
+                num = 12;
+                object obj6;
+                while (true)
+                {
+                    CallSite<Func<CallSite, object, object, bool>> callSite7;
+                    bool flag = (callSite7 = (CallSite<Func<CallSite, object, object, bool>>)L[PythonOps.MakeComboAction($globalContext, PythonOps.MakeBinaryOperationAction($globalContext, /* LessThan */ 20), PythonOps.MakeConversionAction($globalContext, typeof(bool), 1))])(callSite7, obj5, n);
+                    if (!flag)
+                    {
+                        break;
+                    }
+                    num = 13;
+                    CallSite<Func<CallSite, object, object, object>> callSite8;
+                    obj6 = (callSite8 = (CallSite<Func<CallSite, object, object, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* Add */ 0)])(callSite8, obj4, obj3);
+                    num = 14;
+                    obj3 = obj4;
+                    num = 15;
+                    obj4 = obj6;
+                    num = 16;
+                    CallSite<Func<CallSite, object, int, object>> callSite9;
+                    obj5 = (callSite9 = (CallSite<Func<CallSite, object, int, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* AddAssign */ 63)])(callSite9, obj5, 1);
+                }
+                result = obj6;
+            }
+        }
+        catch (Exception)
+        {
+            int num;
+            PythonOps.UpdateStackTrace(globalContext, (FunctionCode)L[fib$2], MethodBase.GetCurrentMethod(), "fib", "fibonacci.py", num);
+            throw;
+        }
+        return result;
+    }
+
+и начинаем. В самом начале создаются три объекта: result (имя говорит само за себя, там будет то, что функция возвращает), obj2 и obj.
+Ещё одно лирическое отступление про эти objНОМЕР. В спойлер прятать не буду, это важное отступление
+Если просто создаётся objНОМЕР как выше:
+object obj2;
+object obj;
+
+то это как правило вспомогательные объекты, используемые как временные хранилища для временных результатов if, enumerable и т.д. Если же объект инициализируется во время создания:
+object obj3 = ScriptingRuntimeHelpers.Int32ToObject(1);
+object obj4 = ScriptingRuntimeHelpers.Int32ToObject(1);
+object obj5 = ScriptingRuntimeHelpers.Int32ToObject(2);
+
+то это локальная переменная. Имя локальной переменной узнать довольно просто (есть нюансы, но они довольно редки и я не буду на них заострять внимание). Мы уже видели ранее что наша функция «fib» была объявлена как:
+            PythonOps.MakeFunctionCode($globalContext, "fib", "This function does the main work to calculate Fibonacci numbers", new string[]
+            {
+                "n"
+            }, 0, new SourceSpan(new SourceLocation(59, 3, 1), new SourceLocation(373, 17, 19)), "fibonacci.py", new Func<PythonFunction, object, object>(new Closure(null, array).fib$2), null, null, null, new string[]
+            {
+                "n",
+                "fib1",
+                "fib2",
+                "i",
+                "fib_sum"
+            }, 5),
+
+Отбрасываем аргумент «n» и получаем что первый инициализируемый при создании объект, в данном случае obj3, имеет в оригинальном коде имя «fib1». Второй инициализируемый при создании объект, obj4, называется «fib2». Третий, obj5, соответственно «в девичестве» имел имя «i».
+
+После создания объектов идёт какой-то ужас:
+            if ((callSite = (CallSite<Func<CallSite, object, bool>>)L[PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)])(callSite, (!(callSite2 = (CallSite<Func<CallSite, object, bool>>)L[PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)])(callSite2, obj = ((!(callSite3 = (CallSite<Func<CallSite, object, bool>>)L[PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)])(callSite3, obj2 = (callSite4 = (CallSite<Func<CallSite, object, int, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* Equal */ 13)])(callSite4, n, 0))) ? (callSite5 = (CallSite<Func<CallSite, object, int, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* Equal */ 13)])(callSite5, n, 1) : obj2))) ? (callSite6 = (CallSite<Func<CallSite, object, int, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* Equal */ 13)])(callSite6, n, 2) : obj))
+            {
+                result = ScriptingRuntimeHelpers.Int32ToObject(1);
+            }
+
+Убираем в текстовом редакторе «шум», форматируем «лесенкой» для лучшей читаемости и получаем:
+if ((callSite = L[PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)])(callSite, (!(callSite2 =
+    L[PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)])(callSite2, obj = ((!(callSite3 =
+        L[PythonOps.MakeConversionAction($globalContext, typeof(bool), 1)])(callSite3, obj2 = (callSite4 =
+            L[PythonOps.MakeBinaryOperationAction($globalContext, /* Equal */ 13)])(callSite4, n, 0)))
+                ? (callSite5 = L[PythonOps.MakeBinaryOperationAction($globalContext, /* Equal */ 13)])(callSite5, n, 1)
+                : obj2)))
+            ? (callSite6 = L[PythonOps.MakeBinaryOperationAction($globalContext, /* Equal */ 13)])(callSite6, n, 2)
+            : obj))
+{
+    result = ScriptingRuntimeHelpers.Int32ToObject(1);
+}
+
+Если кто не видит в этом коде явного
+if ((n == 0) || (n == 1) || (n == 2))
+{
+    result = ScriptingRuntimeHelpers.Int32ToObject(1);
+}
+
+тому осенью на переэкзаменовку ;-) Или менять профессию.
+
+То есть наш
+    if n == 0 or n == 1 or n == 2:
+        return 1
+
+мы благополучно нашли. Идём дальше.
+                num = 8;
+                object obj3 = ScriptingRuntimeHelpers.Int32ToObject(1);
+                num = 9;
+                object obj4 = ScriptingRuntimeHelpers.Int32ToObject(1);
+                num = 11;
+                object obj5 = ScriptingRuntimeHelpers.Int32ToObject(2);
+
+Это само собой
+    fib1 = 1
+    fib2 = 1
+    i = 2 
+
+(переменные с именем «num» содержат номер строки исходного файла, IronPython так всегда делает, на этом заострять внимание не надо)
+
+Дальше
+                num = 12;
+                object obj6;
+
+Вот obj6 в данном случае не временная, хотя не инициализированная (я выше говорил про «есть нюансы», вот это один из них) переменная, на самом деле это переменная «fib_sum» из исходного текста. Т.к. присвоение ей (и начальная инициализация) идёт внутри цикла, а значение после используется вне цикла, поэтому IronPython был вынужден объявить её тут.
+
+Дальше:
+                while (true)
+                {
+                    CallSite<Func<CallSite, object, object, bool>> callSite7;
+                    bool flag = (callSite7 = (CallSite<Func<CallSite, object, object, bool>>)L[PythonOps.MakeComboAction($globalContext, PythonOps.MakeBinaryOperationAction($globalContext, /* LessThan */ 20), PythonOps.MakeConversionAction($globalContext, typeof(bool), 1))])(callSite7, obj5, n);
+                    if (!flag)
+                    {
+                        break;
+                    }
+                    num = 13;
+                    CallSite<Func<CallSite, object, object, object>> callSite8;
+                    obj6 = (callSite8 = (CallSite<Func<CallSite, object, object, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* Add */ 0)])(callSite8, obj4, obj3);
+                    num = 14;
+                    obj3 = obj4;
+                    num = 15;
+                    obj4 = obj6;
+                    num = 16;
+                    CallSite<Func<CallSite, object, int, object>> callSite9;
+                    obj5 = (callSite9 = (CallSite<Func<CallSite, object, int, object>>)L[PythonOps.MakeBinaryOperationAction($globalContext, /* AddAssign */ 63)])(callSite9, obj5, 1);
+                }
+
+Мысленно «переписываем» это как
+                while (true)
+                {
+                    bool flag = (obj5 < n);
+                    if (!flag)
+                    {
+                        break;
+                    }
+                    obj6 = obj4 + obj3;
+                    obj3 = obj4;
+                    obj4 = obj6;
+                    obj5 = obj5 + 1;
+                }
+
+(это просто на самом деле, лично я терялся только первые минут 40-50 [интересующая программа была большая и циклы/блоки там были гораздо побольше, я её дней пять так вот сидел переводил], после уже тьфу, раз плюнуть получалось)
+
+и с учётом того, что (см. выше) мы уже знаем кто такие на самом деле (в исходном файле то есть) ob3, obj4, obj5 и obj6 пишем:
+                while (true)
+                {
+                    bool flag = (i < n);
+                    if (!flag)
+                    {
+                        break;
+                    }
+                    fib_sum = fib2 + fib1;
+                    fib1 = fib2;
+                    fib2 = fib_sum;
+                    i = i + 1;
+                }
+
+Ого! Похоже мы получили вполне себе
+    while i < n:
+        fib_sum = fib2 + fib1
+        fib1 = fib2
+        fib2 = fib_sum
+        i += 1
+
+И последний штрих:
+                result = obj6;
+            }
+        }
+        catch (Exception)
+        {
+            int num;
+            PythonOps.UpdateStackTrace(globalContext, (FunctionCode)L[fib$2], MethodBase.GetCurrentMethod(), "fib", "fibonacci.py", num);
+            throw;
+        }
+        return result;
+    }
+
+То есть переменной «result» присваивается «fib_sum» и это дело возвращается. We did it! We HAVE DONE it!!!
+
+На try в начале методов и catch в конце методов внимания обращать тоже не надо, это чисто IronPytonовские штуки и к нам отношения не имеют. Хотя питоновские исключения IronPython обрабатывает почти так же, но в данном случае pure Python exceptions нет, это ловятся исключения самого IronPython.
+
+Ну вот как-то так.
+IronPython, 
+decompilation
+Реклама помогает поддерживать и развивать наши сервисыПодробнее
+Реклама
+Хабы
+Разработка веб-сайтов
+PHP
+JavaScript
+Разработка под Android
+Программирование
+Разработка мобильных приложений
+Браузеры
+Big Data
+Open source
+Node.JS
+Все хабы
+Реклама помогает поддерживать и развивать наши сервисыПодробнее
+Реклама
+↑
++12
+↓
+9,5k
+Добавить в избранное
+53
+Выберите рекомендации для отправки автору:
+Указан только блог
+Орфографические ошибки
+Пунктуационные ошибки
+Отступы
+Текст-простыня
+Короткие предложения
+Смайлики
+Много форматирования
+Картинки
+Ссылки
+Отправить
+Перикл Фемиди
+@pfemidi
+карма
+2,0
+рейтинг
+0,0
+          Пользователь
+        
+Похожие публикации
++6
+Разработчик научных пакетов SciPy/NumPy выпустит их на .NET/IronPython
+873
+5
+3
++6
+Даешь поддержку IronRuby и IronPython в Visual Studio 2010!
+492
+0
+18
++32
+IronPython как движок для макросов в .NET приложениях
+4,7k
+48
+38
+Самое читаемое
+Разработка
+Сейчас
+Сутки
+Неделя
+Месяц
++9
+What the flask?
+2,1k
+10
+2
++6
+Пора играть честно, Microsoft
+8,7k
+14
+240
++9
+Книга «В работу с головой. Паттерны успеха от IT-специалиста»
+7,9k
+51
+10
++3
+Самые популярные слова в двух терабайтах кода
+453
+4
+12
++19
+Async/await это шаг назад для JavaScript'a?
+10,5k
+78
+69
++27
+Правильный путь становления безопасника: от ламера до практического эксплойтинга
+13,5k
+196
+16
++19
+Async/await это шаг назад для JavaScript'a?
+10,5k
+78
+69
++6
+Пора играть честно, Microsoft
+8,7k
+14
+240
++9
+Книга «В работу с головой. Паттерны успеха от IT-специалиста»
+7,9k
+51
+10
++26
+Экзамен для будущих «русских хакеров» в Московском Политехе
+17,8k
+140
+32
++56
+Старикам здесь вполне ещё место: забытые ИT-технологии в строю
+34,1k
+78
+136
++135
+Что если в играх использовать видеокарточку для физики, а не для графики
+27k
+115
+179
++36
+Один из простых способов улучшить свои навыки программирования — читать чужой код
+24,9k
+247
+33
++34
+Пользователи Windows получили возможность работать с openSUSE (и Arch Linux)
+23,6k
+110
+71
++54
+Я работаю в ТехЦентре Дойче Банка
+22,1k
+47
+67
++47
+Самые востребованные языки программирования 2016
+63,6k
+112
+152
++96
+Писать веб-сайты на ассемблере полезно и приятно
+58,4k
+268
+428
++107
+Как проектируют ненастоящие программисты
+54,4k
+158
+257
++75
+Уязвимость Viber, позволяющая прослушивать чужой разговор
+49,5k
+58
+33
++92
+Почему Hackintosh уже актуален. Развенчание мифов
+46,6k
+485
+430
+      Комментарии (7)
+      
+    
+Egor3f
+            17 мая 2015 в 23:50
+          
+0
+↑
+↓
+          Даже интересно стало сравнить производительность полученной программы: чистый python vs IronPython. Сам .net быстр, но тут тааакой салат на выходе получается, думаю, скорость падает, а потребление памяти растёт изрядно.
+        
+pfemidi
+            18 мая 2015 в 00:44
+          
++1
+↑
+↓
+          Так ведь этот «салат на выходе» JIT от .Net предварительно в нативный код преобразует. Так что не думаю что скорость сильно упадёт.
+        
+pfemidi
+            18 мая 2015 в 14:03
+          
+0
+↑
+↓
+          Вот.
+Слегка модифицированный fibonacci.py"""This proggy calculates first 10 Fibonacci numbers"""
+import time
+def fib(n):
+    """This function does the main work to calculate Fibonacci numbers"""
+    if n == 0 or n == 1 or n == 2:
+        return 1
+    fib1 = 1
+    fib2 = 1
+    i = 2 
+    while i < n:
+        fib_sum = fib2 + fib1
+        fib1 = fib2
+        fib2 = fib_sum
+        i += 1
+    return fib_sum
+start_time = time.time()
+for i in xrange(5000):
+    for j in xrange(100):
+        fib(j)
+#    print("n is {0} for step {1}".format(fib(i), i))
+elapsed_time = time.time() - start_time
+print(elapsed_time)
+Сначала Linux[pfemidi@pfemidi shared]$ uname -a
+Linux pfemidi 3.19.7-200.fc21.x86_64 #1 SMP Thu May 7 22:00:21 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux
+[pfemidi@pfemidi shared]$ cat /etc/redhat-release 
+Fedora release 21 (Twenty One)
+[pfemidi@pfemidi shared]$ python --version
+Python 2.7.8
+[pfemidi@pfemidi shared]$ python fibonacci_time.py 
+2.98193216324
+[pfemidi@pfemidi shared]$ python fibonacci_time.py 
+2.98093986511
+[pfemidi@pfemidi shared]$ python fibonacci_time.py 
+2.98589110374
+[pfemidi@pfemidi shared]$
+
+Не думаю что время IronPython 2.6 будет сильно отличаться от IronPython 2.7
+Т.к. чистого Windows у меня нет, то Windows 7 Enterprise в VirtualBox под тем же самым LinuxC:\Users\pfemidi\Documents\fibonacci>«C:\Program Files (x86)\IronPython 2.7\ipy.exe» -V
+IronPython 2.7 2.7.5.0 on .NET 4.0.30319.36213
+
+C:\Users\pfemidi\Documents\fibonacci>python --version
+Python 2.7.9
+
+C:\Users\pfemidi\Documents\fibonacci>«C:\Program Files (x86)\IronPython 2.7\ipy.exe» fibonacci_time.py
+1.98535919189
+
+C:\Users\pfemidi\Documents\fibonacci>«C:\Program Files (x86)\IronPython 2.7\ipy.exe» fibonacci_time.py
+1.875
+
+C:\Users\pfemidi\Documents\fibonacci>«C:\Program Files (x86)\IronPython 2.7\ipy.exe» fibonacci_time.py
+1.90625762939
+
+C:\Users\pfemidi\Documents\fibonacci>python fibonacci_time.py
+3.59899997711
+
+C:\Users\pfemidi\Documents\fibonacci>python fibonacci_time.py
+3.61599993706
+
+C:\Users\pfemidi\Documents\fibonacci>python fibonacci_time.py
+3.62599992752
+
+C:\Users\pfemidi\Documents\fibonacci>
+
+Результаты думаю говорят сами за себя (это про скорость, а вот как проверить потребление памяти я не знаю).
+        
+obiwanus
+            18 мая 2015 в 00:38
+          
++3
+↑
+↓
+          Сорри, honestly собирался прочесть, но блин, я не able переварить такую кашу из русского и инглиш.
+        
+pfemidi
+            18 мая 2015 в 00:47
+          
++2
+↑
+↓
+          Сорри, но я не миксовал рашн и английские вордсы. Фор икземпл, плиз, где конкретно это хэппенс?
+        
+obiwanus
+            18 мая 2015 в 01:22
+          
+0
+↑
+↓
+          Блин, ответил ниже случайно. 
+        
+obiwanus
+            18 мая 2015 в 01:16
+          
++2
+↑
+↓
+          существует Over 9000 различных декомпайлеров байткода
+делает из него практически native executable
+процесс я не автоматизировал, всё так сказать hand made
+и это дело возвращается. We did it! We HAVE DONE it!!!
+
+Евери факин вере!
+        
+Только зарегистрированные пользователи могут оставлять комментарии. Войдите, пожалуйста.
+Пометьте топик понятными вам метками, если хотите
+Метки лучше разделять запятой. Например: общение, социальные сети, myspace.com, подростки, мердок
+ или закрыть
+Что обсуждают
+Сейчас
+Вчера
+Неделя
+Месяц
+Это не ransomware, но в любом случае может «захватить» Ваш сервер  9
+Самые популярные слова в двух терабайтах кода  12
+Автоматическая визуализации python-кода с использованием блок-схем  58
+Семь отличных ускорителей сайтов для Linux и Unix  10
+Викимарт и “теория бОльшего дурака” в электронной коммерции  11
+Пора играть честно, Microsoft  240
+Async/await это шаг назад для JavaScript'a?  69
+Будущее мобайла — не приложения, а браузеры  40
+Выпуск фреймворка Qt 5.8  40
+Краткий обзор нововведений в Laravel 5.4  35
+Пора играть честно, Microsoft  240
+Почему в России много идей, но мало стартапов  212
+Что если в играх использовать видеокарточку для физики, а не для графики  179
+Linux-2017: самые перспективные дистрибутивы  161
+Старикам здесь вполне ещё место: забытые ИT-технологии в строю  136
+Обратная сторона Agile  575
+IDEA пора закапывать?  504
+Почему Hackintosh уже актуален. Развенчание мифов  430
+Писать веб-сайты на ассемблере полезно и приятно  428
+Обещания Google начали сбываться — теперь сайты https помечаются как надёжные  321
+Интересные публикации
+Хабрахабр
+Гиктаймс
+Национальные домены vs один общий домен: кейс 841% роста от международного бренда  4
+What the flask?  2
+Как изучать английскую грамматику БЕЗ упражнений. Творческий подход — внедрение юнитов в главы своей книги  17
+3D-моделирование и гибкая эндоскопия  4
+Как рождались IT-династии в Беларуси  0
+Краткий обзор нововведений в Laravel 5.4  35
+Южная Корея разрабатывает свой Hyperloop  26
+Как получаются дети [18+]  60
+Пользовательские исследования в играх  2
+Китай объявил о 14-месячной облаве на VPN, используемых для обхода национального файервола  55
+Реклама помогает поддерживать и развивать наши сервисыПодробнее
+Реклама
+Войти
+Регистрация
+Разделы
+Публикации
+Хабы
+Компании
+Пользователи
+Q&A
+Песочница
+Инфо
+О сайте
+Правила
+Помощь
+Соглашение
+Услуги
+Реклама
+Тарифы
+Контент
+Семинары
+Разное
+iOS приложение
+Android приложение
+Помощь стартапам
+© TM
+Служба поддержки
+Мобильная версия

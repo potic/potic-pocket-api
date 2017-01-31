@@ -1,0 +1,773 @@
+
+6 Books to Learn and Master Programming and Coding - Must Read
+Javarevisited
+Blog about  Java programming language, FIX Protocol, Tibco RV
+Pages
+Home
+core java
+spring
+hibernate
+collections
+multithreading
+design patterns
+interview questions
+coding
+data structure
+OOP
+books
+About Me
+6 Books to Learn and Master Programming and Coding - Must Read
+Coding is an integral part of programming and we all somehow learn to code by following examples here and there. What is more difficult is to write good code. You can easily find programmers in Java, C++, Ruby or Python, but finding programmers, who are also a good coder is very difficult. Some universities have a good curriculum and practical classes to teach coding better than others, but most of these great codes are self-taught. The point is self-learning is VERY important in the field of Programming and Coding, you just cannot rely on your college and university to make you an expert programmer, you have to make that extra effort to distinguish yourself from the group. What could be best by learning coding and wisdom of programming from those who have gone through the same path?
+Uncle Bob is a big advocate of clean coding and object-oriented design, and as much I have learned about coding and programming from his series of books, I have not learned anywhere. Martin Fowler is another great name in software design, development, and testing, and his book on Refactoring is must read for any serious programmer.
+Recently I come across an infographic about 10 Books That Make You Expert in Programming. Though I don't agree with all the books they have there, I definitely agree with the top 6 and the last book, which is an all-time classic on design patterns. I thought to share that with you guys, If you are more inclined to web programming you will also find rest of the books more valuable, but If you are server side Java programmer, you will definitely find top 5 worth reading.
+6 Books to become Expert in Programming and Coding 
+Here is the list of books, that will make you an expert in coding and programming. If you follow and practice advice given in these books, you will surely learn a lot about the craft of coding and programming. They are not the book which tells you how to write for loop or how to check for a condition on if block because that can be learned from any book. They will teach you how to use these tools to solve a real world problem.
+Refactoring, Improving design of existing code
+This book is written in Java as it's principle language, but the concept and idea are applicable to any Object oriented language e.g. C++ or C#.This book will teach you how to convert a mediocre code into a great code which can stand production load and real-world software development nightmare, the CHANGE. The great part is that Martin literally walks you the steps by taking a code you often see and then step by step converting into more flexible, more usable code. You will learn the true definition of clean code, by going through his examples. Refactoring is also an attribute of experienced Programmers, as your job area now includes improving code but also your fellow developers code.
+Clean Code
+This is my favorite book, and time and again I have recommended it to my fellow programmers, readers, colleagues, and students. If you ask me what is the best book on coding, software development and programming in general, THIS is it.
+Uncle Bob Martin doesn't need any introduction, he has authored a series of agile software development books, some of them from myself are Clean Code, Clean Coder, Agile Software Development: Principles, Patterns, and Practices, UML for Java Programmers and Extreme Programming in Practice.
+Though most of his books are a decade old but they are still valuable and I am sure they will remain for another 20 years or at least till the object-oriented programming is in business. Clean code not only teaches you WHAT TO DO but also WHAT NOT TO DO. It has chapters of code smell, which is the great collection of common mistakes made by all kinds of programmers. It has chapters on how you correct them e.g. how to convert a long switch statement into a much better model based upon open close design principle and leveraging the power of Inheritance and Polymorphism.
+This is a must read the book for any Programmer. Though examples are given in Java, which makes it, even more, valuable for Java programmer, but it is also equally useful for other programmers e.g. C, C++ or any other OO practitioner.
+Code Complete
+This is I guess most read a book on coding practices. At 10000 ft, It looked to me as the counterpart of Clean Code for C++ developers. Though I have gone through this book even before reading Clean Code. Long back one of my friends told me that In his small company, every new developer who joins the firm receives a brand new copy of Code Complete.
+That was an awesome practice on the part of that small company, but later I come to know that even Microsoft distributes copies of this books to their employee, I don't know how much truth in this, but the book certainly makes me believe it.
+It's a must read for any programmer, but even more, MUST read for a C, C++ programmer. Just like I recommend Java developer to read Clean Code first before reading Code Complete, I also recommend C++ developer to read this book before touching Clean Code. Though they both have a lot of overlap in terms of best practices and common mistake to avoid, both are worth trying. In the end, you will find one of the book close to your heart than other.
+Given my Java background and writing style of Uncle Bob, I find it reading Clean Code more often than Code Complete. As the infographic says, "Code complete helps the developer to write better software with the highest quality code".
+The Art of Unit Testing
+If there is one thing I would like to improve on projects as well as programmers are their ability to unit test. After so many years or recognition that Unit testing is must have practice for a professional developer, you will hardly find developers who are well verse of Unit testing and follows TDD.
+Though I am not hard on following TDD, but at a bare minimum, you must write the Unit test for the code you wrote and also for the code you maintain. Projects are also not different, apart from open source projects, many commercial in-house enterprise projects suffers from the lack of Unit test.
+If you are a project manager, team lead or Tech lead, create proper software development process which includes Code Review, Unit testing, JIRA, Coding standards, SVN Commit policy and deployment practices. It's your job not only to create those process but also make sure that developers not just follow but also learns from that.
+Even if you invest a small amount in helping the developer to learn and adopt this practice, you will gain big time on code quality, bug fixing, maintenance, and training. A project with unit tests is much easier to maintain and change. Developers also find learning a new code-base with unit tests easier than those monolithic pieces of code which require Database, MQ and Enterprise Server setup. The art of Unit testing address this concern.
+This book tells you the difference between a failed project and a successful one, and difference between a maintainable code base and a code-base when you are testing database and other technologies. This book has examples in the.NET but not difficult for any programmer. By the way, for Java developers, I have also shared a couple of good JUnit books here.
+Leading Lean Software Developer
+This book tells you how to drive high-value change throughout a software organization, and make it stick. It shows you how to make lean work in real projects, environments, and companies. Tom and Mary Poppendieck (poppendieck.com) teaches and consults worldwide on Lean principles for software. Her approach identifies real business value and enables product teams to realize that value and her new book "Leading Lean Software Development" is written for all kinds of leaders, e.g. Project leaders, Program Managers, C-level management, and others. I come to know about this book little late, but it's a  great addition to your book self, particularly more if you are aspiring to become a technical leader or doing that job already.
+ Design Patterns, Elements of Reusable Object-Oriented Software
+If not read already, I am sure you must have heard about this book. This is the classic GOF (Gang of Four) design pattern books. We should be thankful to Gang of Four; Eric Gamma, Richard Helm, Ralph Johnson, and John Vissides for their excellent word of creating, consolidating and bring it to mainstream software development. This book has a catalog of simple and succinct solutions to commonly occurring design problems. It contains 23 Object Oriented design patterns to create more flexible, elegant, and ultimately reusable designs without having to rediscover the design solutions themselves.
+And Now here is the Infographic, I am talking about.
+Source: www.perceptionsystem.com
+That's all on this list of top six books to learn coding and programming. I know reading and learning something is hard, but this is the challenge you take when you become a programmer. This is the field where the ability to learn and adopt makes the difference between a good and great developer. Make books your friend, listen to the podcast, watch clean code talks and most importantly write code and refactor it until you can say it's clean. If you are hungry to become a better developer, make sure to read my 10 tips to become an expert programmer.
+Posted by
+Javin Paul
+Email This
+BlogThis!
+Share to Twitter
+Share to Facebook
+Labels:
+books
+                              ,
+                            
+coding
+                              ,
+                            
+java
+                              ,
+                            
+online resources
+                              ,
+                            
+programming
+13 comments
+                      :
+                    
+Anonymous
+said...
+Nice collection dude...
+September 15, 2014 at 8:44 AM
+Anonymous
+said...
+what podcasts do you recommend ? any links to clean code talks ?
+October 11, 2014 at 6:03 PM
+Javin Paul
+said...
+@Anonymous, Clean code talks from TheGoogleTechTalks is very good resource. I personally like this, Conditionals and Polymorphism talks a lot. You will enjoy this if you have not seen it already https://www.youtube.com/watch?v=4F72VULWFvc
+October 12, 2014 at 12:06 AM
+Anonymous
+said...
+Thank you very much for writing this post....I'm really tempted to begin learning how to program...but is frustrating because I haven't really seen any attempt from a professional programmer with much experience in the industry to write a guide that gets you from knowing nothing to an intermediate level programmer, taking the Tim Ferriss approach on shortening learning time...I know that to become an advanced world class programmer you would need 10-15 years of experience but to go from zero to intermediate while focusing on good programing habits I still think it's doable in 3-6 months...but to do this you need real experts that know HOW and WHAT to teach to a novice to shorten the learning curve, while not forgetting about the good programing habits.From my short research it's clear that if you want to become a great programmer you need to understand the underlying concepts of how code works..but sadly many people that seem to interview for coding projects have many many gaps because they're so focused on syntax and don't understand the concepts,principles and can't map in their minds how everything works together and how to solve problems.Any recommendations from you and your readers would be awesome! thank you in advance! Sorry for my English it's not my native language.
+October 24, 2014 at 7:34 AM
+Prakash Dubey
+said...
+List is incomplete, unless Effective Java is added :)
+November 7, 2014 at 10:21 AM
+Raymond
+said...
+I missed "The Art of UNIX Programming" in this list...
+November 27, 2014 at 7:55 AM
+Erik Ostermueller
+said...
+What role should the software developer play in making software perform to expectations?How much treatment does this get in these books?  Seems like very little.
+November 30, 2014 at 9:25 AM
+Anonymous
+said...
+@Prakash Dubey, Yes, I also missed Effective Java in this list, one of the best book I have ever read. must for any Java programmer who is serious aobut his skills. 
+December 10, 2014 at 7:41 PM
+Senthil Kumar B
+said...
+Good Collection of books . The pragmatic programmer could be another good book to be added in the list.
+March 9, 2015 at 6:17 AM
+V. Anton Spraul
+said...
+In a transparent bid of self-promotion, I'm going to tout my own book, Think Like a Programmer. (https://www.nostarch.com/thinklikeaprogrammer). In all seriousness, if someone is already at the point where a book about design patterns can be fully digested, they probably don't need my book, but for people trying to learn to program who are stuck at the stage where they know the syntax but don't feel like they "get" programming, my book can help. Or check out the videos (https://www.youtube.com/user/vantonspraul).
+October 29, 2015 at 6:13 PM
+Anonymous
+said...
+Nice list, couple of books I would like to add in this list- working with legacy code, must read for any programmer- writing secure code from Microsoft press, security is most important if you are in real business. 
+January 19, 2016 at 9:17 PM
+Anonymous
+said...
+Here is one more list of 10 free Java Programming books, worth looking too. Cheers ...
+June 10, 2016 at 12:37 AM
+Anonymous
+said...
+If you seriously want to become a better programmer , you must improve your data structure and algorithm skill. You can read these books to learn Algorithms. You should be good at algorithm and data structure to write good code. Once you done, that you can look at these books to improve coding skill . 
+June 10, 2016 at 12:47 AM
+Post a Comment
+Newer Post
+Older Post
+Home
+Subscribe to:
+Post Comments
+                      (
+                      Atom
+                      )
+                    
+Interview Questions
+core java interview question
+(161)
+data structure and algorithm
+(45)
+Coding Interview Question
+(32)
+SQL Interview Questions
+(24)
+thread interview questions
+(20)
+database interview questions
+(18)
+servlet interview questions
+(17)
+collections interview questions
+(15)
+spring interview questions
+(9)
+Programming interview question
+(4)
+hibernate interview questions
+(4)
+Translate this blog
+Java Tutorials
+date and time tutorial
+(17)
+FIX protocol tutorial
+(16)
+java collection tutorial
+(52)
+java IO tutorial
+(25)
+Java JSON tutorial
+(6)
+Java multithreading Tutorials
+(33)
+Java Programming Tutorials
+(27)
+Java xml tutorial
+(9)
+Search This Blog
+Follow by Email
+Followers
+Blog Archive
+                            ► 
+                          
+2017
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+2016
+                          (
+                          166
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          2
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          24
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+2015
+                          (
+                          126
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                          ▼ 
+                        
+2014
+                          (
+                          101
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          4
+                          )
+                        
+                          ▼ 
+                        
+September
+                          (
+                          9
+                          )
+                        
+ORA-00904: invalid identifier Error in Oracle 11g ...
+Java 8 Certification - Oracle Java SE 8 Programmer...
+Common Multi-threading Mistakes in Java - Calling ...
+How to Create Complex directory Tree Using mkdir -...
+10 Interview Questions Every Programmer Should Kno...
+6 Books to Learn and Master Programming and Coding...
+3 Examples of Parsing HTML File in Java using Jsou...
+Jar Artifiact Dependency Search Not Working in Ecl...
+Why you should control Visibility of Class and Int...
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+2013
+                          (
+                          127
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+2012
+                          (
+                          214
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          51
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          28
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          34
+                          )
+                        
+                            ► 
+                          
+2011
+                          (
+                          135
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          27
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+2010
+                          (
+                          30
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          26
+                          )
+                        
+Pages
+Privacy Policy
+Copyright by Javin Paul 2010-2016. Powered by Blogger.
+ 

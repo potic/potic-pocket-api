@@ -1,0 +1,24 @@
+Why The 8-Hour Workday Doesn't Work   Leadership #​{{::display_hashtag}} Leadership #​{{::display_hashtag}} {{article.article.pretty_date}} {{article.metrics.page_views}} views  Edit Post{{circ_link.title}} Why The 8-Hour Workday Doesn't Work{{article.article.images.featured.caption}}Most Read{{contrib_block.display_advoice_brand}} {{contrib_block.display_voice_type}}{{contrib_block.display_author.name}}Voice Travis Bradberry ,  {{contrib_block.display_author.type}}   Contributor {{contrib_block.display_author.type}} Contributor   Opinions expressed by Forbes Contributors are their own.Full BioRecent PostsPopular PostsFull profile →'">The author is a Forbes contributor. The opinions expressed are those of the writer.Loading ...Loading ...This story appears in the {{article.article.magazine.pretty_date}} issue of {{article.article.magazine.pubName}}. Subscribe
+The eight-hour workday is an outdated and ineffective approach to work. If you want to be as productive as possible, you need to let go of this relic and find a new approach.
+The eight-hour workday was created during the industrial revolution as an effort to cut down on the number of hours of manual labor that workers were forced to endure on the factory floor. This breakthrough was a more humane approach to work 200 years ago, yet it possesses little relevance for us today.
+Like our ancestors, we’re expected to put in eight-hour days, working in long, continuous blocks of time, with few or no breaks. Heck, most people even work right through their lunch hour!
+Shutterstock
+This antiquated approach to work isn’t helping us; it’s holding us back.
+The Best Way To Structure Your Day
+A study recently conducted by the Draugiem Group used a computer application to track employees’ work habits. Specifically, the application measured how much time people spent on various tasks and compared this to their productivity levels.
+In the process of measuring people’s activity, they stumbled upon a fascinating finding: the length of the workday didn’t matter much; what mattered was how people structured their day. In particular, people who were religious about taking short breaks were far more productive than those who worked longer hours.
+The ideal work-to-break ratio was 52 minutes of work, followed by 17 minutes of rest. People who maintained this schedule had a unique level of focus in their work. For roughly an hour at a time, they were 100% dedicated to the task they needed to accomplish. They didn’t check  “real quick” or get distracted by emails. When they felt fatigue (again, after about an hour), they took short breaks, during which they completely separated themselves from their work. This helped them to dive back in refreshed for another productive hour of work.
+Your Brain Wants An Hour On, 15 Minutes Off
+People who have discovered this magic productivity ratio crush their competition because they tap into a fundamental need of the human mind: the brain naturally functions in spurts of high energy (roughly an hour) followed by spurts of low energy (15–20 minutes).
+For most of us, this natural ebb and flow of energy leaves us wavering between focused periods of high energy followed by far less productive periods, when we tire and succumb to distractions.
+Win At Work: An eBook From Forbes
+Land a great job, handle your boss and get ahead today.
+The best way to beat exhaustion and frustrating distractions is to get intentional about your workday. Instead of working for an hour or more and then trying to battle through distractions and fatigue, when your productivity begins to dip, take this as a sign that it’s time for a break.
+Real breaks are easier to take when you know they’re going to make your day more productive. We often let fatigue win because we continue working through it (long after we’ve lost energy and focus), and the breaks we take aren’t real breaks (checking your e-mail and watching YouTube doesn’t recharge you the same way as taking a walk does).
+Gallery 
+    
+15 Surprising Things Productive People Do Differently
+Launch Gallery
+       15 images 
+     
+Start Gallery Page {{article.article.page + 1}} / {{article.article.pages.length}} Continue {{article.article.calledOutCommentCount||''}}Comment on this story Print Report Corrections Reprints & PermissionsTrending on Forbes {{channel_name}}false 

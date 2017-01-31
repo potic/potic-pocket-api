@@ -1,0 +1,103 @@
+
+Algorithms Might Be Everywhere, But Like Us, They’re Deeply Flawed |  | Observer
+Politics|
+Arts & Entertainment|
+Style & Design|
+Business & Technology|
+ 
+Search for:
+Submit
+Observer
+Politics
+National
+New York
+New Jersey
+International
+Editorials
+Arts & Entertainment
+Art
+Movies
+Music
+Performing Arts
+TV
+Style & Design
+Fashion
+Food & Drink
+Health & Wellness
+Home Design
+Real Estate
+Travel
+Business & Technology
+Deals
+Innovators
+Internet Culture
+Media
+Startups
+Subscribe to Newsletters
+ 
+Algorithms Might Be Everywhere, But Like Us, They’re Deeply Flawed
+			By Jonathan Albright • 10/24/16 9:26am 
+Dating app Tinder relies on algorithms to decide which photos users see. LIONEL BONAVENTURE/AFP/Getty Images
+What’s the problem?
+As algorithms become entrenched into society, the debate about their effects rages on.
+In essence, algorithms are sequences of instructions used to solve problems and perform functions in computer programming. As mathematical expressions, algorithms existed long before modern computers. While they vary in application, all algorithms have three things in common: clearly-defined beginning and ending points, discrete sets of “steps,” and design meant to address a specific type of problem.
+And problems we have.
+Sorting algorithm Pmdumuid
+On the one hand, algorithms play the role of prime suspect — responsible for the recent UK pound’s Brexit-induced flash crash, used for political and informational manipulation on social networks, and part of what Harvard Professor Shoshanna Zuboff calls “surveillance capitalism”.
+Algorithms are everywhereOn the other hand, algorithms make modern life easier: they help us find information, detect disease, connect us to friends and family, show us products we’re likely to be interested in, recommend personalized experiences, and direct us around traffic delays, saving us valuable time and money.
+Algorithms are everywhere
+Much has been written on what algorithms do and how they affect us. This includes how algorithms secretly control us, what types of information they filter in or out of our social media feeds, and the thousands of calculated outcomes they force on us daily.
+This piece isn’t about these issues, or about breaking down the complex nature of how algorithms work.
+The relevance of algorithms at the moment isn’t because they are used in Google’s search, maps, autocomplete, photos, and translation services; Facebook’s news feed and Trends; Twitter’s trending topics; Netflix’s movie recommendations; Amazon’s prices and product reviews; or for predicting hurricanes, creditworthiness, and home and car insurance liabilities. It’s not because most computer software and mobile applications are essentially bundled packages of algorithms.
+To return to my very first point, algorithms are important because they are the key process in artificial intelligence: decision-making.
+AI_gorithms
+Algorithms are… The Conversation
+Algorithms, in a sense, are the “nervous system” of AI. They are the models that underpin machine learning, prediction, and problem solving. Yet, as many researchers argue, due to their design by humans, algorithms can never be neutral.
+algorithms are not neutral by definitionalgorithms are not neutral by definitionalgorithms are not neutral by defihttps://t.co/dckOayKybG
+— Casey Johnston (@caseyjohnston) May 17, 2016
+As Vint Cerf, co-inventor of the Internet Protocol, Turing Award winner, and Google VP pointed out in a recent speech at Elon University:
+“We need to remember that [AI systems] are made out of software. And we don’t know how to write perfect software … the consequence is that however much we might benefit from these devices …, they may not work exactly the way they were intended to work or the way we expect them to. And the more we rely on [AI systems], the more surprised we may be when they don’t work the way we expect.”
+“The way we expect” is key here, because algorithms are a computer-simulated reflection of encoded human expectations.
+Engineering memories
+Facebook’s famous “On This Day” prompt involves “engineering for nostalgia.” Likewise, Instagram algorithmically sorts its timeline so you “see the moments you care about first”.
+The more we, as humans, rely on algorithms, the more our reality becomes encoded with other people’s flawed expectations. As more AI-powered systems come online, this type of calculated bias will permeate every level of our lives — even our memories and past experiences.
+Take, for instance, Google Photos, which uses AI-powered “deep learning” to organize people’s photos beyond normal metadata (GPS, time, date, lens, etc.). It uses advanced machine learning algorithms to classify material objects, facial expressions, and emotional relevance.
+The robotic “assistant” even can touch up images, suggest creative filters and create photo albums automatically.Google Photos: ‘The photos app that’s as smart as you’
+Twitter
+Biased learning, troubled future?
+As algorithms “learn” more about us through our financial data, location history, biometric features, voice patterns, social networks, stored memories, and “smart home” devices, we move towards a reality constructed by imperfect machine learning systems which try to understand us through other people’s expectations and sets of “rules”.
+What’s on your mind? Facebook News Feed/The Coversation
+Algorithms are the literal manifestation of “playing by someone else’s rules.”
+For dating app Tinder’s algorithmic “Smart Photos” matching, the rules of successful engagement on Tinder are made clear, and enforced on users.
+Does this mean that we live inside a computer simulation? I’ll defer that question to Elon Musk, who has said, “there’s a billion to one chance we’re living in base reality”. Cerf, however, warns that it’s a mistake to “imbue artificial intelligences with a breadth of knowledge that they don’t actually have, and also with social intelligence that they don’t have”.
+The algorithmic end game, AI, will get better with time, but it will always be flawed. Even in straightforward applications like a game of chess, algorithms can leave people clueless as to how they arrived at a certain outcome.
+Great expectations
+IBM’s Deep Blue Jim Gardner/Flickr
+Cerf talked about a scenario in which IBM’s “Deep Blue” supercomputer, playing world chess champion Gary Kasparov, made a move that Kasparov could not understand.
+I mean, it made no sense whatsoever. And he was clearly concerned about it, because he thought for quite a long time and had to play the endgame much faster … in the end it turned out it was a bug. 
+It was just a mistake. The computer didn’t know what it was doing. But Kasparov assumed that it did, and lost the game as a result.
+The implications of bias today might result in poor neighborhoods experiencing more police brutality because of predictive data modeling; tomorrow, it will mean people die when the algorithms controlling self-driving cars are programmed to save the occupants lives instead of pedestrians.
+Bad or good?
+Is the social use of algorithms inherently “bad,” provided they form the basis of “intelligence” in AI?“ David Lazer, a computer scientist at Northeastern University, is skeptical. In a recent Science article he said:
+The fact that human lives are regulated by code is hardly a new phenomenon. Organizations run on their own algorithms, called standard operating procedures. And anyone who has been told that “it’s a rule” knows that social rules can be as automatic and thoughtless as any algorithm.
+It does mean that companies, governments, and institutions that employ algorithms, and soon, AI powered deep learning “neural networks” need to be more transparent in showing us how the algorithms they use might affect our reality.
+A Google project called Magenta is aimed at making more sophisticated kinds of creative software. #EmTechMIT https://t.co/f6rOmL2yhR
+— MIT Tech Review (@techreview) October 18, 2016
+Given how proprietary algorithms are the new business model, this is doubtful, even despite current laws preventing algorithms from being patentable.
+A recent SSRN piece maintains the need for a “Food and Drug Administration for algorithms.” Some scholars go so far as to argue that algorithms need managers, too. According to Cerf:
+It’s a little unnerving to think that we’re building machines that we don’t understand … Not only in the technical sense, like what’s it going to do or how is it going to behave, but also in the social sense, how is it going to impact our society?
+Just like us
+Bias Error Message Generator
+So, algorithms, the underlying process of decision making in artificial intelligence systems are imperfect, prone to bias, and make unpredictable decisions that impact the future.
+Sound familiar?
+Jonathan Albright is an Assistant Professor at Elon University. This article was originally published on The Conversation. Read the original article.
+Observer
+About
+Newsletters
+Advertise
+Contact
+Privacy
+Terms
+ 
+			Powered by WordPress.com VIP 
+ 

@@ -1,0 +1,409 @@
+
+93 видео-лекции по Scala / Блог компании GolovachCourses / Хабрахабр
+TM Feed
+Хабрахабр
+Geektimes
+Тостер
+Мой круг
+Фрилансим
+Хабрахабр
+Публикации
+Хабы
+Компании
+Пользователи
+Песочница
+Войти
+Регистрация
+GolovachCourses
+Компания
+32,65
+рейтинг
+Профиль
+20
+Блог
+0
+Вакансии
+631
+Подписчики
+       28 апреля 2015 в 01:50 
+    
+Разработка →
+93 видео-лекции по Scala
+tutorial
+Функциональное программирование*, 
+          Scala*, 
+          Java*, 
+          Блог компании GolovachCourses
+В ходе подготовки спецкурса «Scala for Java Developers» под платформу онлайн-обучения UDEMY, я анализирую другие «лекционные» видео. В библиотеке накопилось какое-то количество ссылок на дельных учебные материалы по Scala (видео на английском).
+
+Для большинства видео указано количество просмотров. Надо сделать несколько замечаний:
+1. Количество просмотров не является главным критерием качества и полезности видео, но этот может служить каким-то указателем на ценность.
+2. Здесь не все популярное видео, что я встречал, а лишь то, что ценно по моему личному мнению.
+3. Если кто-то знает еще хорошее видео — пишите, добавлю в списки.
+General
+Odersky about Scala
+Play
+Akka
+Spray
+Spark
+Slick (DB)
+SBT
+Scalaz
+Shapeless
+Spire (generic numeric programming)
+Functional/Reactive Programming
+ 
+General
+Why Scala? ...by a hilarious Indian guy (146,552 views)
+Functional Programming is Terrible (65,463 views), NewCircle Training
+Scala Versus Java (56,715 views)
+Scala for the Intrigued (54,085 views), NewCircle Training
+Learning Functional Programming without Growing a Neckbeard (36,213 views), NewCircle Training
+Busy Java Developer's Guide to Scala: Thinking (17,413 views)
+Scala Monads: Declutter Your Code With Monadic Design (45,306 views), NewCircle Training
+Scala Usage at Twitter (5,493 views)
+Marius Eriksen of Twitter — Effective Scala (4,721 views)
+Explorations in Variance
+Scala Tricks (11,018 views), Oracle Learning Library
+Tutorial: Typeclasses in Scala (17,117 views)
+Scala Collections: Why Not? (28,081 views), Paul Phillips a co-founder of Typesafe
+Guerilla Scala Programming at eBay (8,203 views)
+Joshua Suereth — Effective Scala (4,879 views)
+The Future of Scala (173 views), Adriaan Moors, the Scala tech lead at Typesafe
+Welcome to Scala 2.11 (6,157 views)
+Dead-Simple Dependency Injection (14,368 views), Rúnar Óli Bjarnason, Scalaz library contributor
+May Your Data Ever Be Coherent (6,359 views), Daniel Spiewak
+Concurrency Anti-patterns in Scala (6,295 views)
+Macros vs Types (5,342 views)
+Scala Typeclassopedia (6,886 views)
+Effective Scala (6,874 views), Josh Suereth, author of «Scala In Depth»
+Building a Data Science Platform in Scala (6,604 views)
+Learn about Efficient Functional IO in Scala (3,296 views)
+Premature Optimization in Scala (5,474 views)
+Simplicity In Scala Design (5,514 views), Bill Venners
+How to Write a Functional Program with IO, Mutation, and other effects (5,807 views)
+scala.collection.approximate (4,556 views)
+Scala Usage at LinkedIn (6,976 views)
+Scala & Data Science Fun with Folks from Linkedin & eBay (4,034 views)
+ 
+Odersky about Scala
+Martin Odersky, «Working Hard to Keep It Simple» — OSCON Java 2011 (80,087 views), O'Reilly
+Martin Odersky: Scala with Style (44,510 views), NewCircle Training
+The Scala Experiment (22,107 views), GoogleTechTalks
+Scala — A Scalable Language (21,592 views), 
+Scala — the Simple Parts (18,676 views), 
+Intel hosts Dr. Martin Odersky presenting Scala 2.10 (15,326 views), Typesafe
+What's Next for Scala (12,171 views), NewCircle Training
+The Binary Compatibility Challenge (3,037 views)
+ 
+Play
+The Play Framework at LinkedIn: Productivity and Performance at Scale (50,387 views)
+Introduction to the Play Framework (30,961 views), Oracle Learning Library
+Introduction to Play Framework for Java developers (27,822 views), Typesafe
+Introduction to Play Framework for Java developers (12,889 views), not in Scala but in Java
+Introduction to Play Framework for Scala developers (14,477 views), Typesafe
+Optimizing Play for Production (7,229 views), Typesafe
+Introduction to Views in the Play Framework (6,193 views)
+Non-blocking, composable and reactive realtime web (8,638 views)
+Reactive Streams and Play 3.0 (2,802 views), Typesafe
+ 
+Akka
+Akka 2.0: Scaling Up & Out With Actors (12,199 views), Viktor Klang, tech lead of Akka at Typesafe
+Akka: A Shiny New Hammer. Now Show Me Some Nails Already! (4,745 views)
+Asynchronous & Non-Blocking Scala — A look at Netty & NIO for Async Networking via Scala (6,340 views)
+Having Fun with Play! 2, Akka and Websocket (6,001 views)
+Failure: The Good Parts (4,951 views), Typesafe
+Intro to Akka persistence (5,065 views), Typesafe
+Akka Typed Channels: Implementing Type Calculations as Macros (2,723 views)
+Composable Futures with Akka 2.0 (12,745 views)
+ 
+Spray
+Spray on Akka (13,875 views), Typesafe
+Simple, fast & agile REST with Spray.io (3,460 views)
+Spray & Akka HTTP (2,047 views), Typesafe
+REST on Akka (7,241 views)
+ 
+Spark
+Parallel Programming with Spark (18,873 views)
+Intro to Apache Spark Training (52,670 views)
+Mining Big Data with Apache Spark (9,697 views)
+Spark and the Typesafe Reactive Platform (260 views), Typesafe
+Big Data Scala with Spark (5,060 views)
+ 
+Slick (DB)
+Slick — это фреймворк для построения функционально-реляционных отображений (как JPA и Hibernate — API/фреймворк для объектно-реляционных отображений (ORM)) 
+Introducing Slick 2.0.0! (5,816 views), Typesafe
+Typesafe Slick — Bay Area Scala Enthusiasts (5,261 views)
+Webinar: Introducing Slick 2.0.0! (5,818 views)
+Slick for database access in Scala (589 views)
+ 
+SBT
+SBT Introduction & Cookbook for Scala (12,277 views), NewCircle Training
+ 
+Scalaz
+Scalaz State Monad (12,941 views)
+Learning Scalaz (6,743 views), NewCircle Training
+An Introduction to Scalaz-Stream (6,010 views), NewCircle Training
+Scalaz 7 with Lars Hupel (3,791 views)
+Scalaz: the history, the motivation, the battles, the future (786 views), Tony Morris, author of Scalaz
+Scalaz for the Rest of Us (4,996 views)
+ 
+Shapeless
+Shapeless: Exploring Generic Programming in Scala (5,695 views), Miles Sabin author of Shapeless
+Shapeless Meets Implicit Macros (3,178 views), Miles Sabin author of Shapeless
+Lenses: Fields as Values (753 views)
+Spire (generic numeric programming)
+Life After Monoids (6,550 views), Tom Switzer is a senior R&D; engineer at Precog and is the co-author of a generic numeric programming library called Spire
+Functional/Reactive Programming
+Functional Programming (39,450 views), Erik Meijer
+The Lost Art of Denotational Semantics (3,704 views), Eric Meijer
+Functional Patterns for the Asynchronous Web (9,074 views)
+Lenses: A Functional Imperative, Boston Area Scala Enthusiasts meeting at Google in Cambridge
+Advanced Stream Processing in Scala (9,036 views), Paul Chiusano author of «Functional Programming in Scala»
+Why Big Data Needs To Be Functional (4,586 views)
+What does it mean to be Reactive? (23,166 views), Erik Meijer
+Monads and Gonads (65,456 views), JavaScript, GoogleTechTalks
+Functional Thinking with Neal Ford (27,977 views), Java 8
+Functional Programming (39,450 views), Erik Meijer
+Building Enigma with State Monad and Lenses, Scala
+scala, 
+java, 
+видео
+↑
++17
+↓
+28,6k
+Добавить в избранное
+455
+Выберите рекомендации для отправки автору:
+Указан только блог
+Орфографические ошибки
+Пунктуационные ошибки
+Отступы
+Текст-простыня
+Короткие предложения
+Смайлики
+Много форматирования
+Картинки
+Ссылки
+Отправить
+Автор:
+@IvanGolovach
+GolovachCourses
+рейтинг
+32,65
+Компания прекратила активность на сайте
+Похожие публикации
++4
+Лабораторные по многопоточности в Java: Parallel Copy
+20,2k
+175
+8
++21
+Исключения в Java, Часть II (checked/unchecked)
+108k
+420
+12
++102
+1000+ часов видео по Java на русском
+777k
+3283
+38
+Пометьте топик понятными вам метками, если хотите
+Метки лучше разделять запятой. Например: общение, социальные сети, myspace.com, подростки, мердок
+ или закрыть
+      Комментарии (5)
+      
+    
+nehaev
+            28 апреля 2015 в 01:59
+          
+0
+↑
+↓
+          Спасибо за труд! Хороший список.
+        
+evgeny_goldin
+            28 апреля 2015 в 03:35
+          
+0
+↑
+↓
+          Спасибо!
+        
+vayho
+            28 апреля 2015 в 08:50
+          
+0
+↑
+↓
+          Спасибо!
+        
+Optik
+            28 апреля 2015 в 09:59
+              
+(комментарий был изменён)
+0
+↑
+↓
+          По сбт: learn-you-sbt-fun-profit Честно говоря, сам не смотрел, но люди хвалили.
+
+На parleys.com в принципе много полезного по скале можно найти. Обычно туда же попадают записи выступлений с конференций.
+        
+slava_k
+            28 апреля 2015 в 17:48
+          
+0
+↑
+↓
+          Спасибо большое!
+        
+Только зарегистрированные пользователи могут оставлять комментарии. Войдите, пожалуйста.
+Пометьте топик понятными вам метками, если хотите
+Метки лучше разделять запятой. Например: общение, социальные сети, myspace.com, подростки, мердок
+ или закрыть
+Самое читаемое
+Разработка
+Сейчас
+Сутки
+Неделя
+Месяц
++9
+What the flask?
+2,1k
+10
+2
++6
+Пора играть честно, Microsoft
+8,7k
+14
+240
++9
+Книга «В работу с головой. Паттерны успеха от IT-специалиста»
+7,9k
+51
+10
++3
+Самые популярные слова в двух террабайтах кода
+434
+4
+11
++19
+Async/await это шаг назад для JavaScript'a?
+10,5k
+78
+69
++27
+Правильный путь становления безопасника: от ламера до практического эксплойтинга
+13,5k
+196
+16
++19
+Async/await это шаг назад для JavaScript'a?
+10,5k
+78
+69
++6
+Пора играть честно, Microsoft
+8,7k
+14
+240
++9
+Книга «В работу с головой. Паттерны успеха от IT-специалиста»
+7,9k
+51
+10
++26
+Экзамен для будущих «русских хакеров» в Московском Политехе
+17,7k
+139
+32
++56
+Старикам здесь вполне ещё место: забытые ИT-технологии в строю
+34,1k
+78
+136
++135
+Что если в играх использовать видеокарточку для физики, а не для графики
+27k
+115
+179
++36
+Один из простых способов улучшить свои навыки программирования — читать чужой код
+24,9k
+247
+33
++34
+Пользователи Windows получили возможность работать с openSUSE (и Arch Linux)
+23,6k
+110
+71
++54
+Я работаю в ТехЦентре Дойче Банка
+22,1k
+47
+67
++47
+Самые востребованные языки программирования 2016
+63,6k
+112
+152
++96
+Писать веб-сайты на ассемблере полезно и приятно
+58,4k
+268
+428
++107
+Как проектируют ненастоящие программисты
+54,4k
+158
+257
++75
+Уязвимость Viber, позволяющая прослушивать чужой разговор
+49,5k
+58
+33
++92
+Почему Hackintosh уже актуален. Развенчание мифов
+46,6k
+485
+430
+Интересные публикации
+Хабрахабр
+Гиктаймс
+Национальные домены vs один общий домен: кейс 841% роста от международного бренда  4
+What the flask?  2
+Как изучать английскую грамматику БЕЗ упражнений. Творческий подход — внедрение юнитов в главы своей книги  16
+3D-моделирование и гибкая эндоскопия  4
+Как рождались IT-династии в Беларуси  0
+Краткий обзор нововведений в Laravel 5.4  35
+Южная Корея разрабатывает свой Hyperloop  25
+Как получаются дети [18+]  60
+Пользовательские исследования в играх  2
+Китай объявил о 14-месячной облаве на VPN, используемых для обхода национального файервола  55
+Войти
+Регистрация
+Разделы
+Публикации
+Хабы
+Компании
+Пользователи
+Q&A
+Песочница
+Инфо
+О сайте
+Правила
+Помощь
+Соглашение
+Услуги
+Реклама
+Тарифы
+Контент
+Семинары
+Разное
+iOS приложение
+Android приложение
+Помощь стартапам
+© TM
+Служба поддержки
+Мобильная версия

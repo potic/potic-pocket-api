@@ -20,3 +20,6 @@ def save_pocket_links():
     file_article_list = open('articles.json', 'w+')
     file_article_list.write(json_article_list)
     file_article_list.close()
+
+
+save_pocket_links()

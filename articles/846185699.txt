@@ -1,0 +1,145 @@
+
+The Genetic Algorithm - Explained ~ Tech-Effigy
+Tech-Effigy
+Concepts made Simple
+Skip to content
+Home
+Business
+Internet
+Market
+Stock
+Downloads
+Dvd
+Games
+Software
+Office
+Parent Category
+Child Category 1
+Sub Child Category 1
+Sub Child Category 2
+Sub Child Category 3
+Child Category 2
+Child Category 3
+Child Category 4
+Featured
+Health
+Childcare
+Doctors
+Uncategorized
+Dribbble
+Facebook
+Flickr
+Instagram
+Pinterest
+Tumblr
+Twitter
+RSS Feed
+Sample Text
+Unordered List
+Search for:
+Tuesday, 17 February 2015
+The Genetic Algorithm - Explained
+Paradigm of Evolution
+Every organism contains an array of traits - called DNA, when 2 parents mate they produce a child containing a mixture of their DNA. Depending on how well those traits work together to help the child survive so that he may reproduce, will determine if those traits will pass into future generation. Rarely a random trait enters a child's DNA that was not inherited from the parents, we call this mutation. If the mutation is beneficial, the organism will survive long enough to carry the mutation over to future generations. So the cycle continues, after many generations we continue to optimize the population by "mixing and matching", "trial and error" of  DNA.
+Introduction
+Genetic Algorithms are used to find optimal solution by method of evolution-inspired search and optimization; Generally used in problems where linear/brute-force searches are not viable in terms of time, such as – Travelling Salesman Problem, Timetable Scheduling, Finding Neural Network Weights, Sudoku, Trees(data-structure) etc..  The first requirement is a encoding scheme suitable for representing individuals, second requirement being a evaluation function for representing the fitness of an individual.
+Encoding Scheme
+DNA of an individual is represented by an array. Bit-arrays being the most dynamic. Here are a few encoding scheme examples :
+Notes: Research indicates Gray Coding being more efficient in terms of binary encoding. Trees can be array encoded, will add graphic shortly.
+The Genetic Process
+Below is a flow diagram of the Genetic Algorithm, we will be doing a step by step walk-through of this process.
+Step 1 : Initialize the Population
+The population is initialized by randomly generating a collection of DNA samples. The size of the population depends on the size of the problems search space, and the computational time it takes to evaluate each individual. Most of the time you will be dealing in population counts of about 50 up-to a 1000.
+Type DNA = Array of Boolean
+Block InitializePopulation() Returns Population
+  NewPopulation is array of DNA;
+  Loop i=0 to PopulationCount
+    Population[i]=GenerateRandomDNA();
+  EndLoop
+  return Population;
+EndBlock
+Block GenerateRandomDNA() Returns DNA
+  Variable NewDNA is DNA
+  Loop i=0 to LengthOf(NewDNA)
+    NewDNA[i]=GetRandomBooleanValue;
+  EndLoop
+  Return newDNA;
+EndBlock
+Step 2: Evaluate Chromosomes
+The evaluation function determines the fitness of an individual. This is the most important part to the Genetic algorithm, if this function is flawed, the algorithm will not produce results. The evaluation function should not return a Boolean(true/false) value, it has to be a comparable result. If individuals are able to be sorted from fittest to weakest, it is a viable evaluation function. For evaluating distances between cities you may return the total distance traveled as a fitness score. For a classifier you can return the number of correct classifications. You could use probability as a score assignment, of how likely an individual is a solution.
+Step 3: Select Fittest Individual(s)
+Selection is where we will be choosing the parents for mating. Selection happens for each child in the new population. There are three type of parent selection methods, Fitness Proportionate Selection, Tournament Selection, and Truncation Selection. A viable option is to carry over selected individuals to the next generation.
+Fitness Proportionate Selection: Also known as Roulette wheel selection, is a method of selecting individuals based on its probability of being selected. Sort the population from weakest to fittest, generate a random number within the range of the sum of the populations fitness, iterating through the sorted population, summing each individuals score up until it either equals the random number, or is greater than the random number. That individual is then selected as a parent. This method can take a long time to produce results and is used for maximizing a function.
+Block GetSumOfPopulationFitness(Population is ListOfDNA) Returns Integer
+  Variable FitnessSum is Integer = 0;
+  Loop i=0 to Population.Count
+    FitnessSum = FitnessSum + Population[i].Fitness;
+  NextLoop
+  return FitnessSum;
+EndBlock
+Block FitnessSelection(Population is ListOfDNA) Returns PopulationIndex
+  Variable SortedPopulation is Population;
+  Variable RandomNumber is Integer;
+  Variable FitnessSum is Integer;
+  Variable Sum is Integer;
+  SortedPopulation = Population.Sort(Ascending);
+  FitnessSum=GetSumOfPopulationFitness;
+  RandomNumber=Random(0...FitnessSum);
+  Loop i=0 to SortedPopulation.Count
+    Sum = Sum + SortedPopulation[i].Fitness;
+    If (Sum >= RandomNumber) Then
+  Return i; // Will end Loop as well
+  NextLoop
+EndBlock
+Tournament Selection: Selecting the top performer to carry over to the next generation, and to mate with the rest of the population.
+Truncation Selection: Choose a percentage of fittest individuals to mate with the population or amongst each other. Carrying over selected individuals is optional.
+Crossover Selected DNA
+Once you have your selected individual(s) also known as the parents, we need to mix and match their DNA to produce a new population of children. We call this process Crossover. When using fitness proportionate Selection, you will select a new parent for every individual in the population. Tournament Selection, You mate the selected parent with every individual in the population. Truncation selection, you could randomly select from the winning group, or use fitness proportionate selection on the winning list to mate with every individual in the population. There are 3 ways to crossover two DNA arrays. 1 point crossover, 2 point crossover, random crossover.
+Mutate population
+Mutation allows the algorithm to introduce diversity into the population, expanding the opportunity to search unexplored areas in the search space for fitter solutions. Mutation is implemented by giving each element in the DNA array a probability of 2-5% of being randomly altered. The mutation procedure is called for every child.
+Block MutateDNA(paramDNA is DNA) Returns DNA
+  Variable MutatedDNA is array of boolean
+  Loop i=0 to LengthOf(paramDNA)
+    If (Random(0..100) > 98) then
+      MutatedDNA[i]=GetRandomBoolean;
+    else
+      MutatedDNA[i]=paramDNA[i];
+  NextLoop
+  Return mutatedDNA;
+EndBlock
+What Next?
+After the generating a new generation, we go back to the evaluation step.
+When to Stop
+After the Evaluation step, we can either stop; from finding the most optimal solution, generation is not progressing(evolving) in fitness, or where time is a factor.
+Note: Example algorithm is on its way. This is only a draft, and will be improved.
+Thank you for Reading, Comments welcome.
+Joseph Armstrong
+Email ThisBlogThis!Share to TwitterShare to Facebook
+14:53Joseph Armstrong13 comments
+Older Post →
+Home
+13 comments:
+Anonymous17 February 2015 at 18:56I can't believe that these work even though evolution isn't real.  Are there any good algorithms based on Creationism? \end{sarcasm}ReplyDeleteRepliesAnonymous18 February 2015 at 11:28Yes. Every time you write a program you're the creatorDeleteAnonymous18 February 2015 at 11:53You seem to be implying that "you" are God.DeleteReplyAnonymous17 February 2015 at 22:30Great article. I would like to see more details about the benefits and costs of some of the options available. e.g. When to use which parent selection approach, benefits or 1-point, 2-point, and random crossover, etc. ReplyDeleteRepliesAnonymous17 February 2015 at 23:05If you are truly l33t then you use a genetic algorithm to breed genetic algorithms (adjusting crossover probability, mutation etc) to find the answer.DeleteAnonymous18 February 2015 at 05:46What about an algorithm to breed algorithms that breed algorithms?DeleteAnonymous18 February 2015 at 09:20I think, a better idea would be an algorithm that breed algorithms that breed algorithms that breed algorithms.DeleteReplyAnonymous17 February 2015 at 22:53Thanks for the article! Related to the above comment, would you be able to include more info about crossover operators for other types of encodings? (floating point, trees, etc.)ReplyDeleteAnonymous17 February 2015 at 23:24The problem with GAs is mostly finding a fitting quality/evaluation function... which is suprisingly hard even for seemingly simple problems. This is especially true if you try to optimise something with various and maybe even competing quality criteria. Also encoding is non-trivial since for example binary encoding tends to weigh different parts of a chromosomes differently (think binary encoding of a floating point number... the leftmost bit is way "bigger" than the rightmost one and will most likely have more impact on the solution). A really good read for a general overview on the topic is "Genetic Algorithms + Data Structures = Evolution Programs" ( http://www.springer.com/gp/book/9783540606765 ) - at least some years ago when I worked with GAs in University :-)GAs are very good in traversing different parts of the solution space rather quickly; if you combine them with local optimisation methods to weed out illegal or non-optimal solutions you can really enhance the speed with which (more or less...) optimal solutions are found. Regarding the question above (differences between 1,..,n-point crossover, random, mutation frequency etc. one of the key problems is finding the best configuration for the problem at hand... in fact, one might even try to use another GA just to find a good setting. Unfortunately, some solution which is good for question A might yield really bad results for question B.The article about NSGA-II ( http://www.iitk.ac.in/kangal/Deb_NSGA-II.pdf , this might be outdated but is a good read nevertheless) contains some really good ideas about this topic and is a good example for a rather sophisticated GA.All in all a really interesting topic, a very nice blog entry you have there :-)ReplyDeleteAnonymous17 February 2015 at 23:58No need to post that comment about a domain name. Just a suggestion. So you don't end up investing a lot of time in a website you don't control.ReplyDeleteAnonymous18 February 2015 at 04:18the four letters  A, C, G, and T, are really two symmetrical ones. thats what list to int country means...maybe.ReplyDeleteAnonymous18 February 2015 at 15:31Looks like we are gods now? :)ReplyDeleteAnonymous19 February 2015 at 12:30It might be easier to understand if the biological process that each stage is mimicking is briefly described in each step. That might help pull out points such as if you place functionally related 'genes' on your 'chromosome' close to each other and adopt a single or 2-point crossover, then they will be likely to move together, i.e. display a degree of linkage in each generation.ReplyDeleteAdd commentLoad more...
+Text Widget
+Sorry, haven't had much time to write. Although I have been doing a lot of interesting research. First on my agenda will be editing articles.
+Blog Archive
+▼ 
+2015
+(4)
+▼ 
+February
+(1)
+The Genetic Algorithm - Explained
+          ► 
+        
+January
+(3)
+Total Pageviews
+About Me
+Joseph Armstrong
+View my complete profile
+Powered by Blogger.
+Donations
+Support for Writing Articles, Thank You!
+Copyright © 
+Tech-Effigy | Powered by BloggerDesign by Automattic | Blogger Theme by NewBloggerThemes.com

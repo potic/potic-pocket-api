@@ -1,0 +1,147 @@
+
+Back To Basics: Mark and Sweep Garbage Collection – I know the answer (it's 42)
+|
+Search MSDN
+Search all blogs
+Search this blog
+Sign in
+
+						I know the answer (it's 42)					
+
+						I know the answer (it's 42)					
+A blog on coding, .NET, .NET Compact Framework and life in general….
+Back To Basics: Mark and Sweep Garbage Collection 
+★★★★★★★★★★★★★★★
+ 
+Abhinaba Basu [MSFT]January 30, 20096 
+Share
+0
+0
+This post is Part 4 in the series of posts on Garbage Collection (GC). Please see the index here.
+Recap of definition
+I’ll quickly repeat couple of definitions which are used in this post
+Object: This is a unit of storage on the heap. It generally means an object in the object oriented sense but is equally applicable to a procedural language (e.g. a struct/native-type in C) or functional language. 
+Object/Reference graph: This is the directional graph of objects in memory. A typical sample is below. The nodes are objects in memory and the edges (arrows) are references one object holds to another (e.g. a pointer or reference in C/C++). There can be circular references between two nodes (Object 3 and Object 5) or nodes referencing themselves (Object 6).           
+Roots: These are the set of nodes in the object graph from which the references start. These are typically references held in registers, local variable on the stack or global variables. The green nodes in the diagram above are roots. 
+Unreachable object: These are nodes in the graph which have no edge referencing them. The Orange node in the diagram above is an unreachable object. This is the node that the GC needs to clean/free because it is not reachable from any node and is hence garbage memory. 
+Mark-sweep GC
+In the last post I discussed reference counting GC which continually tracks memory and frees them the moment they go out of reference. Mark and sweep GC takes a very different approach.
+In this scheme memory is not freed the moment they become garbage. Actually no subsystem is used to keep track of memory as they are being used.
+When the system starts running out of memory (or some other such trigger) the GC is fired. It first enumerates all the roots and then starts visiting the objects referenced by them recursively (essentially travelling the nodes in the memory graph). When it reaches an object it marks it with a special flag indicating that the object is reachable and hence not garbage. At the end of this mark phase it gets into the sweep phase. Any object in memory that is not marked by this time is garbage and the system disposes it.
+The algorithm
+At the top level the algorithm in C like Pseudocode looks as follows
+void GC(){    HaltAllProcessing();    ObjectCollection roots = GetRoots();    for(int i = 0; i < roots.Count(); ++i)        Mark(roots[i]);    Sweep();}
+It has three phases, enumeration of roots, marking all object references starting from the root and finally sweeping them.
+Root Enumeration
+As I mentioned above the root enumeration lists all references held in registers, global or static fields, local variables on the stack, function arguments on stack, etc… The runtime system needs to provide ways for the GC to collect the list of roots. E.g. in the case of .NET the JIT maintains the information on the active roots and provides APIs to the GC to enumerate them. The system can also do some form of dynamic analysis to further optimize it. Say a function accepts a pointer argument. Now while JITing the jitter can figure out that the argument is not being used through out the method and can drop it from the list of roots the moment it is last accessed in the method.
+Mark
+Typically every object is given some sort of header as I mentioned in my last post. This header contains a bit flag which is used to “mark” that object. The Mark procedure is recursive and acts as follows
+void Mark(Object* pObj){    if (!Marked(pObj)) // Marked returns the marked flag from object header    {        MarkBit(pObj); // Marks the flag in obj header        // Get list of references that the current object has        // and recursively mark them as well        ObjectCollection children = pObj->GetChildren();        for(int i = 0; i < children.Count(); ++i)        {            Mark(children[i]); // recursively call mark        }	    }}
+This is a recursive algorithm with heavy dose of simplification used and we will re-visit this in later posts on with actual implementation implications.
+The recursion termination criteria is 
+Either a node doesn’t have any children (leaf node) 
+If it is already marked which ensures that we do not land in infinite recursion for circular references 
+At the end of this marking phase every object that can be reached using a reference from the roots would have been visited and it’s marked bit set.
+Sweep
+Sweep starts by iterating through the entire memory and frees memory blocks that are not marked. It also clears the Mark bit so that subsequent GC passes can correctly mark/unmark them (resets the memory to pre-mark state).
+void Sweep(){    Object *pHeap = pHeapStart;    while(pHeap < pHeapEnd)    {        if (!Marked(pHeap))            Free(pHeap); // put it to the free object list        else            UnMarkBit(pHeap);
+        pHeap = GetNext(pHeap);    }}
+There are a bunch of assumptions here which has to be met. Some of them are that the 
+Entire heap can be iterated over 
+Both free memory blocks and allocated objects have the same sort of header that can be queried with Marked 
+You can find the next memory block when given one block (GetNext implemented) 
+There is some sort of free memory pool which tracks the list of free memory and you can add a block to it by calling Free(Object *) 
+Special memory layout is needed to handle this assumptions and I’ll try to cover how they are handled atleast in .NETCF in later post.
+Compaction
+Repeated allocation can actually fragment memory and slow allocation speed significantly (head over here for a nice story on this). So many systems actually combine sweep with a compaction. This ensures fragmentation reduces and hence subsequent allocations are faster. However, when memory is compacted objects move and hence all references to them has to be updated to point to the new location.
+When is the GC run
+At the face of it, it seems that GC should be run when memory allocation fails. However, when memory allocation fails there is a high chance that GC will fail as well because it would need some working memory to function which won’t be available. So in real world systems GC is fired under a variety of conditions like
+System is low on memory (enough for a GC to run but soon allocations are going to fail) 
+Memory it too much fragmented 
+After allocating a bunch of memory (e.g. .NET CF fires GC on allocating 1MB after the last GC) 
+This obviously varies from system to system and is carefully tuned to match the scenarios being supported.
+Advantage and disadvantages
+The primary advantage of mark-sweep is that it handles cyclic references naturally. Moreover, no additional overheads are added while normal execution (e.g. allocation, pointer manipulations). Combined with compaction it ensures good locality of reference and reduced fragmentation and hence optimal subsequent allocations.
+However, mark-sweep pauses useful execution and walks entire memory marking and sweeping it. Hence it adds large freezes which is un-acceptable in most interactive systems. However, incremental variations of Mark-sweep are available which works around this limitation. Mark-sweep also starts thrashing when memory fills up as it fails to clean up memory and it gets triggered again and again as memory approaches exhaustion. Self tuning GC helps in this scenario.
+Tags 
+C# / .NET / Coding Garbage Collection 
+
+		Comments (6)	
+ Cancel reply 
+Name * 
+Email * 
+Website 
+ 
+ 
+ I know the answer (it's 42) : Back to basic: Series on dynamic memory management says: 
+
+			January 30, 2009 at 1:51 am 
+PingBack from http://blogs.msdn.com/abhinaba/archive/2009/01/25/back-to-basic-series-on-dynamic-memory-management.aspx
+Reply
+ DotNetShoutout says: 
+
+			January 30, 2009 at 7:06 am 
+Thank you for submitting this cool story – Trackback from DotNetShoutout
+Reply
+ I know the answer (it's 42) says: 
+
+			March 3, 2009 at 7:06 am 
+This post is Part 9 in the series of posts on Garbage Collection (GC). Please see the index here. Most
+Reply
+ Vivek says: 
+
+			October 24, 2013 at 4:23 am 
+This pose is really nice, but please described the generation 1,2 and 3 in GC also ….. 
+Reply
+ Gabor says: 
+
+			June 11, 2015 at 9:01 am 
+This is trivial mark-and-sweep.  Nobody in their right mind does this.  The point of concurrent mark-and-sweep is short STWs.  That's because the lion share of mark operation can be performed with STW.  You failed to mention that.  The point of this article is to muddy the waters.  Java HotSpot has been using very successfully mark-and-sweep.  http://www.oracle.com/…/memorymanagement-whitepaper-1-150020.pdf
+Reply
+ Gabor says: 
+
+			June 11, 2015 at 12:20 pm 
+…That's because the lion share of mark operations can be performed without STW…
+Reply
+Skip to main content
+Follow UsPopular TagsC# / .NET / Coding
+Everything else
+.NET CF
+Software
+Tech
+Garbage Collection
+Fun
+User interface
+Technology
+Team System
+Windows Phone
+Ruby
+Amazing India
+WP7
+NETCF
+Silverlight
+Arduino
+Mango
+MIX11
+DIY
+Archives February 2016 (1)
+All of 2016 (2)
+All of 2015 (4)
+All of 2014 (7)
+All of 2013 (9)
+All of 2012 (8)
+All of 2011 (7)
+All of 2010 (13)
+All of 2009 (38)
+All of 2008 (49)
+All of 2007 (72)
+All of 2006 (96)
+All of 2005 (77)
+All of 2004 (4)
+ 
+Privacy & Cookies
+Terms of Use
+Trademarks
+
+				© 2017 Microsoft
+			

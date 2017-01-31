@@ -1,0 +1,179 @@
+
+Loading data using Android's Loader class
+ 
+ 
+www.101apps.co.za  Android eBooks and tutorials for beginners 
+×
+×
+Please login to access the Download area
+Forgot your username?
+Forgot your password?
+Sign in
+Remember me
+ 
+
+       * Your email address will automatically be added to our subscription list. You can unsubscribe at any time.
+      
+Or sign in with your account on:
+Facebook
+Twitter
+Google
+LinkedIn
+Not a member yet?
+Register
+ 
+Horizon menu
+×
+HomeTutorialseBooksAppsDownloadsAboutContact 101appsDonate
+ Home
+ Tutorials
+ eBooks
+ Apps
+ Downloads
+ About
+ Contact 101apps
+ Donate
+ 
+Free Android app covering all aspects of addiction, including prevention and treatment
+You are here:  HomeTutorialsArticlesLoading data using Android's Loaders
+ 
+Tweet
+		Check out our google+ page		
+	Pin it
+								Loading data using Android's Loaders							
+    
+   Print  
+  Written by 
+										Clive										 
+Using a Loader to get your data out of a database
+So what’s a Loader?
+Well, it's the next best thing since sliced bread! This is what they can do for you:
+You can use loaders in activities and fragments
+Loaders have been available since Honeycomb (API level 11) and also since Donut (API level 4) if you use the support library
+Loaders can be used to load any kind of data from any data source (for example, Arrays and Databases)
+Loaders work on a separate thread so your app carries on working while the Loader gets the data
+Loaders monitor the data source for any changes and updates the data it gives you
+Loaders take care of restoring the cursor after a configuration change without having to do a re-query
+Types of Loaders
+AsyncTaskLoaders – a loader used to load data in a separate thread
+CursorLoaders – a loader that queries a database’s content provider using a content resolver. It returns a cursor
+CursorLoaders
+In our sample app, we want to display a list of names and email addresses. We’ll need a cursor to do this.
+The source data is saved in a database that has a content provider.  In this case, the best practice is to use a CursorLoader to load the data from a content provider.
+CursorLoaders query the provider on a separate thread and return the result in a cursor. CursorLoaders automatically update the cursor if there are any changes to the database.
+CursorLoaders manages the cursor, closing it when the activity is destroyed.
+Using a cursor loader
+If you’re targeting devices before Honeycomb, then you need to use the support library’s Loader API’s. These are only available if you use the FragmentActivity class.
+We’re using the support library, so our loader class extends the FragamentActivity class.
+The communicator
+We need to implement a communication mechanism for the loader to communicate with our loader class. So we implement the LoaderManager.LoaderCallbacks<type of data being loaded> interface:
+Implement a new callback interface, specifying a Cursor as the type of data to be loaded
+The manager
+We need a loader manager.
+The LoaderManager monitors the data in the database. It controls the loader.
+The LoaderManager tells the loader when to start, stop or reset. It also makes sure that the data we use is always up to date (even on configuration change).
+The LoaderManager communicates via the interface with the client.
+The loader
+We also need a loader.
+The Loader queries the database and loads the data into a cursor on a separate thread.
+The Loader also monitors the database for changes and updates the cursor accordingly.
+Starting the loader
+We use intitLoader() to start an existing loader or to create a new one.
+We use restartLoader() if a loader exists and we want to query the database using different parameters.
+Get the manager
+Get the loader manager and then call initLoader()
+You would normally use getLoaderManager() to get an instance of the loader manager.
+We’re using the support library so we call getSupportLoaderManager().
+Calling intitLoader() checks to see if the identified loader is running. It will re-use it if it is else it creates a new one. The intitLoader() parameters are:
+LOADER_ID – a unique ID for this loader (you can have more than one)
+null - optional arguments. We’re not using any so we pass null
+this – the callback. The interface that the loader manager will notify of any changes. Our loader class, MyLoaderActivity implements the loader callbacks interface so we pass a reference to itself, this
+The interface callbacks
+The loader interface callback has 3 handlers:
+onCreateLoader – called when the loader is initialised. It creates and returns a new Loader object. We’re interested in a cursor, so we create a new CursorLoader. The CursorLoader takes the same parameters as a content resolver query. It does the query using a content resolver when onCreateLoader is executed
+onLoadFinished – called when the query is finished. It receives the result, a cursor, as a parameter. The loader monitors changes to the data and will report any changes here. This is where you will update any adapters or UI elements
+onLoaderReset – called when loader manager resets a loader. This is where you should release references to data returned by a query and reset the UI accordingly. The loader manager will close the cursor
+Note that onLoadFinished() and onLoaderReset() are not synchronised with the main thread. You’ll have to use a handler to modify the UI directly.
+Here’s our onCreateLoader() handler:
+onCreateLoader() is called when we need to create a new loader
+Note the following:
+the parameters:
+loaderId – the unique ID of the loader
+additionalArguments – any additional arguments
+uri – the Uri of the data source
+projection – String[] of database column titles, the values of which we want returned. We pass null as we want all the column values returned
+selection – String, the WHERE clause filter. We pass null as we want all rows returned
+selectionArguments – String[] of arguments for the selection wildcards. We pass null as there are no arguments
+sortOrder – String, how the results should be ordered. We pass null to accept the default
+cursorLoader – our cursor loader which will use a content resolver to query the database and return a cursor. We pass it the context and the same parameters as we would to a content resolver query
+Here’s our onLoadFinished()handler:
+Called when the CursorLoader finishes loading the data, it receives the data in a cursor
+The loader will monitor any changes to the data source and report them here. This is where we update our list by swapping the cursor.
+Note the following:
+myCursorAdapter.swapCursor() – this swaps the current cursor with the new updated one. This updates our list. It does not close the old cursor
+And here’s our onLoaderReset() handler:
+onLoaderReset() is called when an existing loader is reset
+This is called when an existing loader is being reset. We can’t use its data anymore so we pass null to the swapCursor() method.
+Running the app
+The loader uses a content resolver to query the database. The database must have an initialized content provider.
+Make sure that the app that registers the content provider is up and running (and of course, the Uri we use in the loader must point to that database).
+You can see more on the content provider app in this tutorial.
+ 
+The first screen after the app starts. Press the button and the list displays
+Running the app displays a single button. Pressing the button starts the loader and displays a list of names and corresponding email addresses retrieved from the database.
+The items loaded from the database are displayed in a list
+Selecting an item in the list updates the selected item’s data in the database and recreates the list using the new data. Remember that the list is indexed from zero.
+On orientation change, the Loader restores the list without doing a re-query
+Changing the device orientation destroys the activity, adds a new row to the database and then recreates the list, displaying the new, updated data.
+The MainActivity
+onResume()
+This is called after onCreate(), when the app first starts. It’s also called when the user returns to this activity after pressing the Back button.
+We empty the database here and then load it with the 5 records stored in the array, recordsArray.
+See the Using the Content Provider tutorial on how to delete and insert records in the database.
+MyLoaderActivity
+We’re going to display the list in a list view.
+We use a SimpleCursorAdapter to load the data from the cursor into the list view.
+We create a SimpleCursorAdapter, myCursorAdapter
+Note the following:
+this – context
+android.R.layout.simple_list_item_2 – a system list layout containing two text views. This will display the list. You could use your own layout
+null – the cursor. We pass null as the cursor does not yet exist
+new String[] – the column titles for the data we’re interested in. Could pass null if the cursor not yet available
+new int[] – the two text views in the list layout. They will display the name and email address. You could use your own text views in your own layout file
+0 – flags for the adapter. We pass null as we don’t need to use flags
+Next, we get an instance of the list view in our layout file and set the adapter that we’ll use to populate the list.
+Get an instance of the list view and set the adapter
+The listener that listens for when the user selects an item in the list
+Clicking a list item, displays a Toast message and updates the name for that row. It uses the row id of the selected item to update that row in the database.
+The Loader monitors the database, notices the change, reloads the cursor and calls onLoadFinished().
+Calling onLoadFinished()swaps the old cursor with the new and the new name is displayed in the list.
+Getting your threads crossed
+Things aren’t always as they seem
+Load the list the first time and the list displays as shown on the right. Press the Back button and load it again and the list displays as shown on the left. Why?
+Let’s look at the log.
+The log shows the events taking place
+We start off with the list showing the 5 items as in the right screenshot above.
+Press the back button and the main activity starts. It deletes all the rows in the database and then loads the 5 records from the array. This all happens on the main thread.
+On a separate thread, the loader has realised that the database has changed and starts to swap the cursor with the updated version.
+Then, on the main thread, the message comes through that the back button had been pressed and the activity has to be destroyed. The loader is also destroyed and a new row is added to the database.
+Then in the main activity, we press the button to start the loader activity. initLoader() is called and a new loader is created.
+The loader queries the database and the list of 6 items is displayed as shown in the left screenshot above.
+Just be aware that there are two threads running at different times and that things may not happen in the sequence that we expect.
+I hope that you have found this tutorial helpful.
+Please consider subscribing to our notification email. We’ll send you one email on Friday with links to our latest tutorials. That way you won’t miss out. If we didn’t publish any then we won’t send any email. No spam. 
+This tutorial was created using Android Studio. You can download the project files here 
+Are you using Eclipse or another IDE? Here's how you can use this project's Android Studio files.
+ 
+Related items
+Android app ApplicationId, versionName and versionCode explained
+The best Russian Weapons Android app
+Realm databases for Android beginners
+Addiction 101:Help for addicts
+Open Images Gold: Version 6 help
+Newsletter subscription
+Subscribe here to receive our occasional newsletter without registering as a member. 
+
+All registered members are automatically subscribed. 
+  
+  
+  

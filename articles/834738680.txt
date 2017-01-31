@@ -1,0 +1,839 @@
+
+Top 50 Programmer Phone Interview Questions with Answers
+Javarevisited
+Blog about  Java programming language, FIX Protocol, Tibco RV
+Pages
+Home
+core java
+spring
+hibernate
+collections
+multithreading
+design patterns
+interview questions
+coding
+data structure
+OOP
+books
+About Me
+Top 50 Programmer Phone Interview Questions with Answers
+It's 2015 now and from last few years, phone interviews also known as the telephonic round is the single most popular way to screen candidates in a programming job interview. It's easy for both parties to gauge each other, candidate don't need to travel to perspective Employer's premises and Interviewer also doesn't need to make any necessary arrangement. This is the second part of my article on programming interview questions, in the first part, I got feedback that it is a little bit heavy on coding based questions and many programmers asked me to share similar list for the telephonic round of programming Interviews. In order to clear telephonic round and proceed to next round, you must be good enough to answer all the questions related to your Job description.
+In most of the phone interviews for Java or C++ developer, you will not only find questions from respective programming language but also from other technology e.g. SQL, XML, UNIX, General Programming, Object oriented programming, Data structure and Algorithm, Networking, Coding and other areas of work. Because of this vast nature of phone round of programming job interview, you need to come up with a special strategy to present yourself in a manner Interviewer is expecting.
+One of the most important thing to remember, while answering questions on phone interview is to mention key points early and always give to the point answer. Since most interviewers like to cover lots of topics to screen the candidate, they usually like to the point answers rather than blah blah and OK I know the stuff, you will get your chance to explain things in deep in the face to face interview. BTW, this is not the hard and fast rule and you can actually understand what interviewer is expecting from you by noting his response to your answers. If he asks follow-up or expect you to speak more than go ahead, but if quickly jumps to next question then be clear and concise.
+In this article, I am sharing you some popular and interesting programming questions especially tailored for phone interviews. Most of them are actually from the telephonic round of various tech companies including banks like Barclays, Citi, Nomura, and various service  based companies like Infosys, TCS, CTS, Tech Mahindra and HCL.
+As I mentioned before questions are randomly picked from various topic but mostly based upon fundamentals because that is what Interviewer test on phone interviews. Though these questions mostly for less experienced developer e.g. 2 to 5 years, Senior, and experienced programmers can also use these for their interview purpose.
+If you are seriously preparing for Job interviews, I also suggest you take a look at either Programming Interviews Exposed by Wrox  or Cracking the code Interview, two of the good books I have found for preparing any programming job interviews. First one is my favorite and I have read it almost 7 years back, but still it's quite relevant because of an excellent explanation of data structure and algorithm questions.
+If you are an interviewer, you can also use these question to quickly screen candidate for development positions. I have provided the short answer here and pointer for more detailed answer.
+Top 50 Programming Questions for Telephonic Interviews
+Here is a list of almost 50 questions from phone round of programming job interviews. These questions are good for any programmers, developers, software engineer, QA and support engineer because they are based upon fundamentals of programming, but most suited for programmers and developers. BTW, If you are Java developer and looking for Java Questions for Phone interviews, check out that list. This list is more general and applicable for all programmers including Python, Ruby, Perl and C# developers.
+1. How much time does it take to retrieve an element if stored in HashMap, Binary tree, and a Linked list? how it change if you have millions of records?
+In HashMap it takes O(1) time, in the binary tree it takes O(logN) where N is a number of nodes in the tree and in linked list it takes O(n) time where n is a number of element in the list. Millions of records don't affect the performance if the data structure is working as expected e.g. HashMap has no or relatively less number of collision or binary tree is balanced. If that's not the case then their performance degrades as a number of records grows.
+2. What is the difference between Overriding and Overloading? (detailed answer)
+Overriding is resolved at runtime while overloading is compile time. Also, rules of overriding and overloading are different, for example in Java, method signature of the overloaded method must be different than original method, but in the case of overriding it must be exactly same as an overriding method.
+3. What is the difference between forking a process and spawning a thread? 
+When you fork a process, the new process will run the same code as parent process but in different memory space, but when you spawn a new thread in existing process, it just creates another independent path of execution but share same memory space.
+4. What is a critical section? (answer)
+A critical section is the part of a code, which is very important and in multi-threading must be exclusively modified by any thread. Semaphore or mutex is used to protect critical section. In Java, you can use synchronized keyword or ReentrantLock to protect a critical section.
+5. What is the difference between a value type and a reference type? (answer)
+A value type is a more optimized type and always immutable e.g. primitive int, long, double and float in Java while a reference type points to an object, which can be mutable or Immutable. You can also say that value type points to a value while reference type points to an object.
+6. What is heap and stack in a process? (detailed answer)
+They are two separate areas of memory in the same process. Talking about Java, the stack is used to store primitive values and reference type to object but actual object is always created in heap. One critical difference between heap and stack is that heap memory is shared by all threads but each thread has their own stack.
+7. What is revision/version control? (answer)
+Version control is software which is used to store code and manage versions of codebase e.g. SVN, CVS, Git, Perforce, and ClearCase. They are very effective while comparing code, reviewing code and creating a build from previous stable version. All professional development use some sort of revision or version control tool, without them, you cannot manage code effectively, especially if 20 developers are working on same code base at the same time. Version control tool plays very important role to keep code base consistent and resolving code conflicts.
+8. What is a strongly typed programming language? (answer)
+In a strongly typed language compiler ensure type correctness, for example, you can not store the number in String or vice-versa. Java is a strongly typed language, that's why you have different data types e.g. int, float, String, char, boolean etc. You can only store compatible values in respective types. On the other hand, weakly typed language don't enforce type checking at compile time and they tree values based upon context. Python and Perl are two popular example of weakly typed programming language, where you can store a numeric string in number type.
+9. Can you describe the difference between valid and well-formed XML?
+A well-formed XML is the one which has root element and all tags are closed properly, attributes are defined properly, their value is also quoted properly. On another hand, a valid XML is the one which can be validated against an XSD file or schema. So it's possible for an XML to be well-formed but not valid because they contain tags which may not be allowed by their schema.
+10. What is the difference between DOM and SAX parser? (detailed answer)
+DOM parser is an in-memory parser so it loads whole XML file in memory and create a DOM tree to parse. SAX parser is an event based parser, so it parses XML document based on the event received e.g. opening tag, closing tag, the start of attribute or end of the attribute. Because of their working methodology, DOM parser is not suitable for large XML file as they will take a lot of space in memory and your process may run out of memory, SAX is the one which should be used to parse large files. For small files, DOM is usually much faster than SAX.
+11. What is the relationship between threads and processes? (detailed answer)
+A process can have multiple threads but a thread always belongs to a single process. Two processes cannot share memory space until they are purposefully doing inter-process communication via shared memory but two threads from the same process always share the same memory.
+12. What is Immutable class mean? (detailed answer)
+A class is said to be Immutable if its state cannot be changed once created, for example, String in Java is immutable. Once you create a String say "Java", you cannot change its content. Any modification in this string e.g. converting into upper case,  concatenating with another String will result in the new object. An immutable object is very useful for concurrent programming because they can be shared between multiple threads without worrying about synchronization. In fact, the whole model of functional programming is built on top of Immutable objects.
+13. Why would you ever want to create a mock object? (answer)
+A mock object is very useful to test an individual unit in your Software, in fact, stub and mocks a are a powerful tool for creating automated unit tests. Suppose you write a program to display currency conversion rates but you don't have a URL to connect to, now if you want to test your code, you can use mock objects. In Java world, there are a lot of frameworks which can create powerful mock objects for you e.g. Mockito and PowerMock.
+14. What is SQL injection?
+SQL injection is a security vulnerability which allows an intruder to steal data from the system. Any system which takes input from the user and creates SQL query without validating or sanitizing that input is vulnerable to SQL injection. In such system, an intruder can inject SQL code instead of data to retrieve more than expected data. There are many instances on which sensitive information e.g. user id, password, and personal details are stolen by exploiting this vulnerability. In Java, you can avoid SQL injection by using Prepared statement.
+15. What is the difference between an inner join and a left join in SQL? (answer)
+In SQL, there are mainly two types of joins, inner join, and outer join. Again outer joins can be two types right and left outer join. The main difference between inner join and left join is that in the case of former only matching records from both tables are selected while in the case of left join, all records from left table are selected in addition to matching records from both tables. Always watch out for queries which have "all" in it, they usually require left join e.g. to write SQL query to find all departments and a number of employees on it. If you use inner join to solve this query, you will miss empty departments where no one works.
+16. What does the V in MVC stand for, and what does it signify? (answer)
+V stands for View in MVC pattern. The view is what user sees e.g. web pages. This is a very important design pattern of web development which is based upon segregation of concern so that each area can be modified without impacting other areas. In Java world, there are lots of open source framework which provides an implementation of MVC pattern e.g. Struts 2 and Spring MVC. By the way, M stands the for model and C stands the for controller. Modes are actual business objects e.g. User, Employee, Order; while the controller is used for the routing request to correct processor.
+17. What is the difference between a class and an object? (detailed answer)
+A class is a blueprint on which objects are created. A class has code and behavior but an object has both the state and behavior. You cannot create an object without creating a class to represent its structure. The class is also used to map an object in memory, in Java, JVM does that for you.
+18. What is loose-coupling?
+Loose coupling is a desirable quality of software, which allows one part of the software to modify without affecting another part of the software. For example, in a loosely coupled software, a change in UI layout should not affect the back-end class structure.
+19. What is the difference between composition, aggregation, and association? (detailed answer)
+Association means two objects are related to each other but can exist without each other, Composition is a form of association where one object is composed of multiple objects, but they only exists together e.g. human body is the composition of organs, individual organs cannot live they only useful in the body. Aggregation is a collection of object e.g. city is an aggregation of citizens.
+20. What is the difference between an interface and an abstract class? (detailed answer)
+This is the most classical question of all programming interviews. An interface is the purest form of abstraction with nothing concrete in place while an abstract class is a combination of some abstraction and concrete things. The difference may vary depending upon language e.g. in Java you can extend multiple interface but you can only extend on the abstract class. For a more comprehensive discussion see the detailed answer.
+21. What is unit testing? (answer)
+Unit testing is a way to test individual unit for their functionality instead of testing whole application. There are a lot of tools to do the unit testing in different programming language e.g. in Java, you can use JUnit or TestNG to write unit tests. It is often run automatically during the build process or in a continuous environment like Jenkins.
+22. Can you describe three different kinds of testing that might be performed on an application before it goes live?
+unit testing, integration testing and smoke testing. Unit testing is used to test individual units to verify whether they are working as expected, integration testing is done to verify whether individually tested module can work together or not and smoke testing is a way to test whether most common functionality of software is working properly or not e.g. in a flight booking website, you should be able to book, cancel or change flights.
+23. What is the difference between iteration and recursion? (detailed answer)
+Iteration uses a loop to perform the same step again and again while recursion calls the function itself to do the repetitive task. Many times recursion result in a clear and concise solution to complex problem e.g. tower of Hanoi, reversing a linked list or reversing a String itself. One drawback of recursion is depth  since recursion stores intermediate result in the stack you can only go up to a certain depth, after that your program will die with StackOverFlowError, this is why iteration is preferred over recursion in production code.
+24. What is difference between & and && operator? (detailed answer)
+& is a bitwise operator while && is a logical operator. One difference between & and && is that bitwise operator (&) can be applied to both integer and boolean but logical operator (&&) can only be applied to boolean variables. When you do a & b then AND operator is applied to each bit of both integer number, while in the case of a && b, the second argument may or may not be evaluated, that's why it is also known as short circuit operator, at least in Java. I like this question and often asked it to junior or developer and college graduates.
+25. What is the result of 1 XOR 1?
+The answer is zero because XOR returns 1 if two operands are distinct and zero if two operands are same, for example, 0 XOR 0 is also zero, but 0 XOR 1 or 1 XOR 0 is always 1.
+26. How do you get the last digit of an integer? (answer)
+By using modulus operator, number % 10 returns the last digit of the number, for example, 2345%10 will return 5 and 567%10 will return 7.  Similarly, division operator can be used to get rid of the last digit of  a number e.g. 2345/10 will give 234 and 567/10 will return 56. This is an important technique to know and useful to solve problems like number palindrome or reversing numbers.
+27. What is test-driven development?
+Test driven is one of the popular development methodologies in which tests are written before writing any function code. In fact, test drives the structure of your program. Purists never wrote a single line of application code without writing a test for that. It greatly improve code quality and often attributed as a quality of rockstar developers.
+28. What is the Liskov substitution principle? (answer)
+Liskov substitution principle is one of the five principle introduced by Uncle Bob as SOLID design principles. It's the 'L' in SOLID. Liskov substitution principle asserts that every subtype should be able to work as the proxy for parent type. For example, if a method except object of Parent class then it should work as expected if you pass an object of the Child class. Any class which cannot stand in place of its parent violate LSP or Liskov substitution principle. This is actually a tough question to answer and if you do that you end up with creating a good impression on interviewers mind.
+29. What is the Open closed design principle? (answer)
+Open closed is another principle from SOLID, which asserts that a system should be open for extension but closes for modification. Which means if a new functionality is required in a stable system then your tried and tested code should not be touched and new functionality should be provided by adding new classes only. 
+30. What is the difference between a binary tree and a binary search tree?
+Binary search tree is an ordered binary tree, where the value of all nodes in the left tree are less than or equal to node and values of all nodes in right subtree is greater than or equal to the node (e.g. root). It's an important data structure and can be used to represent a sorted structure.
+31. Can you give a practical example of a recursive algorithm? (example)
+There are lots of places where recursive algorithm fits e.g. algorithm related to binary and linked list. A couple of examples of a recursive algorithm is reversing String and calculating Fibonacci series. Other examples include reversing linked list, tree traversal, and quick sort algorithm. 
+31. What is time complexity of an algorithm?
+Time complexity specifies the ratio of time to the input. It shows how much time an algorithm will take to complete for a given number of input. It's approximated valued but enough to give you an indication that how your algorithm will perform if the number of input is increased from 10 to 10 million?
+32. What are some important differences between a linked list and an array? (detailed answer)
+linked list and array are two of the most important data structure in the programming world. The most significant difference between them is that array stores its element at the contiguous location while linked list stores its data anywhere in memory. This gives linked list enormous flexibility to expand itself because memory is always scattered. It's always possible that you wouldn't be able to create an array to store 1M integers but can do by using linked list because space is available but not as contiguous chunk. All other differences are the result of this fact. For example, you can search an element in array with O(1) time if you know the index but searching will take O(n) time in linked list. For more differences see the detailed answer.
+33. What is a couple of ways to resolve collision in the hash table? 
+linear probing, double hashing, and chaining. In linear probing, if the bucket is already occupied then function check next bucket linearly until it finds an empty one, while in chaining, multiple elements are stored in same bucket location.
+34. What is a regular expression? (answer)
+A regular expression is a way to perform pattern matching on text data. It's very powerful tool to find something e.g. some character in a long string e.g. finding if a book contains some word or not. Almost all major programming language supports regular expression but Perl has been renowned for its enormous capability. Java also supports Perl-like regular expression using java.util.regex package. You can use the regular expression to check if an email is valid or not, if a phone number is valid, or if a zip code is valid, or even an SSN number is valid or not. One of the simplest examples of the regular expression is to check if a String is a number or not.
+35. What is a stateless system?
+A stateless system is a system which doesn't maintain any internal state. Such system will produce the same output for same input at any point of time. It's always easier to code and optimize a stateless system, so you should always strive for one if possible.
+36. Write SQL query to find second highest salary in employee table? (solution)
+This is one of the classic questions from SQL interviews, the event it's quite old it is still interesting and has lots of follow-ups you can use to check the depth of candidate's knowledge. You can find second highest salary by using the correlated and non-correlated subquery. You can also use keyword's like TOP or LIMIT if you are using SQL Server or MySQL, given Interviewer allows you. The simplest way to find 2nd highest salary is following:
+SELECT MAX(Salary) FROM Employee WHERE Salary NOT IN (SELECT MAX(Salary) FROM Employee)
+This query first finds maximum salary and then exclude that from the list and again finds maximum salary. Obviously second time, it would be second highest salary.
+37. Can you describe the difference between correlated and non-correlated subquery? (answer)
+In correlated sub-query, inner query depends upon the outer query and executes for each row in the outer query. While non-correlated subquery doesn't depend upon the outer query and can be executed independently. Due to this reason former is slow and later is fast. BTW, correlated subquery has some nice application, one of them is finding Nth highest salary in Employee table, as seen on previous SQL question as well.
+39. How do you find if a number is a power of two, without using arithmetic operator? (solution)
+Assume it's a question of using the bitwise operator as soon as you hear restriction about not allowed to use arithmetic operator. If that restriction is not in place then you can easily check if a number is a power of two by using modulus and division operator. By the using bitwise operator, there is a nice trick to do this.  You can use following code to check if a number if power of two or not
+public static boolean powerOfTwo(int x) {
+        return (x & (x - 1)) == 0;
+}
+x & (x-1) is a nice trick to convert right most bit to zero if it's on, I learned from hackers delight book.
+40. How do you find a  running Java process on UNIX? (command)
+You can use the combination of 'ps' and 'grep' command to find any process running on UNIX machine. Suppose your Java process has a name or any text which you can use to match against just use following command.
+ps -ef | grep "myJavaApp"
+ps -e will list every process i.e. process from all user not just you and  ps -f will give you full details including PID, which will be required if you want to investigate more or would like to kill this process using kill command.
+41. How do you find large files in UNIX  e.g. more than 1GB? (command)
+You can easily find big files by using find command because it provides an option to search files based upon their size. Use this if your file system is full and your Java process is crashing with no more space. This command will list all files which are more than 1GB. You can tweak the size easily e.g. to find all files with more than 100 MB just use +100M.
+find . - type f -size +1G -print
+42. What is the shell script?
+A shell script is set of shell commands with some programming constructs e.g. if and for loop, which allow you to automate some repetitive task. For example, you can write a shell script to the daily cleanup of logs files,  for backing up data for historical use and for other housekeeping jobs, releases, and monitoring.
+That's all in this list of programming questions for phone interviews. You might have noticed that there are only 42 questions but title mentioned about 50 questions, where is remaining 8 questions? Well Instead of sharing 8 questions I am sharing with you guys 8 more articles where you can find remaining programming questions.  here you go:
+20 String Coding Questions for Programmers ( read here)
+15 Data Structure and Algorithm questions for Software developers (see here)
+10 Interview Questions Every Developer Should Know (read more)
+20 Core Java Question from Programmers for 2 to 3 years experienced (check here)
+21 SQL Query Interview Questions with Answers (read more)
+23 Tricky Questions for Java Programmers  (read here)
+10 XML Interview Questions for Programmers (see here)
+50 Multithreading and Concurrency Questions from Java Interviews (check here)
+20 Software design Questions from Programming Interviews (read more)
+18 Java Design Pattern Interview questions. (see here)
+ Thanks for reading this far, If you like this article and found it useful for your telephonic interviews, please share with your friends and colleges.  Any feedback to improve the quality of interview questions will be highly appreciated.
+ 
+Posted by
+Javin Paul
+Email This
+BlogThis!
+Share to Twitter
+Share to Facebook
+Labels:
+interview questions
+                              ,
+                            
+programmers
+                              ,
+                            
+programming
+9 comments
+                      :
+                    
+Shubhangi
+said...
+these questiosn are really good for an entry level programmer, but I am not sure if you can use this to test an experienced Java professional, as these are too much fundamental. Everybody who has couple of years of experience can answer all questions without any difficulty. 
+February 3, 2015 at 7:28 PM
+Anonymous
+said...
+Regarding the explanation on Question 8, Python is not weakly typed. In fact, it is strongly typed, just dynamic. 
+February 4, 2015 at 6:52 AM
+Anonymous
+said...
+Yes that's correct Python is strongly typed but not static, its just dyanmic.
+June 9, 2015 at 3:09 AM
+Anonymous
+said...
+What is HTTP etag?What is HTTP basic authentication?
+June 15, 2015 at 11:53 AM
+Anonymous
+said...
+Q39: Determine whether a number is power of 2, without using arithmetic operators. A39: OK, _subtract_ one from x....
+June 22, 2015 at 6:19 AM
+Anonymous
+said...
+For Java developer, you should also check out this mega list of Java questions, it contains core Java questions from last 5 years. 
+December 3, 2015 at 6:51 PM
+Anonymous
+said...
+thanks Javin!
+April 7, 2016 at 3:16 AM
+Anonymous
+said...
+In the first question there is a mistake, a binary tree is not necessarily balanced, so a search in a binary tree, in the worst would take O(n) and not O(log(N))
+April 19, 2016 at 1:21 PM
+asitbangalorereviews
+said...
+I like the answer given for question 41.Its brief ,detailed and informative.
+June 1, 2016 at 1:49 AM
+Post a Comment
+Newer Post
+Older Post
+Home
+Subscribe to:
+Post Comments
+                      (
+                      Atom
+                      )
+                    
+Interview Questions
+core java interview question
+(161)
+data structure and algorithm
+(45)
+Coding Interview Question
+(32)
+SQL Interview Questions
+(24)
+thread interview questions
+(20)
+database interview questions
+(18)
+servlet interview questions
+(17)
+collections interview questions
+(15)
+spring interview questions
+(9)
+Programming interview question
+(4)
+hibernate interview questions
+(4)
+Translate this blog
+Java Tutorials
+date and time tutorial
+(17)
+FIX protocol tutorial
+(16)
+java collection tutorial
+(52)
+java IO tutorial
+(25)
+Java JSON tutorial
+(6)
+Java multithreading Tutorials
+(33)
+Java Programming Tutorials
+(27)
+Java xml tutorial
+(9)
+Search This Blog
+Follow by Email
+Followers
+Blog Archive
+                            ► 
+                          
+2017
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+2016
+                          (
+                          166
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          2
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          24
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          17
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          19
+                          )
+                        
+                          ▼ 
+                        
+2015
+                          (
+                          126
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          10
+                          )
+                        
+                          ▼ 
+                        
+February
+                          (
+                          12
+                          )
+                        
+How to Count Number of Words in String - Java Codi...
+How to Read File in One Line in JDK 7 or Java 8
+Top 20 jQuery Interview Questions and Answers
+How to disable JUnit Test - @Ignore annotation Exa...
+Difference between UTF-8, UTF-16 and UTF-32 Charac...
+How to Find First and Last element in LinkedList J...
+Difference between Right shift and Unsigned right ...
+Constructor vs Init method in Servlet - JEE Interv...
+How to Implement linked list in Java with JUnit te...
+How to Read/Write from RandomAccessFile in Java
+How to Filter Collections in Java 8 with Streams a...
+Top 50 Programmer Phone Interview Questions with A...
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+2014
+                          (
+                          101
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          6
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+2013
+                          (
+                          127
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          15
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          16
+                          )
+                        
+                            ► 
+                          
+2012
+                          (
+                          214
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          51
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          13
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          9
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          12
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          28
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          18
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          34
+                          )
+                        
+                            ► 
+                          
+2011
+                          (
+                          135
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          27
+                          )
+                        
+                            ► 
+                          
+November
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          14
+                          )
+                        
+                            ► 
+                          
+September
+                          (
+                          19
+                          )
+                        
+                            ► 
+                          
+August
+                          (
+                          11
+                          )
+                        
+                            ► 
+                          
+July
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+June
+                          (
+                          8
+                          )
+                        
+                            ► 
+                          
+May
+                          (
+                          5
+                          )
+                        
+                            ► 
+                          
+April
+                          (
+                          7
+                          )
+                        
+                            ► 
+                          
+March
+                          (
+                          3
+                          )
+                        
+                            ► 
+                          
+February
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+January
+                          (
+                          10
+                          )
+                        
+                            ► 
+                          
+2010
+                          (
+                          30
+                          )
+                        
+                            ► 
+                          
+December
+                          (
+                          4
+                          )
+                        
+                            ► 
+                          
+October
+                          (
+                          26
+                          )
+                        
+Pages
+Privacy Policy
+Copyright by Javin Paul 2010-2016. Powered by Blogger.
+ 
