@@ -20,13 +20,17 @@ for l in article_map.keys():
 
 article_file.close()
 
-tfidf = TfidfVectorizer().fit_transform(article_texts)
-print type(tfidf)
-# pairwise_similarity = tfidf * tfidf.T
-cosine_similarities = linear_kernel(tfidf[62:63], tfidf).flatten()
-# print pairwise_similarity.A
-related_docs_indices = cosine_similarities.argsort()[-10:]
-print related_docs_indices
 
-for ind in reversed(related_docs_indices):
+def find_similar(article_texts, post, count):
+    tfidf = TfidfVectorizer().fit_transform(article_texts)
+    # print type(tfidf)
+    # pairwise_similarity = tfidf * tfidf.T
+    cosine_similarities = linear_kernel(tfidf[post:post+1], tfidf).flatten()
+    # print pairwise_similarity.A
+    related_docs_indices = cosine_similarities.argsort()[-count:]
+    return related_docs_indices
+
+article_indices = find_similar(article_texts, 0, 10)
+
+for ind in reversed(article_indices):
     print article_titles[ind]
