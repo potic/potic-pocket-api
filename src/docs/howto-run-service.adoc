@@ -2,7 +2,7 @@
 
 == Endpoints
 
-GET to http://<host>:<port>/fetch/{user_id} - fetch articles of specified user
+GET to http://<host>:<port>/fetch/{user_id}?count={count}&offset={offset} - fetch articles of specified user
 
 == Service locations
 
