@@ -16,7 +16,7 @@ def fetch(user_id):
     count = request.args.get('count')
     offset = request.args.get('offset')
 
-    request = requests.get('http://pocket_square_users:8080/user/' + user_id)
+    request = requests.get('http://pocket-square-users:8080/user/' + user_id)
     response = request.json()
     return json.dumps(fetch_pocket_links(response["accessToken"], count, offset))
 
