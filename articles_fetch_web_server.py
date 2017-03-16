@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import requests
 import json
 from article_fetch import fetch_pocket_links
@@ -16,9 +16,8 @@ def fetch(user_id):
     count = request.args.get('count')
     offset = request.args.get('offset')
 
-    request = requests.get('http://pocket-square-users:8080/user/' + user_id)
-    response = request.json()
-    return json.dumps(fetch_pocket_links(response["accessToken"], count, offset))
+    userResponse = requests.get('http://pocket-square-users:8080/user/' + user_id).json()
+    return json.dumps(fetch_pocket_links(userResponse["accessToken"], count, offset))
 
 
 if __name__ == '__main__':
