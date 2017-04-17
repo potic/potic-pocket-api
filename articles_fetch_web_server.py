@@ -15,9 +15,10 @@ def fetch_cached():
 def fetch(user_id):
     count = request.args.get('count')
     offset = request.args.get('offset')
+    since = request.args.get('since')
 
     userResponse = requests.get('http://pocket-square-users:8080/user/' + user_id).json()
-    return json.dumps(fetch_pocket_links(userResponse["accessToken"], count, offset))
+    return json.dumps(fetch_pocket_links(userResponse["accessToken"], count, offset, since))
 
 
 if __name__ == '__main__':
