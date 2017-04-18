@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import sqlite3
 import os
 
-POCKET_APP_KEY = os.environ['POCKET_SQUARE_APP_KEY']
+POCKET_APP_KEY = os.environ['POCKET_APP_KEY']
 
 
 def fetch_pocket_links(accessToken, count, offset):
