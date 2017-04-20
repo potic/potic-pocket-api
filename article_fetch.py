@@ -10,7 +10,7 @@ POCKET_APP_KEY = os.environ['POCKET_APP_KEY']
 
 def fetch_pocket_links(accessToken, count, offset, since):
     instance = pocket.Pocket(POCKET_APP_KEY, accessToken)
-    return instance.get(state='all', detailType='complete', count=count, offset=offset, since=since, sort='newest')[0]['list']
+    return instance.get(state='all', detailType='complete', count=count, offset=offset, since=since, sort='oldest')[0]['list']
 
 
 def save_pocket_links():
