@@ -1,13 +1,16 @@
 sudo: required
+
 language: python
 python:
 - '2.7'
+
 services:
 - docker
+
 before_install:
-- openssl aes-256-cbc -K $encrypted_7ffbbc34c1fd_key -iv $encrypted_7ffbbc34c1fd_iv
-  -in deployment_keys.tar.enc -out deployment_keys.tar -d
+- openssl aes-256-cbc -K $encrypted_7ffbbc34c1fd_key -iv $encrypted_7ffbbc34c1fd_iv -in deployment_keys.tar.enc -out deployment_keys.tar -d
 - tar xvf deployment_keys.tar
+
 before_script:
 - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 - eval "$(ssh-agent -s)"
@@ -15,14 +18,23 @@ before_script:
 - ssh-add deployment_keys/deploy_test
 - chmod 600 deployment_keys/deploy_prod
 - ssh-add deployment_keys/deploy_prod
+
 script:
 - export DOCKER_REPO=potic/potic-pocket-api
-- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
-  | tr '/' '-' ; fi`
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH | tr '/' '-' ; fi`
 - docker build -t $DOCKER_REPO:travis-$TRAVIS_BUILD_NUMBER .
 - docker tag $DOCKER_REPO:travis-$TRAVIS_BUILD_NUMBER $DOCKER_REPO:$TAG
 - docker push $DOCKER_REPO
-- if [ "$TRAVIS_BRANCH" == "develop" ]; then ssh -o "StrictHostKeyChecking no" "$DEPLOY_TEST_USER"@"$DEPLOY_TEST_HOST"
-  TAG_TO_DEPLOY=develop ENVIRONMENT_NAME=test 'bash -s' < scripts/deploy; fi
-- if [ "$TRAVIS_BRANCH" == "master" ]; then ssh -o "StrictHostKeyChecking no" "$DEPLOY_PROD_USER"@"$DEPLOY_PROD_HOST"
-  TAG_TO_DEPLOY=latest ENVIRONMENT_NAME=prod 'bash -s' < scripts/deploy; fi
+- if [ "$TRAVIS_BRANCH" == "develop" ]; then ssh -o "StrictHostKeyChecking no" "$DEPLOY_TEST_USER"@"$DEPLOY_TEST_HOST" TAG_TO_DEPLOY=develop ENVIRONMENT_NAME=test POCKET_APP_KEY=$POCKET_APP_KEY 'bash -s' < scripts/deploy; fi
+- if [ "$TRAVIS_BRANCH" == "master" ]; then ssh -o "StrictHostKeyChecking no" "$DEPLOY_PROD_USER"@"$DEPLOY_PROD_HOST" TAG_TO_DEPLOY=latest ENVIRONMENT_NAME=prod POCKET_APP_KEY=$POCKET_APP_KEY 'bash -s' < scripts/deploy; fi
+
+env:
+  global:
+  - secure: OeZ4OH1rf0T+xTxeXNnMC9MqBQTjamEuNDbV0d2S+oicKndNu9ngilACbwT7DhqAhBoyizY05MnfcUIvUt4Uq5NGknqioboK/Lllc8ZW47idzZ5ibmHS52sv0x29CNrhQ0b3FFX9AnjAJ1gukSO6IgWJlJsWLnddt5B59eecgA8n7rn20EClzRMdU5TV5xeodTKAaP6UgrzEJLq8RoooRbURusKf3PiNVQ9CDVV1nFM5o1LNhvw/IRBgD9TD66jhuNf4Ivnrovc8U6hcEMuKTosrsGi6hjhsaUeKvM+l37UjZQUlNsiUYe81x6BvFeeL+zMn3iDg0A2FYiv2Fj2yUq9H2k7IfBY/T7Z91xfs4Ykf6gBFVHhGhpTL5oz62uDQ25vupMX2kgUQAtfeb5a586LiRajSzOylMUxwi1dbh3QZENudDoFzA7J5y9UK72a59Oi43ouGJNoARSsKFaaUQ2fqx9f44cEOlyjlxJu4kUxB+vBcZy2mr15Xd2RImru/6iW2hGiAu6rDfj/fz7jHTclDBF8Kfn1mtbdXy5zxU5L9eE9z2gbubtf0mFgk+iq5StjZKkgcXEJ8rb4GjzyJQ+oPvMvLqQTldh9EkcOt3YzUb+wfW9XQAEEWxoSOKk8Qed1kFXCxLQIqXcjFdmtk2FfTeH9YEnhMFntdSLeKjMg= # DOCKER_EMAIL
+  - secure: CMFewqTS9dPX+mbq4c/MijnK7rizhUXVlW+N7yAafuhMjL9dMCTV927s+D1cO5NMgeNcpcI8vINQOurWV6co+xa4fGcIqNYtdyjFamvGqbHxyyIadO38WDrT2p/eGnCfaDJ/tzrC41RbLawszG7ZCto/Dl3QigsTufeTRemGLOT/TnRN0GXKQRnMiOIqvKE90uveGL9jAGYnhtlrbR1/qhXgiTvXspvxCBV/uQdnBtE7owMh7ojKsKMOujakKOeM1yxaj7EHfOSoZvWhckBrVdGyBYf7ZXbtG0KEGb7DfRNY8AbjMpjxqbut5P6sQTC7ZezjMzw0sOw3KE9qzoRQMgxYTp89QuM/2OCVGjRoIzwzBIrY6Ts/QsXVjdCuQB6t+66N3k1Ph/6j6KW6uBM/ybCx9mQmeC1rqPzBWF9yVcYlq3amPTLbUS8F8FDEMuiXyCU2b6ny2d2wwC4s/444libKjpKllNmDPhHwENOuWzmhyYJ803ij3NHkkF6Zc2BxwCBi2e2R1MapGsTLzNVVm5JtOPQxBiPDmisHvatV0TZwUghfd76Be4tvIEOyiTI+xWQjakSwPUzC3EeYJbUUAfrr3hxPsIdv/vlHAnqsOv+Wq0a+fZiMNvHnIiBI1AH7cfy8+6gLwggS7JSE9IHwp1PM68wrYf9nUfgHV7rikaY= # DOCKER_USERNAME
+  - secure: sBFOCrbx4DZfsQqmhREKgRwP9aXy4GQs7XvLAPy2eMiSizayM4yOPegCYGDp2nXgTLnlUmUKwO698FdzRomYZlG9wGtuvFJaVxvZkEqZqE2s3P4IUto9ZPmtg3l66qV6c0GqATecTyieyKkJhVQ0xR35z3LBeewLTWijyoLXMVR1bzrzoulq9RvIRLOZl3+fa8n9hwpNo5TWIsj6kK3/S5PkYbCb4BxSD/3xkb9qUDlQtoEj2Vyv36xpkZ8KVh4h6xGJJr07pMn+bn37gjHugo2k50gOpVbmdrBNEqfJz+hEfERS38d2Q7EeXQ11InpfQ0ZxqydKJn3ITV9F8uSVL0TzeCyJo/doUbnYl9+NE+TPU6ixuG1THJIwS6kfqyCL/kMJlfEgU2eN8tXB9cTwosYom68xFPD24VLry2A9qhG7AnwFHGaXoH7BK1dtB/Qw3/I0FJQ+NmfX22IuR2SQ+cQi1Zxug3/gJM1Aq6l2CCY8o7e5M8wWsn1P2HoTHs/kLQiV+x5yXqDmsn7zFCpPgllfwW4FPJu6xJTRJTeO2OlH2hlDmL9PFP4k5HwQa8cGk1r51lJ9Wx04B8LjaZFxLG3MsSaGcMsHY4GMNmWBxJNUwQADTQ/6hd2+Bm+fMjwTXOOHom5tmjFhV6/SnWMqXoegYzY9vY/VFT/0G/SQa1M= # DOCKER_PASSWORD
+  - secure: haMd0MXxIJCfkKqjSSl7nt7EnAPwRQ2ISDkJKulv1cf88J6a1yh/TsxJn9SrYDXbjVgxWMPb/J0JduDIhmcTvxSZ87G56Pb2DBTwUAl2n+PJSgkoZAjwDKs0gzg89+fqI9MmNORtoqIqQv4LNtnO8mIiaV730UIfFmIJaJoPGDrBmK43Y4o/1CHlKQuWw9yi7WqCBb4MsQ7fzh2o6k8N1fWp+MgAQPcMcFE17oLHOvXFrlLWLhfvWDWLlWgA0qg/E0h0SeoX+D5Ggi9mKZpskd9rYoDT2vJoGHD3rh2tqRcQkV/oLWyyw4eExGZzMM4SlJQ0C2XfYwCC8u9woTW/e0rA/28Ww+kPGL8Fy1GDSJO78orPHojT7Ldh7Q0qZ5lPVwaAsbYsNT9HLFC/Cn5GJXosg6w5VTyOPhLzG1irxFE0ZKFFZDZt+/dnxN8LmCZDcdgvmOdEinrZC5fB8kuYEPZvzxIzQz6o8tlkuIhMZ6VEbMYtb4UvgomECcC8u/Uy/wVdur0kU7Wo7xmOszKl582DtVOzsEfjJ8MphspOhMeZEQQ4kJE71LvRVk2ekW+s07R2Ifx5tFwlDz+0d1xQSm/rbI6nk35DPUDIjPOrgXZvThM8bdikp+4Fa7drEK4iEdz2jMmfaY/V0ZNyviLYV5MdyKCFoInl1BsT340P3aA= # DEPLOY_TEST_USER
+  - secure: BXqR9bPE8vO2rDMQiFHdGZiP+uriX2ZSxcxJZE/m2reetBD4IRmn4JVsjDIVAWnwLmjIQS3NLh1aijAWSrBWmPY6+xL/TcBt1K4fn4SjwSyQfYG7y/I+qeXtpQ/RKSgIAWBqPlizeHnFPQ5qtCoCPkYjjfzNvKYh5qkqMcbMNEe3u/IFcoknrM+0svOI+xD5NFc1ni8+AWGEAdbn69H8Rpl8WSnus0zHui5kIeaQVaGzfL5LpYJjftlxwqWb4sqhLRRg7GHBgs10pgphDgDfT2fRtSvhZGhH6fEtvUpHXsXdbvfFbgjbokfMFb8M9bKfZMAiEYqqyFtR8+RSQvRU79VXzif8U2Jy5qx5XBRll2o7F0Hr8jIiimkrD/WQ2S3tU8dGgqrykurRWtjozONay9N2LC3OSZnBxpOdKyjQWpG4i/Y/dHdaIm4O1APp+4qVGeA8LObv8VBHiX/frjH8IWTN27hWFzKf0ow1b5ykfSFlXRoh7dcGS3/3JWrZXX0+HY6bW/4K2ro1GN1WRJbTsfC20cpGt4F/8XAhyJLeVkRiDh/EaMugWV3Sk67HqhCibzPUzNaVKdhN5bwSnE8GlpFTT6lynGhGATiElZTOP931lFqlhbY9Vvw2UNTjwXyZp+fapfaYE8VD3JfT85Fk8RUTLnBIo3FSRUWJ2AGG4PE= # DEPLOY_TEST_HOST
+  - secure: vAe0SBplIW8xGi78kwXtBWymmHsig8pc545cWHlNLz/eorJhCxtAimS0e/RmDIlv3yQT/pf+DT1guIGdVeJEQ5/IiWdocJpziqaDLGjvt/A+rUzBnUsKivXqH3Upyc/PeOVTW0RtJDB59TUOa0VOrV3Ne9S9eDV0pviAE0dBWNEfjwxPltU2SJiX8OeLg+5c8G/uGN8Xs2i4UBbI8Oi2YETmjdHpS2vqQTvOHasa326d5zlhjaYeMyphd1r13dGsRwo4n4MbH1HcFitHZM22XxnjEeDQPHzGYO6aKUPnSD2kAFp+FNogGTrbqWVWWMy4blkQE7tYjuajrubxAoffU7RcNT+p63PATLrZM3SxA5hbp3j0J7POxXYTufJyEAtEpuIHEa1OsdLSHbOH3Yb0UqkBksgCQezdWjnELh5Jhbr5Xm5hUkJChyvC/X91j+FKKxT4+Uhyn6ni/2hZM1YZu4VI8AdLWLPyuUrYd7tNGV6ys+WqZcNMSm+tfB7RrTDqgSzOqPUELLhOOETBBD80aHCGOMWhr/Bw9sukk7YnepUx+oVWB+x5Kja/8KCLZTMAvgcuYl5fW82Qg3NDJtAFjuBLJwSJOUhSHadpmxeM1HYuROT0laxQl2idKy48s9sUcHenFIsAD6GsiDT35TBzGNc+NzQOBu028bb6q8MphUU= # DEPLOY_PROD_USER
+  - secure: lJM+Uo7I0dm9Ao88P0kBbcs4nAa2holAjgIWnOLlFnUCR4N1ljRvyA52UYBQUuYxd1p71o+hi3SMch3i59CLO503TnpKidglrZjb8ut1mrR0m8fQqRJJDWJkUMJKymxL3K6h2TxdFmzzZ9UxJOfJ4u+SYqnucFOIPI9D+uChCoeq+5Zqknukhf2beMKusFq28jNP19hd6LmAdc5jQ+zbEHDVEkc7j/qLgQnhoBrHKnyk/GKc9P/1SVK8qMluEd4b5g5rFPTCYYxEJdNKNVx1yV35VOH96Qf3536qG37tM3IAOeUehYZ7SvLnb0Xi5GvwioljMP7UNB8rMY71G4CWZFRF68kO4KJL3KUREbyLVHjTOv0lKeID7/YE1wptStbvOJHvXmvBvsUorr7PTz6KV1Z8O+g1FCig4LBDlg5mxR006msOvVGKMJHfCrCl9cOHqs+vXmMfCsPyuoGZ/9rgNEUfzH6O3K03c5eJMslitihzBjVBIbfcumT78Nd4pqz3xtcz4q8ZLWu2d1/LdHMXjKVd3yc8u/+TgAHyR7L0iwC/zEIhbc1MxeYtxYEUxmT9Uy3SPxTLCgYZkQQfmL4u7s/7w+CBUzls4todnDP6tbax3nvcoCB3DEKsVM/3DUWG1s8HZAQyQUzf3eLtyv4FWr/ewjz0w0dRAaHA9gurIlE= # DEPLOY_PROD_HOST
+  - secure: ofBpTzJXTaqB7ZidSxujEBWY3YTYYT9ge7ByIRHZKsdV4Dk9pVyktueCYhxtp4FaYanC4ro96IYpQU6UbYCmSL48QRMxzlI3ra/7VbpaXEudOkEmcpNRJxrDL8QDy3At6u9SlhhyUTaTEWOFKXG7xihy3tB++bq/HeNGiFJBLow5AYpGBpwpRw5al9zc+UfRNByAeSAExjDhaxo8f2ihRYy2GuHD0Rm0Qhoci6rYNd9NE//AfAsuJeLluNnBNahA1CyikN5kd98CEbO9qK8hE41XxK6WOpizAJMTa9xHDUi31cz383Yi+Wi0DWJRBNW3tLt9pjcuUkWRS3o3Opqsyw2u5AclvMixb3B2hT35EqUoYG7rEZkjy7Y10DuPgVutqNpS6c8JNC4pQou7jumlDkB6Pi0FoYXvt/pdHBkJfig0x852ViHCelEq+rHCK445C+KK51bH3yldSUPzG6PqRxV7PBKy8tP1l3uy0Pzlk4xuVgdRkT3vx8YRmBpMUlCtymUeEETd/kaaxz2KZZ9uNkgjAgNqhr7vj1BdhC4Qpu0F9dnqYEB6rnmvd7MCL6lWf/ggxqIm3BWV+G0iVfuBl0gvsGR1qH95CKz5beSs2beCimRwZxkWiOASOSeFsZjy+vINGIUeoMZZKXwvDRNQ69dTu9fjTWT74YvrT8sW3Yg= # POCKER_APP_KEY
