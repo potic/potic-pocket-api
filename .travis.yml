@@ -1,32 +1,28 @@
 sudo: required
 
 language: python
+python:
+  - "2.7"
 
 services:
 - docker
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_51283c91a67c_key -iv $encrypted_51283c91a67c_iv -in id_rsa.enc -out .travis/id_rsa -d
+- tar xvf deployment_keys.tar
 
 before_script:
 - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 - eval "$(ssh-agent -s)"
-- chmod 600 .travis/id_rsa
-- ssh-add .travis/id_rsa
+- chmod 600 deployment_keys/deploy_test
+- ssh-add deployment_keys/deploy_test
+- chmod 600 deployment_keys/deploy_prod
+- ssh-add deployment_keys/deploy_prod
 
 script:
-- export DOCKER_REPO=pocketsquare/pocket-square-ingest
+- export DOCKER_REPO=potic/potic-pocket-api
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH | tr '/' '-' ; fi`
 - docker build -t $DOCKER_REPO:travis-$TRAVIS_BUILD_NUMBER .
 - docker tag $DOCKER_REPO:travis-$TRAVIS_BUILD_NUMBER $DOCKER_REPO:$TAG
 - docker push $DOCKER_REPO
-- if [ "$TRAVIS_BRANCH" == "master" ]; then ssh -o "StrictHostKeyChecking no" "$DEPLOY_USER"@"$DEPLOY_HOST" POCKET_APP_KEY=$POCKET_APP_KEY 'bash -s' < src/scripts/deploy; fi
-
-env:
-  global:
-  - secure: QSTQqvT5Qo7stk6qe8FEiTTggIrLcXs8TZ2/0+x1NGHw1aaZZ4izHouqtuoHtF/EO759jyMUJGHIUI3PlKOsv1MsMwUBMlwuQ0XoZCtyks3YCLZH2WMpN1osrHmxj8I77KqhhWlhy8HSo+f2MxBnnA6LTmyivCg2hPO0AaEFwJdNSSASb4UMoRd/zXRVqiG9cguBeSf6fn/g8JNpH5kOFaZQK+heX/YosErWFkAV5LRbb65Pexp4kK3QhD7fR1TIR4VJ3Ab8JglAffqSIAaKjRFCQdtDDkM87D7vrWSgIATZilwRj+emrt8P03vJiGQ0Tv98Jcv8LzvOKPbFmPJgLNfSov90LJRYXRFw8aeUf2ln/Ug2jO6Qy93Tmv3QpkOsSO0BQRzHX+TaHbZodYXldVO+xGGfIQ/BEdaaMCuun5PV1eDC+wgwsNMgXWg8Btc9o0vOLfVr68ukucB+0diAh3PFFsFOrjxII3Jep+Tlo7CBVuQRmZpVQsIi3fsFfzJGpKrey/gAhtbPsXW7kfLvndANyCrjpEuf0UsW6btwtcPpQ5J5q2TNt2Mkyo9TFCS8rhyI9eVl0vQr0hSOT8FHBtHg/azJkn61eRIijuXyXX2T/zvpryqUU6lYL/QCwpVsdpIs68J4qx5fT/QnP6AzJa3HShm/mNMvN+Ubw0/DlsA=
-  - secure: YN6cD5bVjzHURNeBS3SYck7Y755z/vZhRT7CHghUNm4XiyhFOZlJUJmECu50oIwS6tXoNwScbhCFqHb2MRwWoXEq765AnaFwVuiSfC3KU5vQZf9Xivk3Gtm9vgm27cSFU/Uci7eWaggq4VLhCmXXSrjfpbi6BWvG0/N5blxlEfqZqMuTHmVUzV0XM65ler5QFYN/286ZR6gIvhUL8hT4+k6VhaaGDLgM6Cf/uwmaHlaIH3Z+8DrSQxfmi1Ix3sTcqaGD6y3pJC4HS1lVMKD7umNcHxwwndPKqpb9WfUVCe8fYImaCgoD+qbfWCI8nyjZVNnCvuwQmNa1ORhXQBWZsaluXkqWuWU2ngNsXs20i8DVOFtidIJkKfFQVYwjg9PIEi8GIkPystmqYHAmL6RYK++zMrvLzisqdsLSxvd5rytszhCv94yDUpqySLKxk5Au9kEpclINHTIkJArTl/hUmTPRMWKJaBos/VOSq9R3Vio8qOHvqKKlIQ77rgufqaNg39MuzOh8wlnZwPXqbzwwHCt1kHjp6wrfO0g+v765d+BPaEV2ZUno0OCpxVQZcdgfmrHNdkDCGnBWc6nz9OD23XJQTgxLc8PTF1XGU2mVGOcJ0E0MPnPHloH+WKMxLZ3UySFZJyUi+wfiupAciEYE7Z61sNSnFIrJgiFltchuxNg=
-  - secure: ZB01wSChPEcJJNd8sZ9OXyLqHWmnefciuYD2dY7dfieXKlLHuaFcJgWjTl/26fu6LpKBMOY9yM37uZ4v12tDF7k3B1GWc8dRGHxVzy5fEg1ElmO4+HqinyWiKsbs7oYPDh7YSD2F5Hen064ZvmFjm6ZmpFOQkp4nUD+lns18PxU3QNWFZe9d0k7oGkDO8IMkkR1SzBHq0rnT7SWxAo2K31WOezXbDRROaeW9Ljwit72C2Ria+hvEgXWWwe7+MBf9N3Ak6InnVEeBu866mLJa5FN4afDEwe7/ce5fPIiW3FaqEjrImwFm/8VO2YECb7cdEm/GwO45eG1c40wLWGPQ4sNChRTDPz4funntG+7SuntT0Lr4Jmu1NFKPzKXOB6iwUiWqBxjmICPg5AGQFlckCnSKYyMEKj2EkFR3BDP5A+jy/pM+FAkziuoMcLolFQZpH0TXRcEo1fcalfNXSJd66vx9OZemWThwcIUJAd6oTZg9g5hfOGDoXs7o9L4F2JPrhcLxq6uiSwgdwNHustgqdHpo8DFcCJAp7BeQfZXaj2GGz1zOMQkas4BacbWybaejvu5JgG7CAUVuoXsj0re+3kEJ8ifZ6yNhceXGzqEDGRcWJn6WpMAdWpWRLbJj+SqLrRHEECG0+PoqsFrcM8RGUVCAOFOh8wx83TZaLx/Ljyg=
-  - secure: g9vKQunu4uswUCxdtGU0HXJHPrxkeOk1un00TAd0q/AoTkkbocDmneosvj5h/xf01vkT3FbOvyRkDKK7AlPKkuQmHyaotYV0q/79Q7QB4+bNd0O3gy79qverytZWqLtEq3T7jp2tCMf6FQfT83/x6b0tfHWMbQUoRSHsJWPiKQ9rBEQT61bvLu/npRmujCZYmoMIYNddChQ/9q3L2qb4zQWARQYLzRcW7iibLTglcP/day5kgcc/RTjZ+FliGXZhJ/Gb0L2gFS03OlOB3ZhmqsaJzYfQf5cDzaQs8TidGmPi9pWUhaAHY6gN3E0IgVasjjKNLPQuW107AjnNCpUWCWNp35IinnlDSQnvDMr1E2Xn3YXRFxbIbrvs07FR9apZ5FM8J2xoFWrt0JZqVVqN9Kp0DyTwq3nAOEHJf1iji/ZgqC2sa3YwV1awK8UOwWRnX39YFTz8OjIlThf1xQog5UYG8sL0kuM2RaihN4LfhfhL4wNuo4JmGawusjrIzBQEu6pQOYQL4TClG8AsctgZ5VkwAQDvnyjJr6xeCTf0XR5auHRAXsSHAFIQsATV1oRtGI6JPuPZhZ2cbOCbHF9twNq/TkwzB9h0SfvJ27FRPdSmJoG6TTzc1OzVpnSsbwJXxv6hTt6KfKyTWRrk83dJqNQl8Q0VU2v8g6l/HcnhQsM=
-  - secure: TYxkDqo0Ymo1sKv+O61YesXy0DLRFTzKhkTX5LDgE80igT55LCIRyP47e/HCHnFjYyFYRp7Ew6tHGaask/XoA4Ku/U4IAEJH3zmixqs9AGQ6Dy92gCgTaHzg8VogpKdzIBaBhAfnW2c276AkkDUEiaDf5dJ5bGWvFRCijO1beKxq+YQKDkjtCqel/voq54IR0eaZ9hiJy8Kfq+vNoM2Ed3UYTg9t2zv5/oxyuVgUL3SfFRgkdZpTXjdG+9w7NQpE3fOTducatQPe4/Ygbfvyjg9eE4WpZcRiFeD/zPk41/lA9tEfxOX1ttX7tiDz0DmZeDzFTwZjYLuDJAyR/qxtrtZmsA9R1sn6+gxdwSY5p+yrRZQAGLGVX3/ewXESnu5BA3QGfmL5deyIncPrKf4MhjpQ/wtp7F0u9xR1uYjiDfqBVX5lgIBoidUklOwFn91GoBxpePMRSsh5hvfiiQEV4IFUFlsaFfo6z+94vVZeuu0VMUwpmXg9WGiy734Zj7cl15LjJ92PuLVfIezA+Bm9EZtPgduqEye0uvo8PLavoGjVzm5tdv4/Fdn8p/s53dEWcaYWY8qYN8NoKUa5QAywPee/qshaz1Vep5DzCmbffGPRyzpHW4HpdMrfL/wuYwjBimy/EMdYcKHmj6TfwKu1DjjoLOmCAL2k0XTcyaGU2ag=
-  - secure: g2Rqt/VwuU5qOFUERhozKaoIKhMNWLm8bjXw/PVgWum0seWMSJPgfxxjNknhvWhYrpCV83G1jejQGSSiwjxlggpQRQ6uv7JH6zxStwHF7vND5LCzce5DfZG2jPv5hxucpv8bx9Rdjd1lVN/DnwPE/Sc8AOxMhRABiece3TUYq1H4qhkQjI4HdDjBAmVngHQYjN9RLu8ch3HI+RvftARvktEKsZN6FEc/qCR52HN+c6SITAlmEBfadXHmJDfUgBlurqtGOJc9CIlkDXl2KOB2LYqWS9Ujfwq7lYmPKN7OXzYqZ2Nlh89bKrVzggHoVq97eVrbCIWrTPE215Od0+DAFnISi92ZQXe3l3EdWw5ttwoBC3iMiLS9Ir+I5heHcco44JJwohKfmxSpqSfWNhZDgN3MSkwqQaITCz70OG/db0kyqt1rKqQkAgdO5jFYnhthF3UIfATD5+sBjVQVBZVMYSHZRMX89QBctaJVSspMO8Fg8vFRJ1fZiRDwuMVqJPLHWn/CX7l/3kWl6JCSJ8ZOA3B+xfdys0cekMbeYfMPYhwpntwLw5zs/rmoxpnRq+tCV9jvOU+Kx84gkaOpfTkMrNB2XlH2CZsVsqcTtXfjxh5oqIOvyDjzXnNzWO/o1w8LsjDOuEaLw36j42RBfRFJeNPFeR/vQ1iuSekwDRK9NGc=
+- if [ "$TRAVIS_BRANCH" == "develop" ]; then ssh -o "StrictHostKeyChecking no" "$DEPLOY_TEST_USER"@"$DEPLOY_TEST_HOST" TAG_TO_DEPLOY=develop ENVIRONMENT_NAME=test 'bash -s' < scripts/deploy; fi
+- if [ "$TRAVIS_BRANCH" == "master" ]; then ssh -o "StrictHostKeyChecking no" "$DEPLOY_PROD_USER"@"$DEPLOY_PROD_HOST" TAG_TO_DEPLOY=latest ENVIRONMENT_NAME=prod 'bash -s' < scripts/deploy; fi

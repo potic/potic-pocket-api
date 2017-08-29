@@ -15,13 +15,13 @@ warn "Currently running docker images"
 docker ps -a
 
 warn "Killing currently running docker image..."
-docker kill pocket-square-ingest; docker rm pocket-square-ingest
+docker kill potic-pocket-api; docker rm potic-pocket-api
 
 warn "Pulling latest docker image..."
-docker pull pocketsquare/pocket-square-ingest:latest
+docker pull potic/potic-pocket-api:$TAG_TO_DEPLOY
 
 warn "Starting docker image..."
-docker run -dit --name pocket-square-ingest --link pocket-square-users -e POCKET_APP_KEY=$POCKET_APP_KEY -p 28102:5000 pocketsquare/pocket-square-ingest:latest
+docker run -dit --name potic-pocket-api -e POCKET_APP_KEY=$POCKET_APP_KEY -e ENVIRONMENT_NAME=$ENVIRONMENT_NAME -p 40403:5000 potic/potic-pocket-api:$TAG_TO_DEPLOY
 
 warn "Currently running docker images"
 docker ps -a
