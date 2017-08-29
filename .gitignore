@@ -7,6 +7,3 @@ out/
 
 # Mac #
 .DS_Store
-
-# Digitalocean #
-.travis/id_rsa
