@@ -35,7 +35,7 @@ def get(user_id):
     return json.dumps(pocket_get(userResponse["accessToken"], detailType, count, offset, since))
 
 
-@app.route('/archive/<user_id>/<item_id>')
+@app.route('/archive/<user_id>/<item_id>', methods=['POST'])
 def archive(user_id, item_id):
     userResponse = requests.get('http://188.166.174.189:28101/user/' + user_id).json()
     pocket_archive(userResponse["accessToken"], item_id)
