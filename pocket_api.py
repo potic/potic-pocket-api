@@ -15,4 +15,4 @@ def pocket_get(accessToken, detailType, count, offset, since):
 
 def pocket_archive(accessToken, itemId):
     instance = pocket.Pocket(POCKET_APP_KEY, accessToken)
-    return instance.archive(itemId)
+    return instance.archive(itemId, wait=False)
