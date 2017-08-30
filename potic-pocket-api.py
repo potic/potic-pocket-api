@@ -38,7 +38,7 @@ def get(user_id):
 @app.route('/archive/<user_id>/<item_id>', methods=['POST'])
 def archive(user_id, item_id):
     userResponse = requests.get('http://188.166.174.189:28101/user/' + user_id).json()
-    return pocket_archive(userResponse["accessToken"], item_id)
+    return json.dumps(pocket_archive(userResponse["accessToken"], item_id))
 
 
 if __name__ == '__main__':
