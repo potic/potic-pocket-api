@@ -1,4 +1,3 @@
 Flask
 pocket
 requests
-bs4

@@ -1,8 +1,4 @@
 import pocket
-import json
-import urllib2
-from bs4 import BeautifulSoup
-import sqlite3
 import os
 
 POCKET_APP_KEY = os.environ['POCKET_APP_KEY']
