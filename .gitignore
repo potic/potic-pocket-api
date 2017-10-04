@@ -7,3 +7,9 @@ out/
 
 # Mac #
 .DS_Store
+
+# Compiled #
+*.pyc
+
+# Development environment #
+logs/
