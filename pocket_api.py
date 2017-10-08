@@ -1,7 +1,12 @@
 import pocket
 import os
+import os.path
 
-POCKET_APP_KEY = os.environ['POCKET_APP_KEY']
+if 'POCKET_APP_KEY' in os.environ:
+    POCKET_APP_KEY = os.environ['POCKET_APP_KEY']
+if os.path.isfile('pocket-app.key'):
+    with open('pocket-app.key', 'r') as pocketAppKeyFile:
+        POCKET_APP_KEY = pocketAppKeyFile.read().replace('\n', '')
 
 
 def pocket_get(accessToken, detailType, count, offset, since):

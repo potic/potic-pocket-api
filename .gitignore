@@ -13,3 +13,4 @@ out/
 
 # Development environment #
 logs/
+pocket-app.key

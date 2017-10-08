@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 import json
 from pocket_api import pocket_get
 from pocket_api import pocket_archive
@@ -30,13 +30,13 @@ def get(access_token):
     else:
         since = int(since)
 
-    return json.dumps(pocket_get(access_token, detailType, count, offset, since))
+    return Response(response=json.dumps(pocket_get(access_token, detailType, count, offset, since)), status=200, mimetype="application/json")
 
 
 @app.route('/archive/<access_token>/<item_id>', methods=['POST'])
 def archive(access_token, item_id):
     pocket_archive(access_token, item_id)
-    return 'OK'
+    return Response(response='{}', status=200, mimetype="application/json")
 
 
 if __name__ == '__main__':
